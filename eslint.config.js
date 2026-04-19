@@ -32,6 +32,7 @@ export default [
       ...tsPlugin.configs.recommended.rules,
       ...prettier.rules,
       'prettier/prettier': 'error',
+      'no-console': 'warn',
     },
   },
 ];
