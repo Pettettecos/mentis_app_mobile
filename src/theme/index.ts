@@ -3,7 +3,7 @@ import { colors } from './colors';
 
 const paperTheme = {
   ...MD3LightTheme,
-  version: 3,
+  version: 3 as const,
   colors: {
     ...MD3LightTheme.colors,
     primary: colors.primary,
