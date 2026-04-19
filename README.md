@@ -25,7 +25,7 @@ Antes de começar, certifique-se de ter instalado:
 1. **Clone o repositório**:
 
 ```bash
-git clone <seu-repositorio>
+git clone git@github.com:Pettettecos/frontend.git
 cd mentis-app
 ```
 
