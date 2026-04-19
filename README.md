@@ -1,6 +1,6 @@
 # Mentis App
 
-Um projeto mobile desenvolvido com **Expo**, **React Native**, **TypeScript** e **React 19**.
+Um projeto mobile desenvolvido com **Expo**, **React Native**, **TypeScript** e **React 18**.
 
 ## Pré-requisitos
 
