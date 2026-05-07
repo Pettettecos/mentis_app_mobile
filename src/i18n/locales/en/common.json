@@ -1,0 +1,41 @@
+{
+  "login": {
+    "title": "MentisTech",
+    "tagline": "Your journey to mental wellness starts here",
+    "cardTitle": "Access your account",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot your password?",
+    "enter": "SIGN IN",
+    "footer": "© 2026 MentisTech • v1.0.0"
+  },
+  "forgotPassword": {
+    "title": "MentisTech",
+    "cardTitle": "Recover Password",
+    "description": "Enter your registered email to receive recovery instructions.",
+    "email": "Email",
+    "sendInstructions": "SEND INSTRUCTIONS",
+    "backToLogin": "Remembered your password? Sign in",
+    "successTitle": "Instructions sent",
+    "successMessage": "Instructions sent to {{email}}. Check your inbox.",
+    "backToLoginButton": "CREATE NEW PASSWORD",
+    "tipTitle": "Expert Tip",
+    "tipText": "Check your spam folder if you don't receive the email within 5 minutes."
+  },
+  "resetPassword": {
+    "title": "MentisTech",
+    "cardTitle": "Create New Password",
+    "description": "Your new password must be different from your previous password.",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "save": "SAVE PASSWORD",
+    "successTitle": "Password changed!",
+    "successMessage": "Your password has been changed successfully.",
+    "goToLogin": "GO TO LOGIN",
+    "passwordMismatch": "Passwords do not match",
+    "passwordMinLength": "Password must be at least 6 characters"
+  },
+  "common": {
+    "back": "Back"
+  }
+}
