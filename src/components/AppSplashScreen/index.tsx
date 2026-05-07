@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Animated, Image, StyleSheet, View } from 'react-native';
+import { Animated, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 
 import { GradientText } from '../GradientText';
@@ -10,30 +10,63 @@ interface AppSplashScreenProps {
 }
 
 export function AppSplashScreen({ onFinish }: AppSplashScreenProps) {
-  const opacity = useRef(new Animated.Value(0)).current;
-  const scale = useRef(new Animated.Value(0.92)).current;
+  const containerOpacity = useRef(new Animated.Value(1)).current;
+
+  const logoOpacity = useRef(new Animated.Value(0)).current;
+  const logoScale = useRef(new Animated.Value(0.75)).current;
+  const logoTranslateY = useRef(new Animated.Value(18)).current;
+
+  const textOpacity = useRef(new Animated.Value(0)).current;
+  const textTranslateY = useRef(new Animated.Value(14)).current;
 
   useEffect(() => {
     const animation = Animated.sequence([
       Animated.parallel([
-        Animated.timing(opacity, {
+        Animated.timing(logoOpacity, {
           toValue: 1,
-          duration: 500,
+          duration: 450,
           useNativeDriver: true,
         }),
-        Animated.spring(scale, {
+        Animated.spring(logoScale, {
           toValue: 1,
-          friction: 6,
+          friction: 5,
           tension: 70,
           useNativeDriver: true,
         }),
+        Animated.timing(logoTranslateY, {
+          toValue: 0,
+          duration: 450,
+          useNativeDriver: true,
+        }),
       ]),
-      Animated.delay(1100),
-      Animated.timing(opacity, {
-        toValue: 0,
-        duration: 350,
-        useNativeDriver: true,
-      }),
+
+      Animated.parallel([
+        Animated.timing(textOpacity, {
+          toValue: 1,
+          duration: 350,
+          useNativeDriver: true,
+        }),
+        Animated.timing(textTranslateY, {
+          toValue: 0,
+          duration: 350,
+          useNativeDriver: true,
+        }),
+      ]),
+
+      Animated.delay(900),
+
+      Animated.parallel([
+        Animated.timing(containerOpacity, {
+          toValue: 0,
+          duration: 350,
+          useNativeDriver: true,
+        }),
+        Animated.timing(logoScale, {
+          toValue: 1.06,
+          duration: 350,
+          useNativeDriver: true,
+        }),
+      ]),
     ]);
 
     animation.start(({ finished }) => {
@@ -45,7 +78,15 @@ export function AppSplashScreen({ onFinish }: AppSplashScreenProps) {
     return () => {
       animation.stop();
     };
-  }, [opacity, scale, onFinish]);
+  }, [
+    containerOpacity,
+    logoOpacity,
+    logoScale,
+    logoTranslateY,
+    textOpacity,
+    textTranslateY,
+    onFinish,
+  ]);
 
   return (
     <View style={styles.container}>
@@ -53,22 +94,34 @@ export function AppSplashScreen({ onFinish }: AppSplashScreenProps) {
         style={[
           styles.content,
           {
-            opacity,
-            transform: [{ scale }],
+            opacity: containerOpacity,
           },
         ]}
       >
-        <Image
-          source={require('../../../assets/splash-icon.png')}
-          style={styles.logo}
+        <Animated.Image
+          source={require('../../../assets/mentis-logo-nobg.png')}
+          style={[
+            styles.logo,
+            {
+              opacity: logoOpacity,
+              transform: [{ scale: logoScale }, { translateY: logoTranslateY }],
+            },
+          ]}
           resizeMode="contain"
         />
 
-        <GradientText text="MentisTech" style={styles.title} />
+        <Animated.View
+          style={{
+            opacity: textOpacity,
+            transform: [{ translateY: textTranslateY }],
+          }}
+        >
+          <GradientText text="MentisTech" style={styles.title} />
 
-        <Text variant="bodyMedium" style={styles.subtitle}>
-          Sua jornada para o bem-estar mental começa aqui
-        </Text>
+          <Text variant="bodyMedium" style={styles.subtitle}>
+            Sua jornada para o bem-estar mental começa aqui
+          </Text>
+        </Animated.View>
       </Animated.View>
     </View>
   );
@@ -86,9 +139,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 112,
-    height: 112,
-    marginBottom: 24,
+    width: 190,
+    height: 190,
+    marginBottom: 20,
   },
   title: {
     fontSize: 40,

@@ -8,7 +8,7 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/mentis-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#F8FAFC"
     },
@@ -16,8 +16,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/splash-icon.png",
-          "imageWidth": 180,
+          "image": "./assets/mentis-logo-nobg.png",
           "resizeMode": "contain",
           "backgroundColor": "#F8FAFC"
         }
