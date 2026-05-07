@@ -88,7 +88,11 @@ export function ResetPasswordScreen() {
             {success ? (
               <>
                 <View style={styles.successIcon}>
-                  <IconButton icon="check-circle" size={40} iconColor={colors.success} />
+                  <IconButton
+                    icon="check-circle"
+                    size={40}
+                    iconColor={colors.success}
+                  />
                 </View>
 
                 <Text
