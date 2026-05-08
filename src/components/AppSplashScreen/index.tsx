@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
-
 import { GradientText } from '../GradientText';
 import { colors } from '../../theme/colors';
+import mentisLogo from '../../../assets/mentis-logo-nobg.png';
 
 interface AppSplashScreenProps {
   onFinish: () => void;
@@ -99,7 +99,7 @@ export function AppSplashScreen({ onFinish }: AppSplashScreenProps) {
         ]}
       >
         <Animated.Image
-          source={require('../../../assets/mentis-logo-nobg.png')}
+          source={mentisLogo}
           style={[
             styles.logo,
             {
