@@ -37,5 +37,9 @@
   },
   "common": {
     "back": "Volver"
+  },
+  "splash": {
+    "title": "MentisTech",
+    "subtitle": "Tu camino hacia el bienestar mental comienza aquí"
   }
 }

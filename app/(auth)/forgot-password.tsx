@@ -1,4 +1,4 @@
-import { ForgotPasswordScreen } from '../../src/screens';
+import { ForgotPasswordScreen } from '@/screens';
 
 export default function ForgotPasswordPage() {
   return <ForgotPasswordScreen />;

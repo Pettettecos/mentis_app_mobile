@@ -11,10 +11,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
-import { GradientText } from '../../components';
+import { GradientText } from '@/components';
 import MentisLogo from '../../../assets/logo.png';
 import { styles } from './styles';
-import { colors } from '../../theme/colors';
+import { colors } from '@/theme/colors';
 
 export function LoginScreen() {
   const { t } = useTranslation();

@@ -37,5 +37,9 @@
   },
   "common": {
     "back": "Back"
+  },
+  "splash": {
+    "title": "MentisTech",
+    "subtitle": "Your journey to mental wellness starts here"
   }
 }

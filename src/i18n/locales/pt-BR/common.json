@@ -37,5 +37,9 @@
   },
   "common": {
     "back": "Voltar"
+  },
+  "splash": {
+    "title": "MentisTech",
+    "subtitle": "Sua jornada para o bem-estar mental começa aqui"
   }
 }
