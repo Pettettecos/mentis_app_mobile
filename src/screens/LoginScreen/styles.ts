@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
   },
   triggerContent: {
     padding: 24,
-    paddingVertical: 40,
+    paddingVertical: 20,
     alignItems: 'center',
   },
   triggerText: {
