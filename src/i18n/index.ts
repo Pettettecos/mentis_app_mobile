@@ -1,9 +1,9 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import * as Localization from 'expo-localization';
-import ptBR from './locales/pt-BR/common.json';
-import en from './locales/en/common.json';
-import es from './locales/es/common.json';
+import ptBR from './locales/pt-BR/common';
+import en from './locales/en/common';
+import es from './locales/es/common';
 
 const resources = {
   'pt-BR': { translation: ptBR },

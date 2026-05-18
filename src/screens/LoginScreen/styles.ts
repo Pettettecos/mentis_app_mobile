@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '../../theme/colors';
+import { colors } from '@/theme/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 28,
     overflow: 'hidden',
-    backgroundColor: colors.surface,
+    backgroundColor: colors.accent,
     shadowColor: colors.shadowColor,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.08,
@@ -48,7 +48,7 @@ export const styles = StyleSheet.create({
   },
   triggerText: {
     fontWeight: '600',
-    color: colors.textSoft,
+    color: '#FFFFFF',
     fontSize: 20,
     textAlign: 'center',
     letterSpacing: 0.5,

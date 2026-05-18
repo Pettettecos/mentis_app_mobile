@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { GradientText } from '../GradientText';
-import { colors } from '../../theme/colors';
+import { colors } from '@/theme/colors';
 import mentisLogo from '../../../assets/mentis-logo-nobg.png';
 
 interface AppSplashScreenProps {
@@ -10,6 +11,7 @@ interface AppSplashScreenProps {
 }
 
 export function AppSplashScreen({ onFinish }: AppSplashScreenProps) {
+  const { t } = useTranslation();
   const containerOpacity = useRef(new Animated.Value(1)).current;
 
   const logoOpacity = useRef(new Animated.Value(0)).current;
@@ -116,10 +118,10 @@ export function AppSplashScreen({ onFinish }: AppSplashScreenProps) {
             transform: [{ translateY: textTranslateY }],
           }}
         >
-          <GradientText text="MentisTech" style={styles.title} />
+          <GradientText text={t('splash.title')} style={styles.title} />
 
           <Text variant="bodyMedium" style={styles.subtitle}>
-            Sua jornada para o bem-estar mental começa aqui
+            {t('splash.subtitle')}
           </Text>
         </Animated.View>
       </Animated.View>
