@@ -10,6 +10,14 @@ const en: Translations = {
     forgotPassword: 'Forgot your password?',
     enter: 'SIGN IN',
     footer: '© 2026 MentisTech • v1.0.0',
+    error: {
+      invalidCredentials: 'Invalid email or password',
+    },
+    validation: {
+      emailRequired: 'Email is required',
+      emailInvalid: 'Invalid email',
+      passwordRequired: 'Password is required',
+    },
   },
   forgotPassword: {
     title: 'MentisTech',
@@ -42,6 +50,7 @@ const en: Translations = {
   },
   common: {
     back: 'Back',
+    logout: 'Logout',
   },
   managerDashboard: {
     headerTitle: 'Manager Dashboard',

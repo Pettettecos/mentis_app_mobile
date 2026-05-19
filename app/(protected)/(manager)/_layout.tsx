@@ -1,10 +1,17 @@
-import { Slot } from 'expo-router';
+import { Redirect, Slot } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { BottomNav, TopBar } from '../../src/components';
+import { BottomNav, TopBar } from '../../../src/components';
+import { useAuth } from '../../../src/context/AuthContext';
 
 export default function ManagerLayout() {
   const { t } = useTranslation();
+  const { user } = useAuth();
+
+  if (user?.role !== 'MANAGER') {
+    return <Redirect href="/(protected)/home" />;
+  }
+
   const navItems = [
     {
       key: 'dashboard',

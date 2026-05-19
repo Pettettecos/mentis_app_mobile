@@ -10,6 +10,14 @@ const ptBR: Translations = {
     forgotPassword: 'Esqueceu a senha?',
     enter: 'ENTRAR',
     footer: '© 2026 MentisTech • v1.0.0',
+    error: {
+      invalidCredentials: 'E-mail ou senha inválidos',
+    },
+    validation: {
+      emailRequired: 'E-mail é obrigatório',
+      emailInvalid: 'E-mail inválido',
+      passwordRequired: 'Senha é obrigatória',
+    },
   },
   forgotPassword: {
     title: 'MentisTech',
@@ -42,6 +50,7 @@ const ptBR: Translations = {
   },
   common: {
     back: 'Voltar',
+    logout: 'Sair',
   },
   managerDashboard: {
     headerTitle: 'Painel do Gestor',
