@@ -13,7 +13,7 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller } from 'react-hook-form';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
-import { GradientText } from '../../components';
+import { GradientText } from '@/components';
 import MentisLogo from '../../../assets/logo.png';
 import { styles } from './styles';
 import { colors } from '../../theme/colors';

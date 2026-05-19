@@ -1,0 +1,52 @@
+import type { Translations } from '../../translations';
+
+const es: Translations = {
+  login: {
+    title: 'MentisTech',
+    tagline: 'Tu camino hacia el bienestar mental comienza aquí',
+    cardTitle: 'Accede a tu cuenta',
+    email: 'Correo electrónico',
+    password: 'Contraseña',
+    forgotPassword: '¿Olvidaste tu contraseña?',
+    enter: 'INICIAR SESIÓN',
+    footer: '© 2026 MentisTech • v1.0.0',
+  },
+  forgotPassword: {
+    title: 'MentisTech',
+    cardTitle: 'Recuperar Contraseña',
+    description:
+      'Ingresa tu correo registrado para recibir las instrucciones de recuperación.',
+    email: 'Correo electrónico',
+    sendInstructions: 'ENVIAR INSTRUCCIONES',
+    backToLogin: '¿Recordaste tu contraseña? Iniciar sesión',
+    successTitle: 'Instrucciones enviadas',
+    successMessage:
+      'Instrucciones enviadas a {{email}}. Revisa tu bandeja de entrada.',
+    backToLoginButton: 'CREAR NUEVA CONTRASEÑA',
+    tipTitle: 'Consejo del Experto',
+    tipText: 'Revisa tu carpeta de spam si no recibes el correo en 5 minutos.',
+  },
+  resetPassword: {
+    title: 'MentisTech',
+    cardTitle: 'Crear Nueva Contraseña',
+    description:
+      'Tu nueva contraseña debe ser diferente de tu contraseña anterior.',
+    newPassword: 'Nueva contraseña',
+    confirmPassword: 'Confirmar contraseña',
+    save: 'GUARDAR CONTRASEÑA',
+    successTitle: '¡Contraseña cambiada!',
+    successMessage: 'Tu contraseña ha sido cambiada exitosamente.',
+    goToLogin: 'IR AL INICIO',
+    passwordMismatch: 'Las contraseñas no coinciden',
+    passwordMinLength: 'La contraseña debe tener al menos 6 caracteres',
+  },
+  common: {
+    back: 'Volver',
+  },
+  splash: {
+    title: 'MentisTech',
+    subtitle: 'Tu camino hacia el bienestar mental comienza aquí',
+  },
+};
+
+export default es;

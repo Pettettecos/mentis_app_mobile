@@ -11,8 +11,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
-import { GradientText } from '../../components';
-import { colors } from '../../theme/colors';
+import { GradientText } from '@/components';
+import { colors } from '@/theme/colors';
 import { styles } from './styles';
 
 export function ForgotPasswordScreen() {

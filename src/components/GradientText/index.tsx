@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TextProps } from 'react-native';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { LinearGradient } from 'expo-linear-gradient';
-import { colors } from '../../theme/colors';
+import { colors } from '@/theme/colors';
 
 interface GradientTextProps extends TextProps {
   text: string;
