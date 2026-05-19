@@ -21,7 +21,9 @@
           "resizeMode": "contain",
           "backgroundColor": "#F8FAFC"
         }
-      ]
+      ],
+      "expo-router",
+      "expo-secure-store"
     ],
     "ios": {
       "supportsTablet": true
@@ -36,7 +38,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "plugins": ["expo-router"]
+    }
   }
 }

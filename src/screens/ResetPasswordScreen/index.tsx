@@ -112,7 +112,7 @@ export function ResetPasswordScreen() {
 
                   <Button
                     mode="contained"
-                    onPress={() => router.replace('/(auth)/login')}
+                    onPress={() => router.replace('/(public)/login')}
                     buttonColor={colors.primary}
                     style={styles.loginButton}
                     labelStyle={styles.buttonLabel}
