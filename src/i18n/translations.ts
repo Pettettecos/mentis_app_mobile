@@ -38,6 +38,42 @@ export interface Translations {
   common: {
     back: string;
   };
+  managerDashboard: {
+    headerTitle: string;
+    headerBody: string;
+    healthTitle: string;
+    healthComparison: string;
+    activeUsersTitle: string;
+    activeUsersCaption: string;
+    riskAlertsTitle: string;
+    riskAlertsCaption: string;
+    riskAlertsButton: string;
+    sentimentTitle: string;
+    sentimentSubtitle: string;
+    sentimentBadge: string;
+    sentimentLegendHappy: string;
+    sentimentLegendCalm: string;
+    sentimentLegendTired: string;
+    sentimentLegendStressed: string;
+    sentimentWeek1: string;
+    sentimentWeek2: string;
+    sentimentWeek3: string;
+    sentimentWeek4: string;
+    insightsTitle: string;
+    insightsButton: string;
+    departmentTitle: string;
+    departmentEngineering: string;
+    departmentDesign: string;
+    departmentSales: string;
+    dayMon: string;
+    dayTue: string;
+    dayWed: string;
+    dayThu: string;
+    dayFri: string;
+    navDashboard: string;
+    navUsers: string;
+    navSettings: string;
+  };
   splash: {
     title: string;
     subtitle: string;
