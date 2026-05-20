@@ -101,4 +101,11 @@ export const styles = StyleSheet.create({
     color: colors.textMuted,
     letterSpacing: 0.5,
   },
+  errorText: {
+    color: colors.error,
+    fontSize: 12,
+    marginTop: -8,
+    marginBottom: 8,
+    marginLeft: 4,
+  },
 });

@@ -1,17 +1,42 @@
-import { StyleSheet, View } from 'react-native';
-import { Icon, Text } from 'react-native-paper';
+import { useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Icon, Menu, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useAuth } from '@/context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 export function TopBar() {
   const insets = useSafeAreaInsets();
+  const { logout } = useAuth();
+  const { t } = useTranslation();
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const handleLogout = async () => {
+    setMenuVisible(false);
+    await logout();
+  };
 
   return (
     <View style={[styles.wrapper, { paddingTop: insets.top + 16 }]}>
       <Text style={styles.title}>MentisTech</Text>
 
-      <View style={styles.avatar}>
-        <Icon source="account" size={22} color="#007EA4" />
-      </View>
+      <Menu
+        visible={menuVisible}
+        onDismiss={() => setMenuVisible(false)}
+        anchor={
+          <TouchableOpacity onPress={() => setMenuVisible(true)}>
+            <View style={styles.avatar}>
+              <Icon source="account" size={22} color="#007EA4" />
+            </View>
+          </TouchableOpacity>
+        }
+      >
+        <Menu.Item
+          onPress={handleLogout}
+          title={t('common.logout')}
+          leadingIcon="logout"
+        />
+      </Menu>
     </View>
   );
 }

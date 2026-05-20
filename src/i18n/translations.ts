@@ -8,6 +8,14 @@ export interface Translations {
     forgotPassword: string;
     enter: string;
     footer: string;
+    error: {
+      invalidCredentials: string;
+    };
+    validation: {
+      emailRequired: string;
+      emailInvalid: string;
+      passwordRequired: string;
+    };
   };
   forgotPassword: {
     title: string;
@@ -37,6 +45,7 @@ export interface Translations {
   };
   common: {
     back: string;
+    logout: string;
   };
   managerDashboard: {
     headerTitle: string;

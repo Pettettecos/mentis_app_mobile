@@ -86,7 +86,7 @@ export function ForgotPasswordScreen() {
 
                 <Button
                   mode="contained"
-                  onPress={() => router.push('/(auth)/login')}
+                  onPress={() => router.push('/(public)/login')}
                   buttonColor={colors.primary}
                   style={[styles.loginButton, { marginTop: 10 }]}
                   labelStyle={styles.buttonLabel}

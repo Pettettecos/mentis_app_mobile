@@ -1,17 +1,13 @@
-import { useState } from 'react';
 import { Redirect } from 'expo-router';
-import { AppSplashScreen } from '@/components';
+import { AppSplashScreen } from '../src/components';
+import { useAuth } from '../src/context/AuthContext';
 
 export default function Index() {
-  const [showSplash, setShowSplash] = useState(true);
+  const { user, loading } = useAuth();
 
-  const handleSplashFinish = () => {
-    setShowSplash(false);
-  };
-
-  if (showSplash) {
-    return <AppSplashScreen onFinish={handleSplashFinish} />;
+  if (loading) {
+    return <AppSplashScreen onFinish={() => {}} />;
   }
 
-  return <Redirect href="/(auth)/login" />;
+  return <Redirect href={user ? '/(protected)' : '/(public)/login'} />;
 }
