@@ -83,6 +83,47 @@ export interface Translations {
     navUsers: string;
     navSettings: string;
   };
+  newCompany: {
+    headerTitle: string;
+    title: string;
+    subtitle: string;
+    logoLabel: string;
+    logoHint: string;
+    companyName: string;
+    companyNamePlaceholder: string;
+    cnpj: string;
+    cnpjPlaceholder: string;
+    contactName: string;
+    contactNamePlaceholder: string;
+    contactPhone: string;
+    contactPhonePlaceholder: string;
+    submitButton: string;
+    infoTitle: string;
+    infoBody: string;
+    infoBodyBold: string;
+    infoBodyEnd: string;
+  };
+  enterpriseDashboard: {
+    headerTitle: string;
+    headerBody: string;
+    createCompany: string;
+    registeredCompanies: string;
+    activeUsers: string;
+    vsLastMonth: string;
+    recentCompanies: string;
+    seeAll: string;
+    collaborators: string;
+    platformInsights: string;
+    storageUsage: string;
+    apiRequests: string;
+    recentAlerts: string;
+    licenseExpiring: string;
+    licenseExpiringBody: string;
+    newRoleRequest: string;
+    newRoleRequestBody: string;
+    navHome: string;
+    navSettings: string;
+  };
   splash: {
     title: string;
     subtitle: string;
