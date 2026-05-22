@@ -6,29 +6,60 @@ import {
   Button,
   TouchableRipple,
   Surface,
+  ActivityIndicator,
 } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { useForm, Controller } from 'react-hook-form';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
-import { GradientText } from '../../components';
+import { GradientText } from '@/components';
 import MentisLogo from '../../../assets/logo.png';
 import { styles } from './styles';
 import { colors } from '../../theme/colors';
+import { useAuth } from '../../context/AuthContext';
+import Toast from 'react-native-toast-message';
+
+interface LoginForm {
+  email: string;
+  password: string;
+}
 
 export function LoginScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const actionSheetRef = useRef<ActionSheetRef>(null);
+  const { login: authLogin } = useAuth();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    actionSheetRef.current?.hide();
-    router.push('/(auth)/reset-password');
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>({
+    defaultValues: { email: '', password: '' },
+  });
+
+  const onSubmit = async (data: LoginForm) => {
+    setLoading(true);
+    try {
+      await authLogin(data);
+      router.replace('/(protected)');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err: unknown) {
+      Toast.show({
+        type: 'error',
+        text1: t('login.error.invalidCredentials'),
+        position: 'top',
+        topOffset: 60,
+        visibilityTime: 3000,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputProps = {
@@ -86,51 +117,81 @@ export function LoginScreen() {
             </View>
 
             <View style={styles.form}>
-              <TextInput
-                {...inputProps}
-                label={t('login.email')}
-                value={email}
-                onChangeText={setEmail}
-                autoCorrect={false}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                left={
-                  <TextInput.Icon
-                    icon="email-outline"
-                    size={20}
-                    color={colors.iconMuted}
+              <Controller
+                control={control}
+                name="email"
+                rules={{
+                  required: t('login.validation.emailRequired'),
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: t('login.validation.emailInvalid'),
+                  },
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <TextInput
+                    {...inputProps}
+                    label={t('login.email')}
+                    value={value}
+                    onChangeText={onChange}
+                    error={!!errors.email}
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    left={
+                      <TextInput.Icon
+                        icon="email-outline"
+                        size={20}
+                        color={colors.iconMuted}
+                      />
+                    }
                   />
-                }
+                )}
               />
+              {errors.email && (
+                <Text style={styles.errorText}>{errors.email.message}</Text>
+              )}
 
-              <TextInput
-                {...inputProps}
-                label={t('login.password')}
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry={!showPassword}
-                left={
-                  <TextInput.Icon
-                    icon="lock-outline"
-                    size={20}
-                    color={colors.iconMuted}
+              <Controller
+                control={control}
+                name="password"
+                rules={{
+                  required: t('login.validation.passwordRequired'),
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <TextInput
+                    {...inputProps}
+                    label={t('login.password')}
+                    value={value}
+                    onChangeText={onChange}
+                    error={!!errors.password}
+                    secureTextEntry={!showPassword}
+                    left={
+                      <TextInput.Icon
+                        icon="lock-outline"
+                        size={20}
+                        color={colors.iconMuted}
+                      />
+                    }
+                    right={
+                      <TextInput.Icon
+                        icon={showPassword ? 'eye-off' : 'eye'}
+                        size={20}
+                        color={colors.iconActive}
+                        onPress={() => setShowPassword(!showPassword)}
+                      />
+                    }
                   />
-                }
-                right={
-                  <TextInput.Icon
-                    icon={showPassword ? 'eye-off' : 'eye'}
-                    size={20}
-                    color={colors.iconActive}
-                    onPress={() => setShowPassword(!showPassword)}
-                  />
-                }
+                )}
               />
+              {errors.password && (
+                <Text style={styles.errorText}>{errors.password.message}</Text>
+              )}
 
               <View style={styles.formActions}>
                 <TouchableRipple
                   onPress={() => {
                     actionSheetRef.current?.hide();
-                    router.push('/(auth)/forgot-password');
+                    router.push('/(public)/forgot-password');
                   }}
                   rippleColor="transparent"
                 >
@@ -142,12 +203,17 @@ export function LoginScreen() {
 
               <Button
                 mode="contained"
-                onPress={handleLogin}
+                onPress={handleSubmit(onSubmit)}
                 buttonColor={colors.accent}
                 style={styles.loginButton}
                 labelStyle={{ fontWeight: '800' }}
+                disabled={loading}
               >
-                {t('login.enter')}
+                {loading ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  t('login.enter')
+                )}
               </Button>
             </View>
           </Surface>

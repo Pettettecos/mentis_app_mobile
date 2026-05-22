@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '../../theme/colors';
+import { colors } from '@/theme/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 28,
     overflow: 'hidden',
-    backgroundColor: colors.surface,
+    backgroundColor: colors.accent,
     shadowColor: colors.shadowColor,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.08,
@@ -43,12 +43,12 @@ export const styles = StyleSheet.create({
   },
   triggerContent: {
     padding: 24,
-    paddingVertical: 40,
+    paddingVertical: 20,
     alignItems: 'center',
   },
   triggerText: {
     fontWeight: '600',
-    color: colors.textSoft,
+    color: '#FFFFFF',
     fontSize: 20,
     textAlign: 'center',
     letterSpacing: 0.5,
@@ -100,5 +100,12 @@ export const styles = StyleSheet.create({
   footerText: {
     color: colors.textMuted,
     letterSpacing: 0.5,
+  },
+  errorText: {
+    color: colors.error,
+    fontSize: 12,
+    marginTop: -8,
+    marginBottom: 8,
+    marginLeft: 4,
   },
 });

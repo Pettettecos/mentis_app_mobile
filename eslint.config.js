@@ -21,6 +21,7 @@ export default [
       },
       globals: {
         __DEV__: 'readonly',
+        process: 'readonly',
         console: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
