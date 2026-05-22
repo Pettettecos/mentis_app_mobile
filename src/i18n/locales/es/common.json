@@ -35,6 +35,57 @@
     "passwordMismatch": "Las contraseñas no coinciden",
     "passwordMinLength": "La contraseña debe tener al menos 6 caracteres"
   },
+  "psychologistArea": {
+    "brand": "MentisTech",
+    "tabs": {
+      "dashboard": "Panel",
+      "collaborators": "Colaboradores",
+      "questionnaires": "Cuestionarios",
+      "schedule": "Agenda"
+    },
+    "dashboard": {
+      "title": "Hola, Dra. Mariana Costa",
+      "description": "Tienes 3 nuevas solicitudes de atención hoy.",
+      "insightsTitle": "Insights del Equipo",
+      "wellbeingMetric": "78%",
+      "wellbeingLabel": "Índice general de bienestar",
+      "requestsTitle": "Solicitudes de Atención",
+      "requestOneName": "Ricardo Alves",
+      "requestOneDescription": "Síntomas recurrentes de burnout y dificultad de concentración.",
+      "requestTwoName": "Ana Paula Silva",
+      "requestTwoDescription": "Seguimiento mensual para control de ansiedad social."
+    },
+    "collaborators": {
+      "title": "Gestión de Colaboradores",
+      "description": "Acompaña la salud mental de la organización y gestiona atenciones.",
+      "collaboratorOneName": "Ricardo Mendonca",
+      "collaboratorOneStatus": "Desarrollador Sénior · Estable",
+      "collaboratorTwoName": "Ana Luiza Silva",
+      "collaboratorTwoStatus": "Gerente de Proyectos · Alerta: Estrés",
+      "collaboratorThreeName": "Carlos Eduardo",
+      "collaboratorThreeStatus": "Analista Financiero · Mejorando"
+    },
+    "questionnaires": {
+      "title": "Gestionar Cuestionarios",
+      "description": "Modelos de evaluación y seguimiento psicológico.",
+      "gadTitle": "GAD-7",
+      "gadDescription": "Cuestionario para rastreo de ansiedad.",
+      "phqTitle": "PHQ-9",
+      "phqDescription": "Cuestionario para rastreo de síntomas depresivos.",
+      "moodTitle": "Clima Mental",
+      "moodDescription": "Seguimiento diario de humor y bienestar."
+    },
+    "schedule": {
+      "title": "Gestionar Agenda",
+      "description": "Controla tu disponibilidad y acompaña las atenciones de la semana.",
+      "appointmentOneTitle": "09:00 · Sesión con Julia Ramos",
+      "appointmentOneDescription": "Online por la plataforma",
+      "appointmentTwoTitle": "14:30 · Evaluación Inicial",
+      "appointmentTwoDescription": "Primer contacto · Consultorio",
+      "appointmentThreeTitle": "16:00 · Retorno",
+      "appointmentThreeDescription": "Seguimiento periódico"
+    }
+  },
   "common": {
     "back": "Volver"
   }

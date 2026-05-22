@@ -1,20 +1,26 @@
 import { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Card, Text } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { colors } from '../../theme/colors';
 
-type PsychologistTab = 'dashboard' | 'collaborators' | 'questionnaires' | 'schedule';
+type PsychologistTab =
+  | 'dashboard'
+  | 'collaborators'
+  | 'questionnaires'
+  | 'schedule';
 
-const tabs: { key: PsychologistTab; label: string }[] = [
-  { key: 'dashboard', label: 'Painel' },
-  { key: 'collaborators', label: 'Colaboradores' },
-  { key: 'questionnaires', label: 'Questionários' },
-  { key: 'schedule', label: 'Agenda' },
+const tabs: { key: PsychologistTab; labelKey: string }[] = [
+  { key: 'dashboard', labelKey: 'psychologistArea.tabs.dashboard' },
+  { key: 'collaborators', labelKey: 'psychologistArea.tabs.collaborators' },
+  { key: 'questionnaires', labelKey: 'psychologistArea.tabs.questionnaires' },
+  { key: 'schedule', labelKey: 'psychologistArea.tabs.schedule' },
 ];
 
 export function PsychologistAreaScreen() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<PsychologistTab>('dashboard');
   const insets = useSafeAreaInsets();
 
@@ -22,7 +28,7 @@ export function PsychologistAreaScreen() {
     <View style={styles.root}>
       <View style={[styles.container, { paddingTop: insets.top + 16 }]}>
         <Text variant="titleLarge" style={styles.brand}>
-          MentisTech
+          {t('psychologistArea.brand')}
         </Text>
 
         <ScrollView
@@ -46,8 +52,10 @@ export function PsychologistAreaScreen() {
               style={[styles.tabButton, isActive && styles.tabButtonActive]}
               onPress={() => setActiveTab(tab.key)}
             >
-              <Text style={[styles.tabLabel, isActive && styles.tabLabelActive]}>
-                {tab.label}
+              <Text
+                style={[styles.tabLabel, isActive && styles.tabLabelActive]}
+              >
+                {t(tab.labelKey)}
               </Text>
             </TouchableOpacity>
           );
@@ -58,42 +66,52 @@ export function PsychologistAreaScreen() {
 }
 
 function DashboardContent() {
+  const { t } = useTranslation();
+
   return (
     <>
       <Text variant="headlineMedium" style={styles.title}>
-        Olá, Dra. Mariana Costa
+        {t('psychologistArea.dashboard.title')}
       </Text>
 
       <Text style={styles.description}>
-        Você tem 3 novos pedidos de atendimento hoje.
+        {t('psychologistArea.dashboard.description')}
       </Text>
 
       <Card style={styles.card}>
         <Card.Content>
           <Text variant="titleMedium" style={styles.cardTitle}>
-            Insights da Equipe
+            {t('psychologistArea.dashboard.insightsTitle')}
           </Text>
 
-          <Text style={styles.metric}>78%</Text>
+          <Text style={styles.metric}>
+            {t('psychologistArea.dashboard.wellbeingMetric')}
+          </Text>
 
-          <Text style={styles.description}>Índice de bem-estar geral</Text>
+          <Text style={styles.description}>
+            {t('psychologistArea.dashboard.wellbeingLabel')}
+          </Text>
         </Card.Content>
       </Card>
 
       <Card style={styles.card}>
         <Card.Content>
           <Text variant="titleMedium" style={styles.cardTitle}>
-            Pedidos de Atendimento
+            {t('psychologistArea.dashboard.requestsTitle')}
           </Text>
 
-          <Text style={styles.itemTitle}>Ricardo Alves</Text>
+          <Text style={styles.itemTitle}>
+            {t('psychologistArea.dashboard.requestOneName')}
+          </Text>
           <Text style={styles.description}>
-            Sintomas de burnout recorrentes e dificuldade de concentração.
+            {t('psychologistArea.dashboard.requestOneDescription')}
           </Text>
 
-          <Text style={styles.itemTitle}>Ana Paula Silva</Text>
+          <Text style={styles.itemTitle}>
+            {t('psychologistArea.dashboard.requestTwoName')}
+          </Text>
           <Text style={styles.description}>
-            Acompanhamento mensal para controle de ansiedade social.
+            {t('psychologistArea.dashboard.requestTwoDescription')}
           </Text>
         </Card.Content>
       </Card>
@@ -102,28 +120,40 @@ function DashboardContent() {
 }
 
 function CollaboratorsContent() {
+  const { t } = useTranslation();
+
   return (
     <>
       <Text variant="headlineMedium" style={styles.title}>
-        Gestão de Colaboradores
+        {t('psychologistArea.collaborators.title')}
       </Text>
 
       <Text style={styles.description}>
-        Acompanhe a saúde mental da organização e gerencie atendimentos.
+        {t('psychologistArea.collaborators.description')}
       </Text>
 
       <Card style={styles.card}>
         <Card.Content>
-          <Text style={styles.itemTitle}>Ricardo Mendonça</Text>
-          <Text style={styles.description}>Desenvolvedor Sênior · Estável</Text>
-
-          <Text style={styles.itemTitle}>Ana Luiza Silva</Text>
+          <Text style={styles.itemTitle}>
+            {t('psychologistArea.collaborators.collaboratorOneName')}
+          </Text>
           <Text style={styles.description}>
-            Gerente de Projetos · Alerta: Stress
+            {t('psychologistArea.collaborators.collaboratorOneStatus')}
           </Text>
 
-          <Text style={styles.itemTitle}>Carlos Eduardo</Text>
-          <Text style={styles.description}>Analista Financeiro · Melhorando</Text>
+          <Text style={styles.itemTitle}>
+            {t('psychologistArea.collaborators.collaboratorTwoName')}
+          </Text>
+          <Text style={styles.description}>
+            {t('psychologistArea.collaborators.collaboratorTwoStatus')}
+          </Text>
+
+          <Text style={styles.itemTitle}>
+            {t('psychologistArea.collaborators.collaboratorThreeName')}
+          </Text>
+          <Text style={styles.description}>
+            {t('psychologistArea.collaborators.collaboratorThreeStatus')}
+          </Text>
         </Card.Content>
       </Card>
     </>
@@ -131,31 +161,39 @@ function CollaboratorsContent() {
 }
 
 function QuestionnairesContent() {
+  const { t } = useTranslation();
+
   return (
     <>
       <Text variant="headlineMedium" style={styles.title}>
-        Gerenciar Questionários
+        {t('psychologistArea.questionnaires.title')}
       </Text>
 
       <Text style={styles.description}>
-        Modelos de avaliação e acompanhamento psicológico.
+        {t('psychologistArea.questionnaires.description')}
       </Text>
 
       <Card style={styles.card}>
         <Card.Content>
-          <Text style={styles.itemTitle}>GAD-7</Text>
+          <Text style={styles.itemTitle}>
+            {t('psychologistArea.questionnaires.gadTitle')}
+          </Text>
           <Text style={styles.description}>
-            Questionário para rastreamento de ansiedade.
+            {t('psychologistArea.questionnaires.gadDescription')}
           </Text>
 
-          <Text style={styles.itemTitle}>PHQ-9</Text>
+          <Text style={styles.itemTitle}>
+            {t('psychologistArea.questionnaires.phqTitle')}
+          </Text>
           <Text style={styles.description}>
-            Questionário para rastreamento de sintomas depressivos.
+            {t('psychologistArea.questionnaires.phqDescription')}
           </Text>
 
-          <Text style={styles.itemTitle}>Clima Mental</Text>
+          <Text style={styles.itemTitle}>
+            {t('psychologistArea.questionnaires.moodTitle')}
+          </Text>
           <Text style={styles.description}>
-            Acompanhamento diário de humor e bem-estar.
+            {t('psychologistArea.questionnaires.moodDescription')}
           </Text>
         </Card.Content>
       </Card>
@@ -164,26 +202,40 @@ function QuestionnairesContent() {
 }
 
 function ScheduleContent() {
+  const { t } = useTranslation();
+
   return (
     <>
       <Text variant="headlineMedium" style={styles.title}>
-        Gerenciar Agenda
+        {t('psychologistArea.schedule.title')}
       </Text>
 
       <Text style={styles.description}>
-        Controle sua disponibilidade e acompanhe os atendimentos da semana.
+        {t('psychologistArea.schedule.description')}
       </Text>
 
       <Card style={styles.card}>
         <Card.Content>
-          <Text style={styles.itemTitle}>09:00 · Sessão com Julia Ramos</Text>
-          <Text style={styles.description}>Online pela plataforma</Text>
+          <Text style={styles.itemTitle}>
+            {t('psychologistArea.schedule.appointmentOneTitle')}
+          </Text>
+          <Text style={styles.description}>
+            {t('psychologistArea.schedule.appointmentOneDescription')}
+          </Text>
 
-          <Text style={styles.itemTitle}>14:30 · Avaliação Inicial</Text>
-          <Text style={styles.description}>Primeiro contato · Consultório</Text>
+          <Text style={styles.itemTitle}>
+            {t('psychologistArea.schedule.appointmentTwoTitle')}
+          </Text>
+          <Text style={styles.description}>
+            {t('psychologistArea.schedule.appointmentTwoDescription')}
+          </Text>
 
-          <Text style={styles.itemTitle}>16:00 · Retorno</Text>
-          <Text style={styles.description}>Acompanhamento periódico</Text>
+          <Text style={styles.itemTitle}>
+            {t('psychologistArea.schedule.appointmentThreeTitle')}
+          </Text>
+          <Text style={styles.description}>
+            {t('psychologistArea.schedule.appointmentThreeDescription')}
+          </Text>
         </Card.Content>
       </Card>
     </>
