@@ -124,6 +124,24 @@ export interface Translations {
     navHome: string;
     navSettings: string;
   };
+  employeeDashboard: {
+    greetingTitle: string;
+    greetingSubtitle: string;
+    checkinButton: string;
+    consecutiveWeeks: string;
+    avgMood: string;
+    activeDays: string;
+    moodHistory: string;
+    last30Days: string;
+    chartPlaceholder: string;
+    aiInsights: string;
+    insight1Title: string;
+    insight1Body: string;
+    insight2Title: string;
+    insight2Body: string;
+    navHome: string;
+    navSettings: string;
+  };
   splash: {
     title: string;
     subtitle: string;
