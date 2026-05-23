@@ -164,6 +164,20 @@ export interface Translations {
     navHome: string;
     navSettings: string;
   };
+  meditation: {
+    title: string;
+    subtitle: string;
+    duration: string;
+    sound: string;
+    tapToPreview: string;
+    start: string;
+    audioWaterfall: string;
+    audioPeaceful: string;
+    audioMystical: string;
+    breatheIn: string;
+    hold: string;
+    breatheOut: string;
+  };
   splash: {
     title: string;
     subtitle: string;

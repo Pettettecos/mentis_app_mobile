@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { Card, Icon, Text } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useRouter } from 'expo-router';
 import { styles } from './styles';
 import { useAuth } from '@/context/AuthContext';
 import {
@@ -16,6 +17,7 @@ import {
 export function EmployeeDashboardScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const { user } = useAuth();
 
   return (
@@ -109,7 +111,11 @@ export function EmployeeDashboardScreen() {
         </Text>
 
         {guidedExercises.map((exercise) => (
-          <TouchableOpacity key={exercise.id} style={styles.exerciseCard}>
+          <TouchableOpacity
+            key={exercise.id}
+            style={styles.exerciseCard}
+            onPress={() => exercise.route && router.push(exercise.route)}
+          >
             <Image source={exercise.image} style={styles.exerciseImage} />
             <View style={styles.exerciseContent}>
               <View style={styles.exerciseCategory}>
