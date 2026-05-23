@@ -1,42 +1,22 @@
-import { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Icon, Menu, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/AuthContext';
-import { useTranslation } from 'react-i18next';
+import { GradientText } from '../GradientText';
+import { Icon } from 'react-native-paper';
 
 export function TopBar() {
   const insets = useSafeAreaInsets();
   const { logout } = useAuth();
-  const { t } = useTranslation();
-  const [menuVisible, setMenuVisible] = useState(false);
 
-  const handleLogout = async () => {
-    setMenuVisible(false);
-    await logout();
-  };
+  const handleLogout = async () => logout();
 
   return (
     <View style={[styles.wrapper, { paddingTop: insets.top + 16 }]}>
-      <Text style={styles.title}>MentisTech</Text>
+      <GradientText text={'MentisTech'} style={styles.gradientTitle} />
 
-      <Menu
-        visible={menuVisible}
-        onDismiss={() => setMenuVisible(false)}
-        anchor={
-          <TouchableOpacity onPress={() => setMenuVisible(true)}>
-            <View style={styles.avatar}>
-              <Icon source="account" size={22} color="#007EA4" />
-            </View>
-          </TouchableOpacity>
-        }
-      >
-        <Menu.Item
-          onPress={handleLogout}
-          title={t('common.logout')}
-          leadingIcon="logout"
-        />
-      </Menu>
+      <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+        <Icon source="logout" size={22} color="#007EA4" />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -56,21 +36,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 2,
   },
-  title: {
-    color: '#1A90B9',
-    fontSize: 20,
+  logoutButton: {
+    padding: 8,
+  },
+  gradientTitle: {
+    fontSize: 18,
     fontWeight: '800',
     letterSpacing: -0.5,
-    lineHeight: 28,
-  },
-  avatar: {
-    alignItems: 'center',
-    backgroundColor: '#E6F6FB',
-    borderColor: '#007EA4',
-    borderRadius: 9999,
-    borderWidth: 2,
-    height: 40,
-    justifyContent: 'center',
-    width: 40,
+    lineHeight: 26,
   },
 });
