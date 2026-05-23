@@ -1,14 +1,22 @@
-import { View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { Button, Card, Icon, Text } from 'react-native-paper';
+import { Card, Icon, Text } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import { styles } from './styles';
-import { colors } from '@/theme/colors';
+import { useAuth } from '@/context/AuthContext';
+import {
+  guidedExercises,
+  journeyIcon,
+  journeyIconColor,
+  moodIconColor,
+  moodOptions,
+} from '../constants';
 
 export function EmployeeDashboardScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const { user } = useAuth();
 
   return (
     <ScrollView
@@ -21,111 +29,111 @@ export function EmployeeDashboardScreen() {
     >
       <View style={styles.greetingSection}>
         <Text style={styles.greetingTitle}>
-          {t('employeeDashboard.greetingTitle')}
+          {t('employeeDashboard.greetingTitle', {
+            username: user?.username,
+          })}
         </Text>
         <Text style={styles.greetingSubtitle}>
           {t('employeeDashboard.greetingSubtitle')}
         </Text>
       </View>
 
-      <Button
-        mode="contained"
-        icon={() => <Icon source="emoticon-happy-outline" size={28} color="#FFFFFF" />}
-        onPress={() => {}}
-        contentStyle={styles.checkinButtonContent}
-        labelStyle={styles.checkinButtonLabel}
-        style={styles.checkinButton}
-      >
-        {t('employeeDashboard.checkinButton')}
-      </Button>
-
-      <View style={styles.statsRow}>
-        <Card style={styles.statCard}>
-          <Card.Content style={styles.statCardContent}>
-            <View style={[styles.statIconBg, styles.statIconBgGreen]}>
-              <Icon source="calendar-check" size={20} color="#059669" />
-            </View>
-            <Text style={styles.statValue}>12</Text>
-            <Text style={styles.statLabel}>
-              {t('employeeDashboard.consecutiveWeeks')}
-            </Text>
-          </Card.Content>
-        </Card>
-
-        <Card style={styles.statCard}>
-          <Card.Content style={styles.statCardContent}>
-            <View style={[styles.statIconBg, styles.statIconBgBlue]}>
-              <Icon source="emoticon-excited-outline" size={20} color="#2563EB" />
-            </View>
-            <Text style={styles.statValue}>7.8</Text>
-            <Text style={styles.statLabel}>
-              {t('employeeDashboard.avgMood')}
-            </Text>
-          </Card.Content>
-        </Card>
-
-        <Card style={styles.statCard}>
-          <Card.Content style={styles.statCardContent}>
-            <View style={[styles.statIconBg, styles.statIconBgPurple]}>
-              <Icon source="fire" size={20} color={colors.accent} />
-            </View>
-            <Text style={styles.statValue}>84</Text>
-            <Text style={styles.statLabel}>
-              {t('employeeDashboard.activeDays')}
-            </Text>
-          </Card.Content>
-        </Card>
-      </View>
-
-      <Card style={styles.chartCard}>
-        <Card.Content>
-          <View style={styles.chartHeader}>
-            <Text style={styles.chartTitle}>
-              {t('employeeDashboard.moodHistory')}
-            </Text>
-            <Text style={styles.chartBadge}>
-              {t('employeeDashboard.last30Days')}
-            </Text>
-          </View>
-          <View style={styles.chartPlaceholder}>
-            <Icon source="chart-line" size={48} color={colors.iconMuted} />
-            <Text style={styles.chartPlaceholderText}>
-              {t('employeeDashboard.chartPlaceholder')}
-            </Text>
+      <Card style={styles.checkinCard}>
+        <View style={styles.checkinBadge}>
+          <Text style={styles.checkinBadgeText}>
+            {t('employeeDashboard.today')}
+          </Text>
+        </View>
+        <Card.Content style={styles.checkinCardContent}>
+          <Text style={styles.checkinTitle}>
+            {t('employeeDashboard.checkinTitle')}
+          </Text>
+          <View style={styles.moodOptions}>
+            {moodOptions.map((mood) => (
+              <TouchableOpacity
+                key={mood.label}
+                style={styles.moodButton}
+                onPress={() => {}}
+              >
+                <Icon source={mood.icon} size={32} color={moodIconColor} />
+                <Text style={styles.moodLabel}>{t(mood.label)}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
         </Card.Content>
       </Card>
 
-      <View style={styles.insightsCard}>
-        <Text style={styles.insightsTitle}>
-          {t('employeeDashboard.aiInsights')}
+      <Card style={styles.journeyCard}>
+        <Card.Content style={styles.journeyCardContent}>
+          <View style={styles.journeyHeader}>
+            <View style={styles.journeyIconBg}>
+              <Icon source={journeyIcon} size={28} color={journeyIconColor} />
+            </View>
+            <View style={styles.journeyTextGroup}>
+              <Text style={styles.journeyLabel}>
+                {t('employeeDashboard.yourJourney')}
+              </Text>
+              <Text style={styles.journeyTitle}>
+                {t('employeeDashboard.journeyTitle')}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.journeyStats}>
+            <View style={styles.journeyStatBox}>
+              <Text style={styles.journeyStatLabel}>
+                {t('employeeDashboard.currentStreak')}
+              </Text>
+              <Text
+                style={[styles.journeyStatValue, styles.journeyStatValuePurple]}
+              >
+                {t('employeeDashboard.currentStreakValue')}
+              </Text>
+            </View>
+
+            <View style={styles.journeyStatBox}>
+              <Text style={styles.journeyStatLabel}>
+                {t('employeeDashboard.longestStreak')}
+              </Text>
+              <Text style={styles.journeyStatValue}>
+                {t('employeeDashboard.longestStreakValue')}
+              </Text>
+            </View>
+          </View>
+        </Card.Content>
+      </Card>
+
+      <View style={styles.exercisesSection}>
+        <Text style={styles.exercisesTitle}>
+          {t('employeeDashboard.guidedExercises')}
         </Text>
-        <View style={styles.insightItem}>
-          <View style={styles.insightIcon}>
-            <Icon source="trending-up" size={20} color={colors.success} />
-          </View>
-          <View style={styles.insightContent}>
-            <Text style={styles.insightTitle}>
-              {t('employeeDashboard.insight1Title')}
-            </Text>
-            <Text style={styles.insightBody}>
-              {t('employeeDashboard.insight1Body')}
-            </Text>
-          </View>
-        </View>
-        <View style={[styles.insightItem, styles.insightItemLast]}>
-          <View style={styles.insightIcon}>
-            <Icon source="lightbulb-on" size={20} color="#F59E0B" />
-          </View>
-          <View style={styles.insightContent}>
-            <Text style={styles.insightTitle}>
-              {t('employeeDashboard.insight2Title')}
-            </Text>
-            <Text style={styles.insightBody}>
-              {t('employeeDashboard.insight2Body')}
-            </Text>
-          </View>
-        </View>
+
+        {guidedExercises.map((exercise) => (
+          <TouchableOpacity key={exercise.id} style={styles.exerciseCard}>
+            <Image source={exercise.image} style={styles.exerciseImage} />
+            <View style={styles.exerciseContent}>
+              <View style={styles.exerciseCategory}>
+                <Icon
+                  source={exercise.icon}
+                  size={16}
+                  color={exercise.categoryColor}
+                />
+                <Text
+                  style={[
+                    styles.exerciseCategoryText,
+                    { color: exercise.categoryColor },
+                  ]}
+                >
+                  {t(exercise.category)}
+                </Text>
+              </View>
+              <Text style={styles.exerciseTitle}>{t(exercise.title)}</Text>
+              <Text style={styles.exerciseSubtitle}>
+                {t(exercise.subtitle)}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        ))}
       </View>
     </ScrollView>
   );
