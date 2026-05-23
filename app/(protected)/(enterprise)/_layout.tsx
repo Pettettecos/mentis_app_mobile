@@ -1,13 +1,10 @@
-import { Slot, usePathname, useRouter } from 'expo-router';
+import { Slot } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { BottomNav } from '@/components';
-import { EnterpriseTopBar } from '@/components/EnterpriseTopBar';
+import { BottomNav, TopBar } from '@/components';
 
 export default function EnterpriseLayout() {
   const { t } = useTranslation();
-  const pathname = usePathname();
-  const router = useRouter();
   const navItems = [
     {
       key: 'home',
@@ -27,17 +24,9 @@ export default function EnterpriseLayout() {
     },
   ];
 
-  const isNewCompanyScreen = pathname.includes('new-company');
-  const isDashboard = pathname === '/dashboard' || pathname === '/';
-
   return (
     <View style={styles.container}>
-      <EnterpriseTopBar
-        showTitle={!isDashboard && !isNewCompanyScreen}
-        showLogout={!isNewCompanyScreen}
-        showBackButtonRight={isNewCompanyScreen}
-        onBackPress={() => router.back()}
-      />
+      <TopBar />
       <Slot />
       <BottomNav items={navItems} />
     </View>
