@@ -12,5 +12,9 @@ export default function ProtectedIndex() {
     return <Redirect href="/(protected)/(manager)/dashboard" />;
   }
 
+  if (user?.role === 'EMPLOYEE') {
+    return <Redirect href="/(protected)/(employee)/temporary" />;
+  }
+
   return <Redirect href="/(protected)/home" />;
 }
