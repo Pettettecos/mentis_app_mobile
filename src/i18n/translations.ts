@@ -47,6 +47,83 @@ export interface Translations {
     back: string;
     logout: string;
   };
+  chat: {
+    sessionsList: {
+      headerTitle: string;
+      headerBody: string;
+      newSessionTitle: string;
+      newSessionBody: string;
+      loadingTitle: string;
+      loadingBody: string;
+      errorTitle: string;
+      errorBody: string;
+      retry: string;
+      emptyTitle: string;
+      emptyBody: string;
+    };
+    session: {
+      labelPrefix: string;
+      createdAt: string;
+      updatedAt: string;
+      invalidDate: string;
+      invalidTime: string;
+    };
+    conversation: {
+      newConversationTitle: string;
+      introMessage: string;
+      dateUnavailable: string;
+      sessionOpenedOn: string;
+      subtitle: string;
+      subtitleError: string;
+      loadErrorTitle: string;
+      loadErrorBody: string;
+      sendErrorTitle: string;
+      sendErrorBody: string;
+      placeholder: string;
+      typing: string;
+      backToList: string;
+    };
+  };
+  questionnaires: {
+    list: {
+      headerTitle: string;
+      headerBody: string;
+      aiSessionsTitle: string;
+      aiSessionsBody: string;
+      loadingTitle: string;
+      loadingBody: string;
+      errorTitle: string;
+      errorBody: string;
+      retry: string;
+      emptyTitle: string;
+      emptyBody: string;
+      createdAt: string;
+      answeredBadge: string;
+      answeredAt: string;
+    };
+    detail: {
+      backToList: string;
+      fallbackTitle: string;
+      editableDescription: string;
+      readOnlyDescription: string;
+      progressTitle: string;
+      loadingTitle: string;
+      loadingBody: string;
+      errorTitle: string;
+      errorBody: string;
+      retry: string;
+      emptyTitle: string;
+      emptyBody: string;
+      questionNumber: string;
+      questionTypeClosed: string;
+      questionTypeOpen: string;
+      answerPlaceholder: string;
+      successTitle: string;
+      successSubmittedBody: string;
+      successReadOnlyBody: string;
+      submitButton: string;
+    };
+  };
   managerDashboard: {
     headerTitle: string;
     headerBody: string;
