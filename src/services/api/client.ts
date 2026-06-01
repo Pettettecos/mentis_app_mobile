@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { Platform } from 'react-native';
 import { API_URL } from './config';
 import type { TokenResponse } from './types';
 
@@ -7,47 +8,82 @@ const ACCESS_TOKEN_KEY = 'access_token';
 const REFRESH_TOKEN_KEY = 'refresh_token';
 
 export async function getStoredAccessToken(): Promise<string | null> {
-  if (typeof SecureStore.getItemAsync === 'function') {
-    return SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
-  }
-  // fallback for web where expo-secure-store may not implement async methods
-  if (typeof window !== 'undefined' && window.localStorage) {
+  if (Platform.OS === 'web') {
     return Promise.resolve(window.localStorage.getItem(ACCESS_TOKEN_KEY));
+  }
+
+  try {
+    if (typeof SecureStore.getItemAsync === 'function') {
+      return await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
+    }
+  } catch (err) {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return Promise.resolve(window.localStorage.getItem(ACCESS_TOKEN_KEY));
+    }
   }
   return null;
 }
 
 export async function getStoredRefreshToken(): Promise<string | null> {
-  if (typeof SecureStore.getItemAsync === 'function') {
-    return SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
-  }
-  if (typeof window !== 'undefined' && window.localStorage) {
+  if (Platform.OS === 'web') {
     return Promise.resolve(window.localStorage.getItem(REFRESH_TOKEN_KEY));
+  }
+
+  try {
+    if (typeof SecureStore.getItemAsync === 'function') {
+      return await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
+    }
+  } catch (err) {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return Promise.resolve(window.localStorage.getItem(REFRESH_TOKEN_KEY));
+    }
   }
   return null;
 }
 
 export async function storeTokens(tokens: TokenResponse): Promise<void> {
-  if (typeof SecureStore.setItemAsync === 'function') {
-    await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, tokens.access_token);
-    await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, tokens.refresh_token);
+  if (Platform.OS === 'web') {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem(ACCESS_TOKEN_KEY, tokens.access_token);
+      window.localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refresh_token);
+    }
     return;
   }
-  if (typeof window !== 'undefined' && window.localStorage) {
-    window.localStorage.setItem(ACCESS_TOKEN_KEY, tokens.access_token);
-    window.localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refresh_token);
+
+  try {
+    if (typeof SecureStore.setItemAsync === 'function') {
+      await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, tokens.access_token);
+      await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, tokens.refresh_token);
+      return;
+    }
+  } catch (err) {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem(ACCESS_TOKEN_KEY, tokens.access_token);
+      window.localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refresh_token);
+    }
   }
 }
 
 export async function clearTokens(): Promise<void> {
-  if (typeof SecureStore.deleteItemAsync === 'function') {
-    await SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
-    await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
+  if (Platform.OS === 'web') {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.removeItem(ACCESS_TOKEN_KEY);
+      window.localStorage.removeItem(REFRESH_TOKEN_KEY);
+    }
     return;
   }
-  if (typeof window !== 'undefined' && window.localStorage) {
-    window.localStorage.removeItem(ACCESS_TOKEN_KEY);
-    window.localStorage.removeItem(REFRESH_TOKEN_KEY);
+
+  try {
+    if (typeof SecureStore.deleteItemAsync === 'function') {
+      await SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
+      await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
+      return;
+    }
+  } catch (err) {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.removeItem(ACCESS_TOKEN_KEY);
+      window.localStorage.removeItem(REFRESH_TOKEN_KEY);
+    }
   }
 }
 
