@@ -60,7 +60,6 @@ export function EmployeeAiSessionsListScreen() {
       contentContainerStyle={[
         styles.content,
         {
-          paddingTop: insets.top + 20,
           paddingBottom: insets.bottom + 40,
         },
       ]}
@@ -68,15 +67,9 @@ export function EmployeeAiSessionsListScreen() {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.header}>
-        <Pressable
-          onPress={goToTemporary}
-          style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
-        >
-          <Icon source="arrow-left" size={18} />
-          <Text style={styles.headerTitle}>
-            {t('chat.sessionsList.headerTitle')}
-          </Text>
-        </Pressable>
+        <Text style={styles.headerTitle}>
+          {t('chat.sessionsList.headerTitle')}
+        </Text>
         <Text style={styles.headerBody}>
           {t('chat.sessionsList.headerBody')}
         </Text>

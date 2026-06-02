@@ -15,6 +15,22 @@ export default function EmployeeLayout() {
       matches: ['/dashboard'],
     },
     {
+      key: 'journey',
+      label: t('employeeDashboard.navJourney'),
+      icon: 'map',
+      activeIcon: 'map',
+      route: '/questionnaires',
+      matches: ['/questionnaires'],
+    },
+    {
+      key: 'support',
+      label: t('employeeDashboard.navSupport'),
+      icon: 'brain',
+      activeIcon: 'brain',
+      route: '/chat',
+      matches: ['/chat'],
+    },
+    {
       key: 'settings',
       label: t('employeeDashboard.navSettings'),
       icon: 'cog-outline',

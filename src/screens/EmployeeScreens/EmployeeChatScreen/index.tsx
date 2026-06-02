@@ -244,9 +244,7 @@ export function EmployeeChatScreen() {
     >
       <View style={styles.screen}>
         <View style={styles.chatCard}>
-          <View
-            style={[styles.chatHeaderWrapper, { paddingTop: insets.top + 14 }]}
-          >
+          <View style={styles.chatHeaderWrapper}>
             <ChatHeader
               title={currentHeaderLabel}
               subtitle={

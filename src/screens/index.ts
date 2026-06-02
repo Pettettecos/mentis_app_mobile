@@ -7,3 +7,4 @@ export { DiaryScreen } from './EmployeeScreens/DiaryScreen';
 export { BreathingScreen } from './EmployeeScreens/BreathingScreen';
 export { EmployeeAiSessionsListScreen } from './EmployeeScreens/EmployeeAiSessionsListScreen';
 export { EmployeeChatScreen } from './EmployeeScreens/EmployeeChatScreen';
+export { EmployeeSettingsScreen } from './EmployeeScreens/EmployeeSettingsScreen';

@@ -253,6 +253,8 @@ const es: Translations = {
     insight2Title: 'Consejo Personalizado',
     insight2Body: 'Intenta una pausa de 5min después de reuniones largas.',
     navHome: 'Inicio',
+    navJourney: 'Jornada',
+    navSupport: 'Soporte',
     navSettings: 'Configuraciones',
   },
   meditation: {
@@ -301,6 +303,23 @@ const es: Translations = {
   splash: {
     title: 'MentisTech',
     subtitle: 'Tu camino hacia el bienestar mental comienza aquí',
+  },
+  settings: {
+    headerTitle: 'Ajustes',
+    headerBody: 'Gestiona tus preferencias y configuraciones de cuenta.',
+    profileSection: 'Perfil',
+    profileTitle: 'Mi Cuenta',
+    preferencesSection: 'Preferencias',
+    notificationsTitle: 'Notificaciones',
+    notificationsDescription: 'Gestiona alertas y recordatorios',
+    languageTitle: 'Idioma',
+    languageDescription: 'Portugués (Brasil)',
+    supportSection: 'Soporte',
+    helpTitle: 'Centro de Ayuda',
+    helpDescription: 'Preguntas frecuentes y soporte',
+    aboutTitle: 'Acerca de la App',
+    aboutDescription: 'Versión e información',
+    logout: 'Cerrar Sesión',
   },
 };
 
