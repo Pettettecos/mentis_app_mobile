@@ -25,7 +25,7 @@ export const guidedExercises = [
     title: 'employeeDashboard.breathingTitle',
     subtitle: 'employeeDashboard.breathingSubtitle',
     image: breathImg,
-    route: null,
+    route: '/(protected)/breathing',
   },
   {
     id: 'diary',
@@ -35,7 +35,7 @@ export const guidedExercises = [
     title: 'employeeDashboard.diaryTitle',
     subtitle: 'employeeDashboard.diarySubtitle',
     image: diaryImg,
-    route: null,
+    route: '/(protected)/diary',
   },
 ];
 
