@@ -255,6 +255,35 @@ export interface Translations {
     hold: string;
     breatheOut: string;
   };
+  diary: {
+    title: string;
+    subtitle: string;
+    promptLabel: string;
+    promptGratitude: string;
+    promptAchievement: string;
+    promptFeeling: string;
+    promptGoal: string;
+    promptReflection: string;
+    writeLabel: string;
+    placeholder: string;
+    save: string;
+    history: string;
+    entry: string;
+    entries: string;
+    empty: string;
+    errorTitle: string;
+    errorMessage: string;
+  };
+  breathing: {
+    title: string;
+    subtitle: string;
+    technique: string;
+    breatheIn: string;
+    hold: string;
+    breatheOut: string;
+    rounds: string;
+    start: string;
+  };
   splash: {
     title: string;
     subtitle: string;
