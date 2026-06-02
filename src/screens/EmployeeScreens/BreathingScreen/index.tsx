@@ -5,11 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Icon, Text } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { styles } from './styles';
-import {
-  breathingColors,
-  roundOptions,
-  technique478,
-} from './constants';
+import { breathingColors, roundOptions, technique478 } from './constants';
 
 type Screen = 'setup' | 'session';
 
@@ -19,7 +15,9 @@ export function BreathingScreen() {
   const insets = useSafeAreaInsets();
 
   const [screen, setScreen] = useState<Screen>('setup');
-  const [selectedRound, setSelectedRound] = useState<(typeof roundOptions)[number]>(roundOptions[1]);
+  const [selectedRound, setSelectedRound] = useState<
+    (typeof roundOptions)[number]
+  >(roundOptions[1]);
   const [timeLeft, setTimeLeft] = useState(95);
   const [isPaused, setIsPaused] = useState(false);
   const [breathPhase, setBreathPhase] = useState(0);
@@ -147,7 +145,11 @@ export function BreathingScreen() {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.controlButton} onPress={endSession}>
-              <Icon source="skip-forward" size={28} color={breathingColors.text} />
+              <Icon
+                source="skip-forward"
+                size={28}
+                color={breathingColors.text}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -156,7 +158,12 @@ export function BreathingScreen() {
   }
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
+    <View
+      style={[
+        styles.container,
+        { paddingTop: insets.top, paddingBottom: insets.bottom },
+      ]}
+    >
       <View style={styles.setupContainer}>
         <View style={styles.header}>
           <Text style={styles.title}>{t('breathing.title')}</Text>
@@ -212,7 +219,11 @@ export function BreathingScreen() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.startButton} onPress={startSession} activeOpacity={0.8}>
+        <TouchableOpacity
+          style={styles.startButton}
+          onPress={startSession}
+          activeOpacity={0.8}
+        >
           <Text style={styles.startButtonText}>{t('breathing.start')}</Text>
         </TouchableOpacity>
       </View>

@@ -239,6 +239,8 @@ export interface Translations {
     insight2Title: string;
     insight2Body: string;
     navHome: string;
+    navJourney: string;
+    navSupport: string;
     navSettings: string;
   };
   meditation: {
@@ -283,6 +285,31 @@ export interface Translations {
     breatheOut: string;
     rounds: string;
     start: string;
+  };
+  journey: {
+    title: string;
+    subtitle: string;
+  };
+  support: {
+    title: string;
+    subtitle: string;
+  };
+  settings: {
+    headerTitle: string;
+    headerBody: string;
+    profileSection: string;
+    profileTitle: string;
+    preferencesSection: string;
+    notificationsTitle: string;
+    notificationsDescription: string;
+    languageTitle: string;
+    languageDescription: string;
+    supportSection: string;
+    helpTitle: string;
+    helpDescription: string;
+    aboutTitle: string;
+    aboutDescription: string;
+    logout: string;
   };
   splash: {
     title: string;

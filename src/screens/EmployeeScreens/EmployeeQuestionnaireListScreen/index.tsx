@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Pressable, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { Button, Icon, Text, TouchableRipple } from 'react-native-paper';
@@ -95,16 +95,11 @@ export function EmployeeQuestionnaireListScreen() {
     });
   };
 
-  const goToTemporary = () => {
-    router.push('/(protected)/(employee)/temporary');
-  };
-
   return (
     <ScrollView
       contentContainerStyle={[
         styles.content,
         {
-          paddingTop: insets.top + 20,
           paddingBottom: insets.bottom + 40,
         },
       ]}
@@ -112,15 +107,9 @@ export function EmployeeQuestionnaireListScreen() {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.header}>
-        <Pressable
-          onPress={goToTemporary}
-          style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
-        >
-          <Icon source="arrow-left" size={18} color={colors.textPrimary} />
-          <Text style={styles.headerTitle}>
-            {t('questionnaires.list.headerTitle')}
-          </Text>
-        </Pressable>
+        <Text style={styles.headerTitle}>
+          {t('questionnaires.list.headerTitle')}
+        </Text>
         <Text style={styles.headerBody}>
           {t('questionnaires.list.headerBody')}
         </Text>

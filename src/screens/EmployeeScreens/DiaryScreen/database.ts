@@ -42,6 +42,6 @@ export async function saveEntry(entry: {
     entry.id,
     entry.date,
     entry.text,
-    entry.prompt,
+    entry.prompt
   );
 }

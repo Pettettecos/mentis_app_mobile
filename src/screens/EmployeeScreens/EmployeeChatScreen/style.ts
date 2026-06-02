@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
   },
   chatHeaderWrapper: {
     backgroundColor: colors.primary,
+    paddingTop: 8,
   },
   chatHeader: {
     alignItems: 'center',

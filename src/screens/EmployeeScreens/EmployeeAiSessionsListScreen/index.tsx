@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
-import { Pressable, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { router, useFocusEffect } from 'expo-router';
-import { Icon, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { chatService } from '@/services/api';
 import type { ChatSessionSummary } from '@/services/api';
@@ -51,16 +51,11 @@ export function EmployeeAiSessionsListScreen() {
     );
   };
 
-  const goToTemporary = () => {
-    router.push('/(protected)/(employee)/temporary');
-  };
-
   return (
     <ScrollView
       contentContainerStyle={[
         styles.content,
         {
-          paddingTop: insets.top + 20,
           paddingBottom: insets.bottom + 40,
         },
       ]}
@@ -68,15 +63,9 @@ export function EmployeeAiSessionsListScreen() {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.header}>
-        <Pressable
-          onPress={goToTemporary}
-          style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
-        >
-          <Icon source="arrow-left" size={18} />
-          <Text style={styles.headerTitle}>
-            {t('chat.sessionsList.headerTitle')}
-          </Text>
-        </Pressable>
+        <Text style={styles.headerTitle}>
+          {t('chat.sessionsList.headerTitle')}
+        </Text>
         <Text style={styles.headerBody}>
           {t('chat.sessionsList.headerBody')}
         </Text>

@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Platform, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import { chatService } from '@/services/api';
 import type {
@@ -45,7 +44,6 @@ function mapMessages(messages: ChatMessageRead[]): ChatBubble[] {
 
 export function EmployeeChatScreen() {
   const { t } = useTranslation();
-  const insets = useSafeAreaInsets();
   const listRef = useRef<FlatList<ChatBubble>>(null);
   const { id: routeSessionId } = useLocalSearchParams<{
     id?: string | string[];
@@ -244,9 +242,7 @@ export function EmployeeChatScreen() {
     >
       <View style={styles.screen}>
         <View style={styles.chatCard}>
-          <View
-            style={[styles.chatHeaderWrapper, { paddingTop: insets.top + 14 }]}
-          >
+          <View style={styles.chatHeaderWrapper}>
             <ChatHeader
               title={currentHeaderLabel}
               subtitle={
