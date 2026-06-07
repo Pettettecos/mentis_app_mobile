@@ -1,5 +1,10 @@
 export { LoginScreen } from './LoginScreen';
 export { ForgotPasswordScreen } from './ForgotPasswordScreen';
 export { ResetPasswordScreen } from './ResetPasswordScreen';
+export { EmployeeDashboardScreen } from './EmployeeScreens/EmployeeDashboardScreen';
+export { MeditationScreen } from './EmployeeScreens/MeditationScreen';
+export { DiaryScreen } from './EmployeeScreens/DiaryScreen';
+export { BreathingScreen } from './EmployeeScreens/BreathingScreen';
 export { EmployeeAiSessionsListScreen } from './EmployeeScreens/EmployeeAiSessionsListScreen';
 export { EmployeeChatScreen } from './EmployeeScreens/EmployeeChatScreen';
+export { EmployeeSettingsScreen } from './EmployeeScreens/EmployeeSettingsScreen';

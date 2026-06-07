@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     flexDirection: 'row',
     gap: 12,
-    minHeight: 96,
     paddingHorizontal: 20,
     paddingBottom: 16,
     paddingTop: 16,
