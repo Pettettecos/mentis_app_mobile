@@ -1,0 +1,44 @@
+appId: host.exp.Exponent
+---
+# Login Success Flow
+- launchApp
+- waitForAnimationToEnd
+- tapOn: 'mentis-app'
+- waitForAnimationToEnd
+- waitForAnimationToEnd
+- waitForAnimationToEnd
+- tapOn: 'Acesse sua conta'
+- assertVisible: 'E-mail'
+- tapOn: 'E-mail'
+- inputText: ${TEST_MANAGER_EMAIL}
+- tapOn: 'Senha'
+- inputText: ${TEST_MANAGER_PASSWORD}
+- tapOn: 'ENTRAR'
+- assertNotVisible: 'Acesse sua conta'
+# Handle iOS save password modal
+- tapOn:
+    text: 'Agora não'
+    optional: true
+- waitForAnimationToEnd
+# Verify dashboard loaded
+- assertVisible: 'Painel do Gestor'
+
+# Login Failure Flow - Logout via top bar icon
+- tapOn:
+    id: 'logout-button'
+- waitForAnimationToEnd
+- assertVisible: 'Acesse sua conta'
+- tapOn: 'Acesse sua conta'
+- assertVisible: 'E-mail'
+- tapOn: 'E-mail'
+- inputText: 'invalid@email.com'
+- tapOn: 'Senha'
+- inputText: 'wrongpassword'
+- tapOn: 'ENTRAR'
+- assertVisible: 'E-mail ou senha inválidos'
+
+# Login Validation Flow
+- tapOn: 'Senha'
+- eraseText
+- tapOn: 'ENTRAR'
+- assertVisible: 'Senha é obrigatória'

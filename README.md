@@ -104,6 +104,81 @@ yarn lint:fix
 yarn format
 ```
 
+## Testes de Integracao com Maestro
+
+Este projeto utiliza [Maestro](https://maestro.mobile.dev/) para testes de integracao UI.
+
+### Instalacao do Maestro
+
+**macOS:**
+```bash
+brew tap mobile-dev-inc/tap
+brew install maestro
+```
+
+**Linux:**
+```bash
+curl -Ls "https://get.maestro.mobile.dev" | bash
+```
+
+### Configuracao
+
+1. Copie o arquivo de exemplo de variaveis de ambiente:
+```bash
+cp .maestro/.env.example .maestro/.env
+```
+
+2. Preencha as credenciais de teste no arquivo `.maestro/.env`
+
+### Executando os Testes
+
+```bash
+# Executar todos os testes
+yarn maestro:test
+
+# Executar testes com output JUnit (CI)
+yarn maestro:test:ci
+
+# Abrir Maestro Studio para criar testes visuais
+yarn maestro:studio
+
+# Executar um fluxo especifico
+maestro test .maestro/flows/002-login-success.yaml
+```
+
+### Estrutura dos Testes
+
+```
+.maestro/
+├── .env.example          # Variaveis de ambiente para testes
+└── flows/
+    ├── 001-app-launch.yaml           # Teste de inicializacao
+    ├── 002-login-success.yaml        # Login com sucesso
+    ├── 003-login-failure.yaml        # Login com credenciais invalidas
+    ├── 004-login-validation.yaml     # Validacao de formulario de login
+    ├── 005-forgot-password.yaml      # Recuperacao de senha
+    ├── 006-forgot-password-validation.yaml
+    ├── 007-forgot-password-back.yaml
+    ├── 010-manager-dashboard-load.yaml
+    ├── 011-manager-navigation.yaml
+    ├── 012-manager-interactions.yaml
+    ├── 013-manager-logout.yaml
+    ├── 020-enterprise-dashboard-load.yaml
+    ├── 021-enterprise-new-company.yaml
+    ├── 022-enterprise-navigation.yaml
+    ├── 030-employee-questionnaire-list.yaml
+    ├── 031-employee-questionnaire-navigation.yaml
+    ├── 040-employee-chat-list.yaml
+    ├── 041-employee-chat-send.yaml
+    └── 100-e2e-full-flow.yaml        # Fluxo E2E completo
+```
+
+### Pre-requisitos para Testes
+
+- Emulador Android ou dispositivo iOS conectado
+- App rodando em modo de desenvolvimento (`yarn android` ou `yarn ios`)
+- Credenciais de teste configuradas em `.maestro/.env`
+
 ## Recursos Úteis
 
 - [Documentação Expo](https://docs.expo.dev/)

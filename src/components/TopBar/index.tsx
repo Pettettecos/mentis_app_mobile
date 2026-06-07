@@ -14,7 +14,11 @@ export function TopBar() {
     <View style={[styles.wrapper, { paddingTop: insets.top + 16 }]}>
       <GradientText text={'MentisTech'} style={styles.gradientTitle} />
 
-      <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+      <TouchableOpacity
+        onPress={handleLogout}
+        style={styles.logoutButton}
+        testID="logout-button"
+      >
         <Icon source="logout" size={22} color="#007EA4" />
       </TouchableOpacity>
     </View>
