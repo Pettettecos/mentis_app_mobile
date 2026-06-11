@@ -1,15 +1,16 @@
-import { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { useCallback, useMemo, useState } from 'react';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { router, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Icon, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { managerService } from '@/services/api';
+import type { ManagerDashboardMetrics } from '@/services/api';
 import { ActiveUsersBarChart } from './components/ActiveUsersBarChart';
 import { SentimentTrendChart } from './components/SentimentTrendChart';
 import { styles } from './styles';
 import { colors } from '../../../theme/colors';
-
-const activeUsersValues = [22, 34, 31, 47, 55];
 
 const sentimentChartData = [
   { value: 115, frontColor: '#1186AC', spacing: 3 },
@@ -31,43 +32,64 @@ const sentimentChartData = [
 ];
 
 const maxSentimentValue = 170;
-const activeUsersMaxValue = 60;
-const mockAiInsight =
-  "A equipe apresenta sinais de fadiga digital nas tardes de quarta-feira. Sugerimos implementar o 'Foco Silencioso' pós-almoço para reduzir o estresse cognitivo.";
 
 export function ManagerDashboardScreen() {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
+  const [metrics, setMetrics] = useState<ManagerDashboardMetrics | null>(null);
+  const [aiInsight, setAiInsight] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [insightLoading, setInsightLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [selectedActiveUserIndex, setSelectedActiveUserIndex] = useState<
     number | null
   >(null);
-  const activeUsersData = [
-    {
-      value: activeUsersValues[0],
-      frontColor: '#127680',
-      label: t('managerDashboard.dayMon'),
-    },
-    {
-      value: activeUsersValues[1],
-      frontColor: '#127680',
-      label: t('managerDashboard.dayTue'),
-    },
-    {
-      value: activeUsersValues[2],
-      frontColor: '#127680',
-      label: t('managerDashboard.dayWed'),
-    },
-    {
-      value: activeUsersValues[3],
-      frontColor: '#127680',
-      label: t('managerDashboard.dayThu'),
-    },
-    {
-      value: activeUsersValues[4],
-      frontColor: '#127680',
-      label: t('managerDashboard.dayFri'),
-    },
-  ];
+
+  const loadDashboard = useCallback(async () => {
+    setLoading(true);
+    setInsightLoading(true);
+    setError(false);
+
+    try {
+      const dashboardMetrics =
+        await managerService.getManagerDashboardMetrics();
+      setMetrics(dashboardMetrics);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+
+    try {
+      const response = await managerService.getManagerAIInsight();
+      setAiInsight(response.insight);
+    } catch {
+      setAiInsight(t('managerDashboard.insightsFallback'));
+    } finally {
+      setInsightLoading(false);
+    }
+  }, [t]);
+
+  useFocusEffect(
+    useCallback(() => {
+      void loadDashboard();
+    }, [loadDashboard])
+  );
+
+  const activeUsersData = useMemo(
+    () =>
+      (metrics?.active_users_by_day ?? []).map((item) => ({
+        value: item.value,
+        frontColor: '#127680',
+        label: item.label,
+      })),
+    [metrics?.active_users_by_day]
+  );
+  const activeUsersMaxValue = Math.max(
+    1,
+    ...activeUsersData.map((item) => item.value)
+  );
+  const healthIndex = metrics?.health_index ?? 0;
   const sentimentLegend = [
     { label: t('managerDashboard.sentimentLegendHappy'), color: '#1186AC' },
     {
@@ -88,11 +110,6 @@ export function ManagerDashboardScreen() {
     { label: t('managerDashboard.sentimentWeek2') },
     { label: t('managerDashboard.sentimentWeek3') },
     { label: t('managerDashboard.sentimentWeek4') },
-  ];
-  const departmentUsage = [
-    { label: t('managerDashboard.departmentEngineering'), value: 78 },
-    { label: t('managerDashboard.departmentDesign'), value: 92 },
-    { label: t('managerDashboard.departmentSales'), value: 45 },
   ];
 
   return (
@@ -116,6 +133,28 @@ export function ManagerDashboardScreen() {
         </Text>
       </View>
 
+      {loading && (
+        <Card style={styles.stateCard}>
+          <Card.Content style={styles.stateContent}>
+            <ActivityIndicator color={colors.primary} />
+            <Text style={styles.stateText}>
+              {t('managerDashboard.loading')}
+            </Text>
+          </Card.Content>
+        </Card>
+      )}
+
+      {error && (
+        <Card style={styles.stateCard}>
+          <Card.Content style={styles.stateContent}>
+            <Text style={styles.stateText}>{t('managerDashboard.error')}</Text>
+            <Button mode="contained" onPress={loadDashboard}>
+              {t('managerDashboard.retry')}
+            </Button>
+          </Card.Content>
+        </Card>
+      )}
+
       <Card style={[styles.card, styles.topCard]}>
         <Card.Content style={[styles.cardContent, styles.topCardContent]}>
           <View style={styles.healthTitleGrid}>
@@ -131,21 +170,20 @@ export function ManagerDashboardScreen() {
             </View>
           </View>
           <Text style={styles.healthIndexTotal}>
-            <Text style={styles.healthIndex}>84</Text>/100
+            <Text style={styles.healthIndex}>{healthIndex}</Text>/100
           </Text>
           <View style={styles.healthBar}>
             <LinearGradient
               colors={colors.gradient}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
-              style={styles.healthValueBar}
+              style={[
+                styles.healthValueBar,
+                { width: `${Math.max(0, Math.min(100, healthIndex))}%` },
+              ]}
             />
           </View>
           <Text style={styles.healthBody}>
-            <Text style={styles.healthPorcent}>
-              <Icon source="arrow-up-thick" size={16} color={colors.success} />
-              12%
-            </Text>{' '}
             {t('managerDashboard.healthComparison')}
           </Text>
         </Card.Content>
@@ -169,9 +207,13 @@ export function ManagerDashboardScreen() {
           </View>
 
           <View style={styles.metricBlock}>
-            <Text style={styles.metricValue}>142</Text>
+            <Text style={styles.metricValue}>
+              {metrics?.active_users_total ?? 0}
+            </Text>
             <Text style={styles.metricCaption}>
-              {t('managerDashboard.activeUsersCaption')}
+              {t('managerDashboard.activeUsersCaption', {
+                percentage: metrics?.active_users_percentage ?? 0,
+              })}
             </Text>
           </View>
 
@@ -202,7 +244,9 @@ export function ManagerDashboardScreen() {
           </View>
 
           <View style={styles.metricBlock}>
-            <Text style={styles.metricValue}>03</Text>
+            <Text style={styles.metricValue}>
+              {String(metrics?.risk_alerts_count ?? 0).padStart(2, '0')}
+            </Text>
             <Text style={styles.metricCaption}>
               {t('managerDashboard.riskAlertsCaption')}
             </Text>
@@ -213,6 +257,7 @@ export function ManagerDashboardScreen() {
             contentStyle={styles.alertButtonContent}
             labelStyle={styles.alertButtonLabel}
             style={styles.alertButton}
+            onPress={() => router.push('/(protected)/(manager)/risk-alerts')}
           >
             {t('managerDashboard.riskAlertsButton')}
           </Button>
@@ -259,37 +304,52 @@ export function ManagerDashboardScreen() {
           </Text>
         </View>
 
-        <Text style={styles.insightsBody}>{`"${mockAiInsight}"`}</Text>
+        {insightLoading ? (
+          <View style={styles.insightsLoadingRow}>
+            <ActivityIndicator color="#FFFFFF" />
+            <Text style={styles.insightsBody}>
+              {t('managerDashboard.insightsLoading')}
+            </Text>
+          </View>
+        ) : (
+          <Text style={styles.insightsBody}>{`"${aiInsight}"`}</Text>
+        )}
 
         <Button
           mode="contained-tonal"
           contentStyle={styles.insightsButtonContent}
           labelStyle={styles.insightsButtonLabel}
           style={styles.insightsButton}
+          onPress={() => router.push('/(protected)/(manager)/report')}
         >
           {t('managerDashboard.insightsButton')}
         </Button>
       </LinearGradient>
 
-      <View style={styles.departmentCard}>
-        <Text style={styles.departmentTitle}>
-          {t('managerDashboard.departmentTitle')}
-        </Text>
+      {(metrics?.department_usage ?? []).length > 0 && (
+        <View style={styles.departmentCard}>
+          <Text style={styles.departmentTitle}>
+            {t('managerDashboard.departmentTitle')}
+          </Text>
 
-        <View style={styles.departmentList}>
-          {departmentUsage.map((item) => (
-            <View key={item.label} style={styles.departmentRow}>
-              <Text style={styles.departmentLabel}>{item.label}</Text>
-              <View style={styles.departmentTrack}>
-                <View
-                  style={[styles.departmentFill, { width: `${item.value}%` }]}
-                />
+          <View style={styles.departmentList}>
+            {(metrics?.department_usage ?? []).map((item) => (
+              <View key={item.label} style={styles.departmentRow}>
+                <Text style={styles.departmentLabel}>{item.label}</Text>
+                <View style={styles.departmentTrack}>
+                  <View
+                    style={[
+                      styles.departmentFill,
+                      { width: `${Math.max(0, Math.min(100, item.value))}%` },
+                    ]}
+                  />
+                </View>
+                <Text style={styles.departmentValue}>{item.value}%</Text>
               </View>
-              <Text style={styles.departmentValue}>{item.value}%</Text>
-            </View>
-          ))}
+            ))}
+          </View>
         </View>
-      </View>
+      )}
     </ScrollView>
   );
 }
