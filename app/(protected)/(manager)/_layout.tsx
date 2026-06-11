@@ -27,7 +27,7 @@ export default function ManagerLayout() {
       icon: 'account-group-outline',
       activeIcon: 'account-group',
       route: '/users',
-      matches: ['/users'],
+      matches: ['/users', '/new-user', '/new-team'],
     },
     {
       key: 'settings',
