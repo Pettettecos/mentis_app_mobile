@@ -1,15 +1,14 @@
 import { Redirect } from 'expo-router';
-import { useAuth } from '../../src/context/AuthContext';
+
+import { getDashboardRoute } from '@/navigation/roleRoutes';
+import { useAuth } from '@/context/AuthContext';
 
 export default function ProtectedIndex() {
   const { user } = useAuth();
+  const dashboardRoute = getDashboardRoute(user?.role);
 
-  if (user?.role === 'ENTERPRISE') {
-    return <Redirect href="/(protected)/(enterprise)/dashboard" />;
-  }
-
-  if (user?.role === 'MANAGER') {
-    return <Redirect href="/(protected)/(manager)/dashboard" />;
+  if (dashboardRoute) {
+    return <Redirect href={dashboardRoute} />;
   }
 
   return <Redirect href="/(protected)/home" />;

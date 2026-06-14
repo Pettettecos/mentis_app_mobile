@@ -4,86 +4,125 @@ import { Platform } from 'react-native';
 import { API_URL } from './config';
 import type { TokenResponse } from './types';
 
+/* global window */
+
 const ACCESS_TOKEN_KEY = 'access_token';
 const REFRESH_TOKEN_KEY = 'refresh_token';
+const sessionExpiredListeners = new Set<() => void>();
+const isWeb = Platform.OS === 'web';
+
+export function subscribeToSessionExpired(listener: () => void): () => void {
+  sessionExpiredListeners.add(listener);
+  return () => sessionExpiredListeners.delete(listener);
+}
+
+function notifySessionExpired(): void {
+  sessionExpiredListeners.forEach((listener) => listener());
+}
+
+function readWebStorage(key: string): string | null {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return null;
+  }
+
+  return window.localStorage.getItem(key);
+}
+
+function writeWebStorage(key: string, value: string): void {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return;
+  }
+
+  window.localStorage.setItem(key, value);
+}
+
+function removeWebStorage(key: string): void {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return;
+  }
+
+  window.localStorage.removeItem(key);
+}
+
+async function readSecureStorage(key: string): Promise<string | null> {
+  if (typeof SecureStore.getItemAsync !== 'function') {
+    return null;
+  }
+
+  return SecureStore.getItemAsync(key);
+}
+
+async function writeSecureStorage(key: string, value: string): Promise<void> {
+  if (typeof SecureStore.setItemAsync !== 'function') {
+    return;
+  }
+
+  await SecureStore.setItemAsync(key, value);
+}
+
+async function removeSecureStorage(key: string): Promise<void> {
+  if (typeof SecureStore.deleteItemAsync !== 'function') {
+    return;
+  }
+
+  await SecureStore.deleteItemAsync(key);
+}
 
 export async function getStoredAccessToken(): Promise<string | null> {
-  if (Platform.OS === 'web') {
-    return Promise.resolve(window.localStorage.getItem(ACCESS_TOKEN_KEY));
+  if (isWeb) {
+    return readWebStorage(ACCESS_TOKEN_KEY);
   }
 
   try {
-    if (typeof SecureStore.getItemAsync === 'function') {
-      return await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
-    }
-  } catch (err) {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      return Promise.resolve(window.localStorage.getItem(ACCESS_TOKEN_KEY));
-    }
+    return await readSecureStorage(ACCESS_TOKEN_KEY);
+  } catch {
+    return readWebStorage(ACCESS_TOKEN_KEY);
   }
-  return null;
 }
 
 export async function getStoredRefreshToken(): Promise<string | null> {
-  if (Platform.OS === 'web') {
-    return Promise.resolve(window.localStorage.getItem(REFRESH_TOKEN_KEY));
+  if (isWeb) {
+    return readWebStorage(REFRESH_TOKEN_KEY);
   }
 
   try {
-    if (typeof SecureStore.getItemAsync === 'function') {
-      return await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
-    }
-  } catch (err) {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      return Promise.resolve(window.localStorage.getItem(REFRESH_TOKEN_KEY));
-    }
+    return await readSecureStorage(REFRESH_TOKEN_KEY);
+  } catch {
+    return readWebStorage(REFRESH_TOKEN_KEY);
   }
-  return null;
 }
 
 export async function storeTokens(tokens: TokenResponse): Promise<void> {
-  if (Platform.OS === 'web') {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      window.localStorage.setItem(ACCESS_TOKEN_KEY, tokens.access_token);
-      window.localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refresh_token);
-    }
+  if (isWeb) {
+    writeWebStorage(ACCESS_TOKEN_KEY, tokens.access_token);
+    writeWebStorage(REFRESH_TOKEN_KEY, tokens.refresh_token);
     return;
   }
 
   try {
-    if (typeof SecureStore.setItemAsync === 'function') {
-      await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, tokens.access_token);
-      await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, tokens.refresh_token);
-      return;
-    }
-  } catch (err) {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      window.localStorage.setItem(ACCESS_TOKEN_KEY, tokens.access_token);
-      window.localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refresh_token);
-    }
+    await writeSecureStorage(ACCESS_TOKEN_KEY, tokens.access_token);
+    await writeSecureStorage(REFRESH_TOKEN_KEY, tokens.refresh_token);
+    return;
+  } catch {
+    writeWebStorage(ACCESS_TOKEN_KEY, tokens.access_token);
+    writeWebStorage(REFRESH_TOKEN_KEY, tokens.refresh_token);
   }
 }
 
 export async function clearTokens(): Promise<void> {
-  if (Platform.OS === 'web') {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      window.localStorage.removeItem(ACCESS_TOKEN_KEY);
-      window.localStorage.removeItem(REFRESH_TOKEN_KEY);
-    }
+  if (isWeb) {
+    removeWebStorage(ACCESS_TOKEN_KEY);
+    removeWebStorage(REFRESH_TOKEN_KEY);
     return;
   }
 
   try {
-    if (typeof SecureStore.deleteItemAsync === 'function') {
-      await SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
-      await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
-      return;
-    }
-  } catch (err) {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      window.localStorage.removeItem(ACCESS_TOKEN_KEY);
-      window.localStorage.removeItem(REFRESH_TOKEN_KEY);
-    }
+    await removeSecureStorage(ACCESS_TOKEN_KEY);
+    await removeSecureStorage(REFRESH_TOKEN_KEY);
+    return;
+  } catch {
+    removeWebStorage(ACCESS_TOKEN_KEY);
+    removeWebStorage(REFRESH_TOKEN_KEY);
   }
 }
 
@@ -160,6 +199,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError, null);
         await clearTokens();
+        notifySessionExpired();
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

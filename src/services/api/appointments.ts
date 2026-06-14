@@ -1,57 +1,44 @@
-type Appointment = {
+import { api } from './client';
+
+export interface Appointment {
   id: string;
+  psychologist_id: string;
+  user_id: string;
+  user_name: string;
+  time: string;
+  title: string;
+  description: string | null;
+  type: string | null;
+  created_at: string;
+  updated_at: string | null;
+  deleted_at: string | null;
+}
+
+export interface AppointmentCreate {
+  user_id: string;
   time: string;
   title: string;
   description?: string;
   type?: string;
-};
-
-const mockAppointments: Appointment[] = [
-  {
-    id: 'a1',
-    time: '2026-06-01T09:00:00Z',
-    title: 'Sessão com Julia Ramos',
-    description: 'Acompanhamento de ansiedade social',
-    type: 'Online',
-  },
-  {
-    id: 'a2',
-    time: '2026-06-01T11:00:00Z',
-    title: 'Avaliação inicial - Ana Luiza',
-    description: 'Triagem inicial',
-    type: 'Presencial',
-  },
-];
+}
 
 export async function listAppointments(): Promise<Appointment[]> {
-  // simulate network latency
-  await new Promise((r) => setTimeout(r, 150));
-  return mockAppointments;
+  const { data } = await api.get<Appointment[]>('/api/v1/appointments');
+  return data;
 }
 
-export async function createAppointment(payload: {
-  time: string;
-  title: string;
-  description?: string;
-  type?: string;
-}): Promise<Appointment> {
-  await new Promise((r) => setTimeout(r, 150));
-
-  const newItem: Appointment = {
-    id: `a${Math.floor(Math.random() * 10000)}`,
-    ...payload,
-  };
-
-  mockAppointments.push(newItem);
-  return newItem;
+export async function listMyAppointments(): Promise<Appointment[]> {
+  const { data } = await api.get<Appointment[]>('/api/v1/appointments/me');
+  return data;
 }
 
-export async function deleteAppointment(id: string): Promise<boolean> {
-  await new Promise((r) => setTimeout(r, 120));
-  const idx = mockAppointments.findIndex((a) => a.id === id);
-  if (idx === -1) return false;
-  mockAppointments.splice(idx, 1);
-  return true;
+export async function createAppointment(
+  payload: AppointmentCreate
+): Promise<Appointment> {
+  const { data } = await api.post<Appointment>('/api/v1/appointments', payload);
+  return data;
 }
 
-export type { Appointment };
+export async function deleteAppointment(id: string): Promise<void> {
+  await api.delete(`/api/v1/appointments/${id}`);
+}

@@ -1,20 +1,16 @@
-import { Button, Text, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { Redirect } from 'expo-router';
+
 import { useAuth } from '@/context/AuthContext';
+import { getDashboardRoute } from '@/navigation/roleRoutes';
+import { EmployeeHomeScreen } from '@/screens';
 
 export default function HomeScreen() {
-  const router = useRouter();
-  const { logout, user } = useAuth();
+  const { user } = useAuth();
+  const dashboardRoute = getDashboardRoute(user?.role);
 
-  const handleLogout = async () => {
-    await logout();
-    router.replace('/(public)/login');
-  };
+  if (dashboardRoute) {
+    return <Redirect href={dashboardRoute} />;
+  }
 
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home - Role: {user?.role}</Text>
-      <Button title="Logout" onPress={handleLogout} />
-    </View>
-  );
+  return <EmployeeHomeScreen />;
 }

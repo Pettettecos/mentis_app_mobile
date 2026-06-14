@@ -28,7 +28,7 @@ export interface UserCreate {
   sponsor_id?: string | null;
   document?: string | null;
   role?: UserRole;
-  tasks?: Record<string, unknown>;
+  tasks?: string[];
 }
 
 export interface UserRead {
@@ -39,7 +39,7 @@ export interface UserRead {
   phone_number: string;
   document: string | null;
   role: UserRole;
-  tasks: Record<string, unknown>;
+  tasks: string[];
   created_at: string;
   updated_at: string | null;
   deleted_at: string | null;
@@ -51,7 +51,7 @@ export interface UserUpdate {
   phone_number?: string | null;
   document?: string | null;
   role?: UserRole | null;
-  tasks?: Record<string, unknown> | null;
+  tasks?: string[] | null;
 }
 
 export interface HTTPValidationError {

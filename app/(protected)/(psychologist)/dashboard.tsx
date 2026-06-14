@@ -1,4 +1,4 @@
-import { PsychologistAreaScreen } from '../../src/screens/PsychologistArea';
+import { PsychologistAreaScreen } from '@/screens/PsychologistArea';
 
 export default function PsychologistDashboardRoute() {
   return <PsychologistAreaScreen />;

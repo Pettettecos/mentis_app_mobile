@@ -6,6 +6,11 @@ export async function createUser(userData: UserCreate): Promise<UserRead> {
   return data;
 }
 
+export async function listEmployees(): Promise<UserRead[]> {
+  const { data } = await api.get<UserRead[]>('/api/v1/users');
+  return data;
+}
+
 export async function getUser(userId: string): Promise<UserRead> {
   const { data } = await api.get<UserRead>(`/api/v1/users/${userId}`);
   return data;
