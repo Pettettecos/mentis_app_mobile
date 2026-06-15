@@ -8,12 +8,12 @@ import { colors } from '@/theme/colors';
 import { useRouter } from 'expo-router';
 
 const mockCompanies = [
-  { name: 'Luminal Solutions', type: 'Enterprise', employees: '1,200' },
+  { name: 'Luminal Solutions', type: 'Admin', employees: '1,200' },
   { name: 'Aether Tech', type: 'Startup', employees: '45' },
   { name: 'Global Dynamics', type: 'Global', employees: '15,000' },
 ];
 
-export function EnterpriseDashboardScreen() {
+export function AdminDashboardScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
@@ -29,22 +29,22 @@ export function EnterpriseDashboardScreen() {
     >
       <View style={styles.header}>
         <Text style={styles.headerTitle}>
-          {t('enterpriseDashboard.headerTitle')}
+          {t('adminDashboard.headerTitle')}
         </Text>
         <Text style={styles.headerBody}>
-          {t('enterpriseDashboard.headerBody')}
+          {t('adminDashboard.headerBody')}
         </Text>
       </View>
 
       <Button
         mode="contained"
         icon={() => <Icon source="store-plus" size={28} color="#FFFFFF" />}
-        onPress={() => router.push('/(protected)/(enterprise)/new-company')}
+        onPress={() => router.push('/(protected)/(admin)/new-company')}
         contentStyle={styles.createButtonContent}
         labelStyle={styles.createButtonLabel}
         style={styles.createButton}
       >
-        {t('enterpriseDashboard.createCompany')}
+        {t('adminDashboard.createCompany')}
       </Button>
 
       <Card style={styles.statCard}>
@@ -59,11 +59,11 @@ export function EnterpriseDashboardScreen() {
             </View>
           </View>
           <Text style={styles.statLabel}>
-            {t('enterpriseDashboard.registeredCompanies')}
+            {t('adminDashboard.registeredCompanies')}
           </Text>
           <Text style={styles.statValue}>142</Text>
           <Text style={styles.statCaption}>
-            {t('enterpriseDashboard.vsLastMonth')}
+            {t('adminDashboard.vsLastMonth')}
           </Text>
         </Card.Content>
       </Card>
@@ -80,11 +80,11 @@ export function EnterpriseDashboardScreen() {
             </View>
           </View>
           <Text style={styles.statLabel}>
-            {t('enterpriseDashboard.activeUsers')}
+            {t('adminDashboard.activeUsers')}
           </Text>
           <Text style={styles.statValue}>12.840</Text>
           <Text style={styles.statCaption}>
-            {t('enterpriseDashboard.vsLastMonth')}
+            {t('adminDashboard.vsLastMonth')}
           </Text>
         </Card.Content>
       </Card>
@@ -92,11 +92,11 @@ export function EnterpriseDashboardScreen() {
       <View style={styles.recentCard}>
         <View style={styles.recentHeader}>
           <Text style={styles.recentTitle}>
-            {t('enterpriseDashboard.recentCompanies')}
+            {t('adminDashboard.recentCompanies')}
           </Text>
           <TouchableRipple>
             <Text style={styles.recentSeeAll}>
-              {t('enterpriseDashboard.seeAll')}
+              {t('adminDashboard.seeAll')}
             </Text>
           </TouchableRipple>
         </View>
@@ -109,7 +109,7 @@ export function EnterpriseDashboardScreen() {
               <Text style={styles.companyName}>{company.name}</Text>
               <Text style={styles.companyMeta}>
                 {company.type} • {company.employees}{' '}
-                {t('enterpriseDashboard.collaborators')}
+                {t('adminDashboard.collaborators')}
               </Text>
             </View>
             <Icon source="chevron-right" size={20} color={colors.textMuted} />
@@ -119,12 +119,12 @@ export function EnterpriseDashboardScreen() {
 
       <View style={styles.insightsCard}>
         <Text style={styles.insightsTitle}>
-          {t('enterpriseDashboard.platformInsights')}
+          {t('adminDashboard.platformInsights')}
         </Text>
         <View style={styles.insightRow}>
           <View style={styles.insightLabelRow}>
             <Text style={styles.insightLabel}>
-              {t('enterpriseDashboard.storageUsage')}
+              {t('adminDashboard.storageUsage')}
             </Text>
             <Text style={styles.insightValue}>64%</Text>
           </View>
@@ -135,7 +135,7 @@ export function EnterpriseDashboardScreen() {
         <View style={styles.insightRow}>
           <View style={styles.insightLabelRow}>
             <Text style={styles.insightLabel}>
-              {t('enterpriseDashboard.apiRequests')}
+              {t('adminDashboard.apiRequests')}
             </Text>
             <Text style={styles.insightValue}>2.4M</Text>
           </View>
@@ -147,7 +147,7 @@ export function EnterpriseDashboardScreen() {
 
       <View style={styles.alertsCard}>
         <Text style={styles.alertsTitle}>
-          {t('enterpriseDashboard.recentAlerts')}
+          {t('adminDashboard.recentAlerts')}
         </Text>
         <View style={styles.alertItem}>
           <View style={styles.alertIcon}>
@@ -159,10 +159,10 @@ export function EnterpriseDashboardScreen() {
           </View>
           <View style={styles.alertContent}>
             <Text style={styles.alertTitle}>
-              {t('enterpriseDashboard.licenseExpiring')}
+              {t('adminDashboard.licenseExpiring')}
             </Text>
             <Text style={styles.alertBody}>
-              {t('enterpriseDashboard.licenseExpiringBody')}
+              {t('adminDashboard.licenseExpiringBody')}
             </Text>
           </View>
         </View>
@@ -176,10 +176,10 @@ export function EnterpriseDashboardScreen() {
           </View>
           <View style={styles.alertContent}>
             <Text style={styles.alertTitle}>
-              {t('enterpriseDashboard.newRoleRequest')}
+              {t('adminDashboard.newRoleRequest')}
             </Text>
             <Text style={styles.alertBody}>
-              {t('enterpriseDashboard.newRoleRequestBody')}
+              {t('adminDashboard.newRoleRequestBody')}
             </Text>
           </View>
         </View>

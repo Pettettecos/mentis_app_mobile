@@ -7,3 +7,4 @@ export * as sponsorTeamService from './sponsorTeams';
 export * as userTeamService from './userTeams';
 export * as questionnaireService from './questionnaires';
 export * as managerService from './manager';
+export * as sponsorService from './sponsors';

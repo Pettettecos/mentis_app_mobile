@@ -4,8 +4,8 @@ import { useAuth } from '../../src/context/AuthContext';
 export default function ProtectedIndex() {
   const { user } = useAuth();
 
-  if (user?.role === 'ENTERPRISE') {
-    return <Redirect href="/(protected)/(enterprise)/dashboard" />;
+  if (user?.role === 'ADMIN') {
+    return <Redirect href="/(protected)/(admin)/dashboard" />;
   }
 
   if (user?.role === 'EMPLOYEE') {

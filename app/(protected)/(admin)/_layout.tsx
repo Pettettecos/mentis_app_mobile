@@ -3,12 +3,12 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { BottomNav, TopBar } from '@/components';
 
-export default function EnterpriseLayout() {
+export default function AdminLayout() {
   const { t } = useTranslation();
   const navItems = [
     {
       key: 'home',
-      label: t('enterpriseDashboard.navHome'),
+      label: t('adminDashboard.navHome'),
       icon: 'home-outline',
       activeIcon: 'home',
       route: '/dashboard',
@@ -16,7 +16,7 @@ export default function EnterpriseLayout() {
     },
     {
       key: 'settings',
-      label: t('enterpriseDashboard.navSettings'),
+      label: t('adminDashboard.navSettings'),
       icon: 'cog-outline',
       activeIcon: 'cog',
       route: '/settings',

@@ -1,9 +1,4 @@
-export type UserRole =
-  | 'ADMIN'
-  | 'ENTERPRISE'
-  | 'MANAGER'
-  | 'PSYCHOLOGIST'
-  | 'EMPLOYEE';
+export type UserRole = 'ADMIN' | 'MANAGER' | 'PSYCHOLOGIST' | 'EMPLOYEE';
 
 export interface LoginRequest {
   email: string;
@@ -82,6 +77,34 @@ export interface SponsorTeamRead {
   id: string;
   name: string;
   sponsor_id: string;
+  created_at: string;
+  updated_at: string | null;
+  deleted_at: string | null;
+}
+
+export interface SponsorUserCreate {
+  sponsor_id?: string | null;
+  username: string;
+  email: string;
+  phone_number: string;
+  document?: string | null;
+  password: string;
+  role?: UserRole;
+  tasks?: string[];
+}
+
+export interface SponsorCreate {
+  name: string;
+  cnpj: string;
+  logo: string;
+  user: SponsorUserCreate;
+}
+
+export interface SponsorRead {
+  id: string;
+  name: string;
+  cnpj: string | null;
+  logo: string | null;
   created_at: string;
   updated_at: string | null;
   deleted_at: string | null;

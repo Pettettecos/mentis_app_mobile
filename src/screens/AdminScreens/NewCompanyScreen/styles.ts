@@ -39,22 +39,15 @@ export const styles = StyleSheet.create({
     marginBottom: 28,
     marginTop: 8,
   },
-  logoCircle: {
-    alignItems: 'center',
-    backgroundColor: colors.iconCircleBg,
-    borderColor: colors.handleIndicator,
-    borderStyle: 'dashed',
-    borderWidth: 2,
-    borderRadius: 999,
-    height: 100,
-    justifyContent: 'center',
-    width: 100,
+  logoButton: {
+    marginBottom: 12,
+    borderRadius: 14,
   },
-  logoLabel: {
-    color: colors.textPrimary,
-    fontSize: 15,
-    fontWeight: '600',
-    marginTop: 12,
+  logoPreview: {
+    width: 100,
+    height: 100,
+    borderRadius: 999,
+    marginBottom: 8,
   },
   logoHint: {
     color: colors.textMuted,
@@ -124,5 +117,84 @@ export const styles = StyleSheet.create({
   },
   infoBold: {
     fontWeight: '700',
+  },
+  credentialsContainer: {
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 40,
+  },
+  successTitle: {
+    color: colors.textPrimary,
+    fontSize: 24,
+    fontWeight: '800',
+    marginTop: 16,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  successBody: {
+    color: colors.textSecondary,
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  credentialsCard: {
+    backgroundColor: colors.surface,
+    borderRadius: 20,
+    width: '100%',
+    shadowColor: colors.shadowColor,
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+    marginBottom: 24,
+  },
+  credentialsTitle: {
+    color: colors.primary,
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 16,
+  },
+  credentialRow: {
+    marginBottom: 16,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.handleIndicator,
+  },
+  credentialInfo: {
+    marginBottom: 8,
+  },
+  credentialLabel: {
+    color: colors.textMuted,
+    fontSize: 12,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  credentialValue: {
+    color: colors.textPrimary,
+    fontSize: 16,
+    fontWeight: '600',
+    fontFamily: 'monospace',
+  },
+  copyButton: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 8,
+  },
+  copyButtonLabel: {
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  credentialsActions: {
+    width: '100%',
+    gap: 12,
+  },
+  secondaryButton: {
+    borderRadius: 14,
+    height: 52,
+    borderColor: colors.primary,
+  },
+  primaryButton: {
+    borderRadius: 14,
+    height: 52,
   },
 });
