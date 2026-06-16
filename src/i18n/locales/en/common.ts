@@ -319,6 +319,8 @@ const en: Translations = {
     newRoleRequestBody: "2 users requested the 'Lead Therapist' role.",
     navHome: 'Home',
     navSettings: 'Settings',
+    noCompanies: 'No companies registered yet.',
+    noAlerts: 'No recent alerts.',
   },
   employeeDashboard: {
     greetingTitle: 'Hello, {{username}}',

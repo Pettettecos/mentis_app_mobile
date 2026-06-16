@@ -324,6 +324,8 @@ const es: Translations = {
     newRoleRequestBody: "2 usuarios solicitaron el cargo de 'Terapeuta Líder'.",
     navHome: 'Inicio',
     navSettings: 'Configuraciones',
+    noCompanies: 'Aún no hay empresas registradas.',
+    noAlerts: 'No hay alertas recientes.',
   },
   employeeDashboard: {
     greetingTitle: 'Hola, {{username}}',

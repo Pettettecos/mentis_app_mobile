@@ -298,6 +298,8 @@ export interface Translations {
     newRoleRequestBody: string;
     navHome: string;
     navSettings: string;
+    noCompanies: string;
+    noAlerts: string;
   };
   employeeDashboard: {
     greetingTitle: string;

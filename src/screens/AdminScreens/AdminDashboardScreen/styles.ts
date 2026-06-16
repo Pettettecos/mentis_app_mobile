@@ -146,6 +146,12 @@ export const styles = StyleSheet.create({
     height: 44,
     justifyContent: 'center',
     width: 44,
+    overflow: 'hidden',
+  },
+  companyLogoImage: {
+    width: 44,
+    height: 44,
+    borderRadius: 10,
   },
   companyInfo: {
     flex: 1,
@@ -246,5 +252,15 @@ export const styles = StyleSheet.create({
     color: colors.textSecondary,
     fontSize: 13,
     lineHeight: 18,
+  },
+  loadingCenter: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyText: {
+    color: colors.textMuted,
+    fontSize: 14,
+    textAlign: 'center',
+    padding: 20,
   },
 });

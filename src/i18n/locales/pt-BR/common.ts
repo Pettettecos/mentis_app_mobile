@@ -323,6 +323,8 @@ const ptBR: Translations = {
     newRoleRequestBody: "2 usuários solicitaram o cargo de 'Terapeuta Líder'.",
     navHome: 'Início',
     navSettings: 'Configurações',
+    noCompanies: 'Nenhuma empresa cadastrada ainda.',
+    noAlerts: 'Nenhum alerta recente.',
   },
   employeeDashboard: {
     greetingTitle: 'Olá, {{username}}',

@@ -268,6 +268,25 @@ export interface ManagerAIReportResponse {
   blocks: ReportBlock[];
 }
 
+export interface AdminDashboardMetrics {
+  total_sponsors: number;
+  total_users: number;
+  total_active_users: number;
+  recent_sponsors: {
+    id: string;
+    name: string;
+    logo: string;
+    created_at: string;
+  }[];
+  alerts: {
+    id: string;
+    type: string;
+    title: string;
+    body: string;
+    created_at: string;
+  }[];
+}
+
 export interface HTTPValidationError {
   detail: ValidationError[];
 }

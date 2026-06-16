@@ -1,22 +1,50 @@
-import { View } from 'react-native';
+import { View, ActivityIndicator, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Icon, Text, TouchableRipple } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useEffect, useState } from 'react';
 import { styles } from './styles';
 import { colors } from '@/theme/colors';
 import { useRouter } from 'expo-router';
-
-const mockCompanies = [
-  { name: 'Luminal Solutions', type: 'Admin', employees: '1,200' },
-  { name: 'Aether Tech', type: 'Startup', employees: '45' },
-  { name: 'Global Dynamics', type: 'Global', employees: '15,000' },
-];
+import { adminService } from '@/services/api';
+import type { AdminDashboardMetrics } from '@/services/api';
 
 export function AdminDashboardScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<AdminDashboardMetrics | null>(null);
+
+  useEffect(() => {
+    loadDashboard();
+  }, []);
+
+  const loadDashboard = async () => {
+    try {
+      const result = await adminService.getAdminDashboard();
+      setData(result);
+    } catch {
+      // Em caso de erro, mantém null e mostra mensagem
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.loadingCenter]}>
+        <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    );
+  }
+
+  const sponsorsCount = data?.total_sponsors ?? 0;
+  const activeUsers = data?.total_active_users ?? 0;
+  const totalUsers = data?.total_users ?? 0;
+  const recentCompanies = data?.recent_sponsors ?? [];
+  const alerts = data?.alerts ?? [];
 
   return (
     <ScrollView
@@ -31,9 +59,7 @@ export function AdminDashboardScreen() {
         <Text style={styles.headerTitle}>
           {t('adminDashboard.headerTitle')}
         </Text>
-        <Text style={styles.headerBody}>
-          {t('adminDashboard.headerBody')}
-        </Text>
+        <Text style={styles.headerBody}>{t('adminDashboard.headerBody')}</Text>
       </View>
 
       <Button
@@ -55,13 +81,18 @@ export function AdminDashboardScreen() {
             </View>
             <View style={styles.statGrowth}>
               <Icon source="trending-up" size={16} color={colors.success} />
-              <Text style={styles.statGrowthText}>8%</Text>
+              <Text style={styles.statGrowthText}>
+                {totalUsers > 0
+                  ? Math.round((sponsorsCount / totalUsers) * 100)
+                  : 0}
+                %
+              </Text>
             </View>
           </View>
           <Text style={styles.statLabel}>
             {t('adminDashboard.registeredCompanies')}
           </Text>
-          <Text style={styles.statValue}>142</Text>
+          <Text style={styles.statValue}>{sponsorsCount}</Text>
           <Text style={styles.statCaption}>
             {t('adminDashboard.vsLastMonth')}
           </Text>
@@ -76,13 +107,18 @@ export function AdminDashboardScreen() {
             </View>
             <View style={styles.statGrowth}>
               <Icon source="trending-up" size={16} color={colors.success} />
-              <Text style={styles.statGrowthText}>15%</Text>
+              <Text style={styles.statGrowthText}>
+                {totalUsers > 0
+                  ? Math.round((activeUsers / totalUsers) * 100)
+                  : 0}
+                %
+              </Text>
             </View>
           </View>
           <Text style={styles.statLabel}>
             {t('adminDashboard.activeUsers')}
           </Text>
-          <Text style={styles.statValue}>12.840</Text>
+          <Text style={styles.statValue}>{activeUsers.toLocaleString()}</Text>
           <Text style={styles.statCaption}>
             {t('adminDashboard.vsLastMonth')}
           </Text>
@@ -100,21 +136,33 @@ export function AdminDashboardScreen() {
             </Text>
           </TouchableRipple>
         </View>
-        {mockCompanies.map((company) => (
-          <View key={company.name} style={styles.companyItem}>
-            <View style={styles.companyLogo}>
-              <Icon source="domain" size={22} color={colors.iconMuted} />
+        {recentCompanies.length === 0 ? (
+          <Text style={styles.emptyText}>
+            {t('adminDashboard.noCompanies')}
+          </Text>
+        ) : (
+          recentCompanies.map((company) => (
+            <View key={company.id} style={styles.companyItem}>
+              <View style={styles.companyLogo}>
+                {company.logo ? (
+                  <Image
+                    source={{ uri: `data:image/png;base64,${company.logo}` }}
+                    style={styles.companyLogoImage}
+                  />
+                ) : (
+                  <Icon source="domain" size={22} color={colors.iconMuted} />
+                )}
+              </View>
+              <View style={styles.companyInfo}>
+                <Text style={styles.companyName}>{company.name}</Text>
+                <Text style={styles.companyMeta}>
+                  {new Date(company.created_at).toLocaleDateString()}
+                </Text>
+              </View>
+              <Icon source="chevron-right" size={20} color={colors.textMuted} />
             </View>
-            <View style={styles.companyInfo}>
-              <Text style={styles.companyName}>{company.name}</Text>
-              <Text style={styles.companyMeta}>
-                {company.type} • {company.employees}{' '}
-                {t('adminDashboard.collaborators')}
-              </Text>
-            </View>
-            <Icon source="chevron-right" size={20} color={colors.textMuted} />
-          </View>
-        ))}
+          ))
+        )}
       </View>
 
       <View style={styles.insightsCard}>
@@ -126,10 +174,10 @@ export function AdminDashboardScreen() {
             <Text style={styles.insightLabel}>
               {t('adminDashboard.storageUsage')}
             </Text>
-            <Text style={styles.insightValue}>64%</Text>
+            <Text style={styles.insightValue}>--</Text>
           </View>
           <View style={styles.insightTrack}>
-            <View style={[styles.insightFill, { width: '64%' }]} />
+            <View style={[styles.insightFill, { width: '0%' }]} />
           </View>
         </View>
         <View style={styles.insightRow}>
@@ -137,10 +185,10 @@ export function AdminDashboardScreen() {
             <Text style={styles.insightLabel}>
               {t('adminDashboard.apiRequests')}
             </Text>
-            <Text style={styles.insightValue}>2.4M</Text>
+            <Text style={styles.insightValue}>--</Text>
           </View>
           <View style={styles.insightTrack}>
-            <View style={[styles.insightFill, { width: '78%' }]} />
+            <View style={[styles.insightFill, { width: '0%' }]} />
           </View>
         </View>
       </View>
@@ -149,40 +197,45 @@ export function AdminDashboardScreen() {
         <Text style={styles.alertsTitle}>
           {t('adminDashboard.recentAlerts')}
         </Text>
-        <View style={styles.alertItem}>
-          <View style={styles.alertIcon}>
-            <Icon
-              source="alert-circle-outline"
-              size={20}
-              color={colors.error}
-            />
-          </View>
-          <View style={styles.alertContent}>
-            <Text style={styles.alertTitle}>
-              {t('adminDashboard.licenseExpiring')}
-            </Text>
-            <Text style={styles.alertBody}>
-              {t('adminDashboard.licenseExpiringBody')}
-            </Text>
-          </View>
-        </View>
-        <View style={[styles.alertItem, styles.alertItemLast]}>
-          <View style={styles.alertIcon}>
-            <Icon
-              source="information-outline"
-              size={20}
-              color={colors.primary}
-            />
-          </View>
-          <View style={styles.alertContent}>
-            <Text style={styles.alertTitle}>
-              {t('adminDashboard.newRoleRequest')}
-            </Text>
-            <Text style={styles.alertBody}>
-              {t('adminDashboard.newRoleRequestBody')}
-            </Text>
-          </View>
-        </View>
+        {alerts.length === 0 ? (
+          <Text style={styles.emptyText}>{t('adminDashboard.noAlerts')}</Text>
+        ) : (
+          alerts.map((alert, index) => (
+            <View
+              key={alert.id}
+              style={[
+                styles.alertItem,
+                index === alerts.length - 1 && styles.alertItemLast,
+              ]}
+            >
+              <View style={styles.alertIcon}>
+                <Icon
+                  source={
+                    alert.type === 'warning'
+                      ? 'alert-circle-outline'
+                      : 'information-outline'
+                  }
+                  size={20}
+                  color={
+                    alert.type === 'warning' ? colors.error : colors.primary
+                  }
+                />
+              </View>
+              <View style={styles.alertContent}>
+                <Text style={styles.alertTitle}>
+                  {t(`adminDashboard.alerts.${alert.id}.title`, {
+                    defaultValue: alert.title,
+                  })}
+                </Text>
+                <Text style={styles.alertBody}>
+                  {t(`adminDashboard.alerts.${alert.id}.body`, {
+                    defaultValue: alert.body,
+                  })}
+                </Text>
+              </View>
+            </View>
+          ))
+        )}
       </View>
     </ScrollView>
   );
