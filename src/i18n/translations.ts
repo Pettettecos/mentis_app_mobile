@@ -249,6 +249,8 @@ export interface Translations {
     subtitle: string;
     logoLabel: string;
     logoHint: string;
+    uploadLogo: string;
+    changeLogo: string;
     companyName: string;
     companyNamePlaceholder: string;
     cnpj: string;
@@ -262,8 +264,21 @@ export interface Translations {
     infoBody: string;
     infoBodyBold: string;
     infoBodyEnd: string;
+    successTitle: string;
+    successBody: string;
+    credentialsTitle: string;
+    email: string;
+    password: string;
+    copyEmail: string;
+    copyPassword: string;
+    copied: string;
+    goToCompanies: string;
+    createAnother: string;
+    errorTitle: string;
+    errorBody: string;
+    validationRequired: string;
   };
-  enterpriseDashboard: {
+  adminDashboard: {
     headerTitle: string;
     headerBody: string;
     createCompany: string;
@@ -283,6 +298,7 @@ export interface Translations {
     newRoleRequestBody: string;
     navHome: string;
     navSettings: string;
+    noCompanies: string;
   };
   employeeDashboard: {
     greetingTitle: string;

@@ -272,6 +272,8 @@ const es: Translations = {
       'Complete los datos a continuación para integrar una nueva empresa en la plataforma MentisTech.',
     logoLabel: 'Logotipo de la Empresa',
     logoHint: 'PNG o JPG (Máx. 2MB)',
+    uploadLogo: 'Seleccionar Logo',
+    changeLogo: 'Cambiar Logo',
     companyName: 'Nombre de la Empresa',
     companyNamePlaceholder: 'Ej: Innovación S.A.',
     cnpj: 'RUT/NIT',
@@ -287,8 +289,21 @@ const es: Translations = {
     infoBodyBold: 'definir la contraseña manualmente',
     infoBodyEnd:
       ', guardarla y compartirla de forma segura con la nueva empresa.',
+    successTitle: '¡Empresa creada con éxito!',
+    successBody: 'Copia las credenciales a continuación y envíalas al administrador de la empresa.',
+    credentialsTitle: 'Credenciales de Acceso',
+    email: 'Correo electrónico',
+    password: 'Contraseña temporal',
+    copyEmail: 'Copiar correo',
+    copyPassword: 'Copiar contraseña',
+    copied: '¡Copiado!',
+    goToCompanies: 'Ver empresas',
+    createAnother: 'Crear otra',
+    errorTitle: 'Error al crear empresa',
+    errorBody: 'No fue posible crear la empresa. Verifica los datos e inténtalo de nuevo.',
+    validationRequired: 'Completa todos los campos.',
   },
-  enterpriseDashboard: {
+  adminDashboard: {
     headerTitle: 'Administrador del Sistema',
     headerBody:
       'Gestión interna del SaaS y visión general del rendimiento global',
@@ -309,6 +324,7 @@ const es: Translations = {
     newRoleRequestBody: "2 usuarios solicitaron el cargo de 'Terapeuta Líder'.",
     navHome: 'Inicio',
     navSettings: 'Configuraciones',
+    noCompanies: 'Aún no hay empresas registradas.',
   },
   employeeDashboard: {
     greetingTitle: 'Hola, {{username}}',

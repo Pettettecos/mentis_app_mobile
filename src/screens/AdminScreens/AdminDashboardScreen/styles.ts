@@ -146,6 +146,12 @@ export const styles = StyleSheet.create({
     height: 44,
     justifyContent: 'center',
     width: 44,
+    overflow: 'hidden',
+  },
+  companyLogoImage: {
+    width: 44,
+    height: 44,
+    borderRadius: 10,
   },
   companyInfo: {
     flex: 1,
@@ -205,46 +211,14 @@ export const styles = StyleSheet.create({
     borderRadius: 999,
     height: '100%',
   },
-  alertsCard: {
-    backgroundColor: colors.surface,
-    borderRadius: 20,
-    padding: 20,
-    shadowColor: colors.shadowColor,
-    shadowOpacity: 0.06,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+  loadingCenter: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  alertsTitle: {
-    color: colors.textPrimary,
-    fontSize: 16,
-    fontWeight: '700',
-    marginBottom: 16,
-  },
-  alertItem: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    gap: 12,
-    marginBottom: 14,
-  },
-  alertItemLast: {
-    marginBottom: 0,
-  },
-  alertIcon: {
-    marginTop: 2,
-  },
-  alertContent: {
-    flex: 1,
-    gap: 2,
-  },
-  alertTitle: {
-    color: colors.textPrimary,
+  emptyText: {
+    color: colors.textMuted,
     fontSize: 14,
-    fontWeight: '600',
-  },
-  alertBody: {
-    color: colors.textSecondary,
-    fontSize: 13,
-    lineHeight: 18,
+    textAlign: 'center',
+    padding: 20,
   },
 });
