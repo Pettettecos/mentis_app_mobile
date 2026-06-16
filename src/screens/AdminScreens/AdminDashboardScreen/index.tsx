@@ -44,7 +44,6 @@ export function AdminDashboardScreen() {
   const activeUsers = data?.total_active_users ?? 0;
   const totalUsers = data?.total_users ?? 0;
   const recentCompanies = data?.recent_sponsors ?? [];
-  const alerts = data?.alerts ?? [];
 
   return (
     <ScrollView
@@ -174,10 +173,10 @@ export function AdminDashboardScreen() {
             <Text style={styles.insightLabel}>
               {t('adminDashboard.storageUsage')}
             </Text>
-            <Text style={styles.insightValue}>--</Text>
+            <Text style={styles.insightValue}>64%</Text>
           </View>
           <View style={styles.insightTrack}>
-            <View style={[styles.insightFill, { width: '0%' }]} />
+            <View style={[styles.insightFill, { width: '64%' }]} />
           </View>
         </View>
         <View style={styles.insightRow}>
@@ -185,57 +184,12 @@ export function AdminDashboardScreen() {
             <Text style={styles.insightLabel}>
               {t('adminDashboard.apiRequests')}
             </Text>
-            <Text style={styles.insightValue}>--</Text>
+            <Text style={styles.insightValue}>2.4M</Text>
           </View>
           <View style={styles.insightTrack}>
-            <View style={[styles.insightFill, { width: '0%' }]} />
+            <View style={[styles.insightFill, { width: '78%' }]} />
           </View>
         </View>
-      </View>
-
-      <View style={styles.alertsCard}>
-        <Text style={styles.alertsTitle}>
-          {t('adminDashboard.recentAlerts')}
-        </Text>
-        {alerts.length === 0 ? (
-          <Text style={styles.emptyText}>{t('adminDashboard.noAlerts')}</Text>
-        ) : (
-          alerts.map((alert, index) => (
-            <View
-              key={alert.id}
-              style={[
-                styles.alertItem,
-                index === alerts.length - 1 && styles.alertItemLast,
-              ]}
-            >
-              <View style={styles.alertIcon}>
-                <Icon
-                  source={
-                    alert.type === 'warning'
-                      ? 'alert-circle-outline'
-                      : 'information-outline'
-                  }
-                  size={20}
-                  color={
-                    alert.type === 'warning' ? colors.error : colors.primary
-                  }
-                />
-              </View>
-              <View style={styles.alertContent}>
-                <Text style={styles.alertTitle}>
-                  {t(`adminDashboard.alerts.${alert.id}.title`, {
-                    defaultValue: alert.title,
-                  })}
-                </Text>
-                <Text style={styles.alertBody}>
-                  {t(`adminDashboard.alerts.${alert.id}.body`, {
-                    defaultValue: alert.body,
-                  })}
-                </Text>
-              </View>
-            </View>
-          ))
-        )}
       </View>
     </ScrollView>
   );

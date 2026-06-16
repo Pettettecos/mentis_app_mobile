@@ -325,7 +325,6 @@ const es: Translations = {
     navHome: 'Inicio',
     navSettings: 'Configuraciones',
     noCompanies: 'Aún no hay empresas registradas.',
-    noAlerts: 'No hay alertas recientes.',
   },
   employeeDashboard: {
     greetingTitle: 'Hola, {{username}}',

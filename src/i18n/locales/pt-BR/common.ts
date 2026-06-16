@@ -324,7 +324,6 @@ const ptBR: Translations = {
     navHome: 'Início',
     navSettings: 'Configurações',
     noCompanies: 'Nenhuma empresa cadastrada ainda.',
-    noAlerts: 'Nenhum alerta recente.',
   },
   employeeDashboard: {
     greetingTitle: 'Olá, {{username}}',

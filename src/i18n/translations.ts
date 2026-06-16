@@ -299,7 +299,6 @@ export interface Translations {
     navHome: string;
     navSettings: string;
     noCompanies: string;
-    noAlerts: string;
   };
   employeeDashboard: {
     greetingTitle: string;
