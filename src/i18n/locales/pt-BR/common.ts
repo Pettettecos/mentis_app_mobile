@@ -51,6 +51,7 @@ const ptBR: Translations = {
   common: {
     back: 'Voltar',
     logout: 'Sair',
+    selectLanguage: 'Selecionar Idioma',
   },
   chat: {
     sessionsList: {
@@ -207,7 +208,7 @@ const ptBR: Translations = {
     dayFri: 'Sex',
     navDashboard: 'Painel',
     navUsers: 'Usuários',
-    navSettings: 'Configurações',
+    navSettings: 'Ajustes',
   },
   managerCreate: {
     teamTitle: 'Cadastrar Equipe',
@@ -340,6 +341,7 @@ const ptBR: Translations = {
     currentStreakValue: '12 Dias',
     longestStreak: 'Maior Sequência',
     longestStreakValue: '45 Dias',
+    days: 'dias',
     guidedExercises: 'Exercícios Guiados',
     seeAll: 'Ver todos',
     meditation: 'Meditação',

@@ -46,6 +46,7 @@ export interface Translations {
   common: {
     back: string;
     logout: string;
+    selectLanguage: string;
   };
   chat: {
     sessionsList: {
@@ -315,6 +316,7 @@ export interface Translations {
     currentStreakValue: string;
     longestStreak: string;
     longestStreakValue: string;
+    days: string;
     guidedExercises: string;
     seeAll: string;
     meditation: string;

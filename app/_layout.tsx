@@ -6,10 +6,27 @@ import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 import { AuthProvider } from '@/context/AuthContext';
-import '@/i18n';
+import { getInitialLanguage } from '@/i18n';
 import paperTheme from '@/theme';
+import { useEffect, useState } from 'react';
+import i18n from '@/i18n';
 
 export default function RootLayout() {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const init = async () => {
+      const lang = await getInitialLanguage();
+      await i18n.changeLanguage(lang);
+      setIsReady(true);
+    };
+    init();
+  }, []);
+
+  if (!isReady) {
+    return null;
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
