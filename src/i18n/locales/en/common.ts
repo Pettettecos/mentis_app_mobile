@@ -51,6 +51,7 @@ const en: Translations = {
   common: {
     back: 'Back',
     logout: 'Logout',
+    selectLanguage: 'Select Language',
   },
   chat: {
     sessionsList: {
@@ -336,6 +337,7 @@ const en: Translations = {
     currentStreakValue: '12 Days',
     longestStreak: 'Longest Streak',
     longestStreakValue: '45 Days',
+    days: 'days',
     guidedExercises: 'Guided Exercises',
     seeAll: 'See all',
     meditation: 'Meditation',

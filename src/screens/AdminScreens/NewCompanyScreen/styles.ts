@@ -192,9 +192,11 @@ export const styles = StyleSheet.create({
     borderRadius: 14,
     height: 52,
     borderColor: colors.primary,
+    justifyContent: 'center',
   },
   primaryButton: {
     borderRadius: 14,
     height: 52,
+    justifyContent: 'center',
   },
 });

@@ -5,14 +5,25 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/AuthContext';
 import { colors } from '@/theme/colors';
 import { styles } from './styles';
+import { LanguageSelector } from '@/components/LanguageSelector';
+import { useState } from 'react';
 
 export function ManagerSettingsScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const insets = useSafeAreaInsets();
   const { user, logout } = useAuth();
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
 
   const handleLogout = async () => {
     await logout();
+  };
+
+  const getLanguageLabel = () => {
+    const lang = i18n.language;
+    if (lang === 'pt-BR') return 'Português (Brasil)';
+    if (lang === 'en') return 'English (US)';
+    if (lang === 'es') return 'Español';
+    return 'Português (Brasil)';
   };
 
   return (
@@ -87,7 +98,10 @@ export function ManagerSettingsScreen() {
           <Icon source="chevron-right" size={22} color={colors.textMuted} />
         </Pressable>
 
-        <Pressable style={[styles.settingItem, styles.settingItemBorder]}>
+        <Pressable
+          style={[styles.settingItem, styles.settingItemBorder]}
+          onPress={() => setLanguageModalVisible(true)}
+        >
           <View style={styles.settingIconBg}>
             <Icon source="translate" size={22} color={colors.primary} />
           </View>
@@ -96,7 +110,7 @@ export function ManagerSettingsScreen() {
               {t('managerSettings.languageTitle')}
             </Text>
             <Text style={styles.settingDescription}>
-              {t('managerSettings.languageDescription')}
+              {getLanguageLabel()}
             </Text>
           </View>
           <Icon source="chevron-right" size={22} color={colors.textMuted} />
@@ -158,6 +172,11 @@ export function ManagerSettingsScreen() {
           <Text style={styles.logoutText}>{t('managerSettings.logout')}</Text>
         </View>
       </Pressable>
+
+      <LanguageSelector
+        visible={languageModalVisible}
+        onClose={() => setLanguageModalVisible(false)}
+      />
     </ScrollView>
   );
 }

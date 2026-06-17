@@ -51,6 +51,7 @@ const es: Translations = {
   common: {
     back: 'Volver',
     logout: 'Cerrar sesión',
+    selectLanguage: 'Seleccionar Idioma',
   },
   chat: {
     sessionsList: {
@@ -341,6 +342,7 @@ const es: Translations = {
     currentStreakValue: '12 Días',
     longestStreak: 'Mayor Racha',
     longestStreakValue: '45 Días',
+    days: 'días',
     guidedExercises: 'Ejercicios Guiados',
     seeAll: 'Ver todos',
     meditation: 'Meditación',

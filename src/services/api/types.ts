@@ -227,6 +227,13 @@ export interface DepartmentUsage {
   value: number;
 }
 
+export interface UserStreakDto {
+  current_streak: number;
+  longest_streak: number;
+  last_activity_date: string;
+  streak_started_at: string;
+}
+
 export interface ManagerDashboardMetrics {
   health_index: number;
   active_users_total: number;
