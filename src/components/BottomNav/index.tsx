@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     elevation: 12,
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     left: 0,
     paddingHorizontal: 12,
     paddingTop: 12,

@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { Card, Icon, Text } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import { styles } from './styles';
 import { useAuth } from '@/context/AuthContext';
@@ -13,12 +14,28 @@ import {
   moodIconColor,
   moodOptions,
 } from '../constants';
+import { streakService } from '@/services/api';
+import type { UserStreakDto } from '@/services/api';
 
 export function EmployeeDashboardScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { user } = useAuth();
+  const [streak, setStreak] = useState<UserStreakDto | null>(null);
+
+  useEffect(() => {
+    loadStreak();
+  }, []);
+
+  const loadStreak = async () => {
+    try {
+      const data = await streakService.getUserStreak();
+      setStreak(data);
+    } catch {
+      // Streak unavailable, show defaults
+    }
+  };
 
   return (
     <ScrollView
@@ -89,7 +106,7 @@ export function EmployeeDashboardScreen() {
               <Text
                 style={[styles.journeyStatValue, styles.journeyStatValuePurple]}
               >
-                {t('employeeDashboard.currentStreakValue')}
+                {streak ? `${streak.current_streak} ${t('employeeDashboard.days')}` : t('employeeDashboard.currentStreakValue')}
               </Text>
             </View>
 
@@ -98,7 +115,7 @@ export function EmployeeDashboardScreen() {
                 {t('employeeDashboard.longestStreak')}
               </Text>
               <Text style={styles.journeyStatValue}>
-                {t('employeeDashboard.longestStreakValue')}
+                {streak ? `${streak.longest_streak} ${t('employeeDashboard.days')}` : t('employeeDashboard.longestStreakValue')}
               </Text>
             </View>
           </View>

@@ -9,3 +9,4 @@ export * as questionnaireService from './questionnaires';
 export * as managerService from './manager';
 export * as sponsorService from './sponsors';
 export * as adminService from './admin';
+export * as streakService from './streak';
