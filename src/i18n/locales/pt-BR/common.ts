@@ -46,7 +46,8 @@ const ptBR: Translations = {
     successMessage: 'Sua senha foi alterada com sucesso.',
     goToLogin: 'IR PARA O LOGIN',
     passwordMismatch: 'As senhas não coincidem',
-    passwordMinLength: 'A senha deve ter pelo menos 6 caracteres',
+    passwordMinLength: 'A senha deve ter pelo menos 8 caracteres',
+    requestError: 'Não foi possível alterar a senha. Tente novamente.',
   },
   common: {
     back: 'Voltar',
@@ -291,7 +292,8 @@ const ptBR: Translations = {
     infoBodyEnd:
       ', salvá-la e compartilhá-la com segurança com a nova empresa.',
     successTitle: 'Empresa criada com sucesso!',
-    successBody: 'Copie as credenciais abaixo e envie ao administrador da empresa.',
+    successBody:
+      'Copie as credenciais abaixo e envie ao administrador da empresa.',
     credentialsTitle: 'Credenciais de Acesso',
     email: 'E-mail',
     password: 'Senha temporária',
@@ -301,7 +303,8 @@ const ptBR: Translations = {
     goToCompanies: 'Ver empresas',
     createAnother: 'Criar outra',
     errorTitle: 'Erro ao criar empresa',
-    errorBody: 'Não foi possível criar a empresa. Verifique os dados e tente novamente.',
+    errorBody:
+      'Não foi possível criar a empresa. Verifique os dados e tente novamente.',
     validationRequired: 'Preencha todos os campos.',
   },
   adminDashboard: {

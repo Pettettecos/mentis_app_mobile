@@ -46,7 +46,8 @@ const en: Translations = {
     successMessage: 'Your password has been changed successfully.',
     goToLogin: 'GO TO LOGIN',
     passwordMismatch: 'Passwords do not match',
-    passwordMinLength: 'Password must be at least 6 characters',
+    passwordMinLength: 'Password must be at least 8 characters',
+    requestError: 'Could not change the password. Please try again.',
   },
   common: {
     back: 'Back',
@@ -287,7 +288,8 @@ const en: Translations = {
     infoBodyBold: 'set the password manually',
     infoBodyEnd: ', save it and share it securely with the new company.',
     successTitle: 'Company created successfully!',
-    successBody: 'Copy the credentials below and send them to the company administrator.',
+    successBody:
+      'Copy the credentials below and send them to the company administrator.',
     credentialsTitle: 'Access Credentials',
     email: 'Email',
     password: 'Temporary password',

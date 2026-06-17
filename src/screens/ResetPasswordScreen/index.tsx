@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import {
   Text,
@@ -10,8 +10,11 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
+import { AxiosError } from 'axios';
+import Toast from 'react-native-toast-message';
 import { GradientText } from '@/components';
+import { useAuth } from '@/context/AuthContext';
+import { userService } from '@/services/api';
 import { colors } from '@/theme/colors';
 import { styles } from './styles';
 
@@ -19,19 +22,23 @@ export function ResetPasswordScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const actionSheetRef = useRef<ActionSheetRef>(null);
+  const { logout } = useAuth();
 
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
-  const handleReset = () => {
+  const handleBackToLogin = async () => {
+    await logout();
+    router.replace('/(public)/login');
+  };
+
+  const handleReset = async () => {
     setError('');
 
-    if (newPassword.length < 6) {
+    if (newPassword.length < 8) {
       setError(t('resetPassword.passwordMinLength'));
       return;
     }
@@ -42,10 +49,26 @@ export function ResetPasswordScreen() {
     }
 
     setLoading(true);
-    setTimeout(() => {
+    try {
+      await userService.changeMyPassword({ new_password: newPassword });
+      Toast.show({
+        type: 'success',
+        text1: t('resetPassword.successTitle'),
+        text2: t('resetPassword.successMessage'),
+        position: 'top',
+        topOffset: 60,
+        visibilityTime: 2500,
+      });
+      await logout();
+      router.replace('/(public)/login');
+    } catch (err: unknown) {
+      const requestError = err as AxiosError<{ detail?: string }>;
+      setError(
+        requestError.response?.data?.detail ?? t('resetPassword.requestError')
+      );
+    } finally {
       setLoading(false);
-      setSuccess(true);
-    }, 2000);
+    }
   };
 
   const inputProps = {
@@ -72,7 +95,7 @@ export function ResetPasswordScreen() {
           <IconButton
             icon="arrow-left"
             iconColor={colors.primary}
-            onPress={() => router.back()}
+            onPress={handleBackToLogin}
           />
         </View>
 
@@ -85,143 +108,87 @@ export function ResetPasswordScreen() {
           </View>
 
           <Surface style={styles.card} elevation={1}>
-            {success ? (
-              <>
-                <View style={styles.successIcon}>
-                  <IconButton
-                    icon="check-circle"
-                    size={40}
-                    iconColor={colors.success}
+            <View style={styles.iconCircle}>
+              <IconButton
+                icon="shield-key"
+                size={40}
+                iconColor={colors.primary}
+              />
+            </View>
+
+            <Text
+              variant="headlineSmall"
+              style={[styles.cardTitle, { textAlign: 'center' }]}
+            >
+              {t('resetPassword.cardTitle')}
+            </Text>
+
+            <View style={styles.form}>
+              <Text variant="bodyMedium" style={styles.description}>
+                {t('resetPassword.description')}
+              </Text>
+
+              {error && <Text style={styles.errorText}>{error}</Text>}
+
+              <TextInput
+                {...inputProps}
+                label={t('resetPassword.newPassword')}
+                value={newPassword}
+                onChangeText={(text) => {
+                  setNewPassword(text);
+                  setError('');
+                }}
+                secureTextEntry={!showPassword}
+                left={
+                  <TextInput.Icon
+                    icon="lock-outline"
+                    size={20}
+                    color={colors.iconMuted}
                   />
-                </View>
-
-                <Text
-                  variant="headlineSmall"
-                  style={[styles.cardTitle, { textAlign: 'center' }]}
-                >
-                  {t('resetPassword.successTitle')}
-                </Text>
-
-                <View style={styles.form}>
-                  <Text
-                    variant="bodyMedium"
-                    style={[styles.description, { marginBottom: 32 }]}
-                  >
-                    {t('resetPassword.successMessage')}
-                  </Text>
-
-                  <Button
-                    mode="contained"
-                    onPress={() => router.replace('/(public)/login')}
-                    buttonColor={colors.primary}
-                    style={styles.loginButton}
-                    labelStyle={styles.buttonLabel}
-                  >
-                    {t('resetPassword.goToLogin')}
-                  </Button>
-                </View>
-              </>
-            ) : (
-              <>
-                <View style={styles.iconCircle}>
-                  <IconButton
-                    icon="shield-key"
-                    size={40}
-                    iconColor={colors.primary}
+                }
+                right={
+                  <TextInput.Icon
+                    icon={showPassword ? 'eye-off' : 'eye'}
+                    size={20}
+                    color={colors.iconActive}
+                    onPress={() => setShowPassword(!showPassword)}
                   />
-                </View>
+                }
+              />
 
-                <Text
-                  variant="headlineSmall"
-                  style={[styles.cardTitle, { textAlign: 'center' }]}
-                >
-                  {t('resetPassword.cardTitle')}
-                </Text>
-
-                <View style={styles.form}>
-                  <Text variant="bodyMedium" style={styles.description}>
-                    {t('resetPassword.description')}
-                  </Text>
-
-                  {error && <Text style={styles.errorText}>{error}</Text>}
-
-                  <TextInput
-                    {...inputProps}
-                    label={t('resetPassword.newPassword')}
-                    value={newPassword}
-                    onChangeText={(text) => {
-                      setNewPassword(text);
-                      setError('');
-                    }}
-                    secureTextEntry={!showPassword}
-                    left={
-                      <TextInput.Icon
-                        icon="lock-outline"
-                        size={20}
-                        color={colors.iconMuted}
-                      />
-                    }
-                    right={
-                      <TextInput.Icon
-                        icon={showPassword ? 'eye-off' : 'eye'}
-                        size={20}
-                        color={colors.iconActive}
-                        onPress={() => setShowPassword(!showPassword)}
-                      />
-                    }
+              <TextInput
+                {...inputProps}
+                label={t('resetPassword.confirmPassword')}
+                value={confirmPassword}
+                onChangeText={(text) => {
+                  setConfirmPassword(text);
+                  setError('');
+                }}
+                secureTextEntry={!showPassword}
+                left={
+                  <TextInput.Icon
+                    icon="lock-check"
+                    size={20}
+                    color={colors.iconMuted}
                   />
+                }
+              />
 
-                  <TextInput
-                    {...inputProps}
-                    label={t('resetPassword.confirmPassword')}
-                    value={confirmPassword}
-                    onChangeText={(text) => {
-                      setConfirmPassword(text);
-                      setError('');
-                    }}
-                    secureTextEntry={!showPassword}
-                    left={
-                      <TextInput.Icon
-                        icon="lock-check"
-                        size={20}
-                        color={colors.iconMuted}
-                      />
-                    }
-                  />
-
-                  <Button
-                    mode="contained"
-                    onPress={handleReset}
-                    loading={loading}
-                    disabled={loading}
-                    buttonColor={colors.primary}
-                    style={styles.loginButton}
-                    labelStyle={styles.buttonLabel}
-                  >
-                    {t('resetPassword.save')}
-                  </Button>
-                </View>
-              </>
-            )}
+              <Button
+                mode="contained"
+                onPress={handleReset}
+                loading={loading}
+                disabled={loading}
+                buttonColor={colors.primary}
+                style={styles.loginButton}
+                labelStyle={styles.buttonLabel}
+              >
+                {t('resetPassword.save')}
+              </Button>
+            </View>
           </Surface>
         </View>
       </ScrollView>
-
-      <ActionSheet
-        ref={actionSheetRef}
-        gestureEnabled
-        closeOnPressBack
-        keyboardHandlerEnabled
-        drawUnderStatusBar={false}
-        containerStyle={styles.sheetContainer}
-        indicatorStyle={{ display: 'none' }}
-      >
-        <View
-          style={[styles.sheetContent, { paddingBottom: insets.bottom + 20 }]}
-        >
-          <Text>Content</Text>
-        </View>
-      </ActionSheet>
     </KeyboardAvoidingView>
   );
 }
