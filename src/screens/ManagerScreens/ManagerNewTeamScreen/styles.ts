@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '../../../theme/colors';
+import { colors } from '@/theme/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -27,43 +27,15 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: 20,
     padding: 24,
-    alignItems: 'center',
     shadowColor: colors.shadowColor,
     shadowOpacity: 0.06,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 2 },
     elevation: 2,
   },
-  logoUpload: {
-    alignItems: 'center',
-    marginBottom: 28,
-    marginTop: 8,
-  },
-  logoCircle: {
-    alignItems: 'center',
-    backgroundColor: colors.iconCircleBg,
-    borderColor: colors.handleIndicator,
-    borderStyle: 'dashed',
-    borderWidth: 2,
-    borderRadius: 999,
-    height: 100,
-    justifyContent: 'center',
-    width: 100,
-  },
-  logoLabel: {
-    color: colors.textPrimary,
-    fontSize: 15,
-    fontWeight: '600',
-    marginTop: 12,
-  },
-  logoHint: {
-    color: colors.textMuted,
-    fontSize: 12,
-    marginTop: 2,
-  },
   inputGroup: {
-    width: '100%',
     marginBottom: 16,
+    width: '100%',
   },
   inputLabel: {
     color: colors.primary,
@@ -79,9 +51,8 @@ export const styles = StyleSheet.create({
   submitButton: {
     backgroundColor: colors.primary,
     borderRadius: 14,
-    marginTop: 8,
     height: 52,
-    width: '100%',
+    marginTop: 8,
   },
   submitButtonContent: {
     height: 52,
@@ -91,38 +62,44 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
-  infoCard: {
-    backgroundColor: colors.successBg,
+  stateCard: {
     borderRadius: 20,
-    marginTop: 20,
-    padding: 20,
     flexDirection: 'row',
     gap: 16,
+    marginTop: 20,
+    padding: 20,
   },
-  infoIconBg: {
+  successCard: {
+    backgroundColor: colors.successBg,
+  },
+  errorCard: {
+    backgroundColor: '#FEECEC',
+  },
+  stateIconBg: {
     alignItems: 'center',
-    backgroundColor: colors.success,
     borderRadius: 999,
     height: 44,
     justifyContent: 'center',
     width: 44,
-    flexShrink: 0,
   },
-  infoContent: {
+  successIconBg: {
+    backgroundColor: colors.success,
+  },
+  errorIconBg: {
+    backgroundColor: colors.error,
+  },
+  stateContent: {
     flex: 1,
     gap: 8,
   },
-  infoTitle: {
-    color: colors.success,
+  stateTitle: {
+    color: colors.textPrimary,
     fontSize: 16,
     fontWeight: '700',
   },
-  infoBody: {
+  stateBody: {
     color: colors.textSoft,
     fontSize: 14,
     lineHeight: 22,
-  },
-  infoBold: {
-    fontWeight: '700',
   },
 });

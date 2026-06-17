@@ -24,6 +24,21 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 22,
   },
+  stateCard: {
+    backgroundColor: colors.surface,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 18,
+  },
+  stateContent: {
+    alignItems: 'center',
+    gap: 12,
+  },
+  stateText: {
+    color: colors.textSecondary,
+    fontSize: 14,
+    textAlign: 'center',
+  },
   card: {
     backgroundColor: colors.surface,
     borderRadius: 24,
@@ -351,6 +366,11 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '400',
     lineHeight: 29,
+  },
+  insightsLoadingRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 12,
   },
   insightsButton: {
     backgroundColor: 'rgba(255, 255, 255, 0.2)',

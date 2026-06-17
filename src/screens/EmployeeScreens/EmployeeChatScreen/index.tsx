@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Platform, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { chatService } from '@/services/api';
 import type {
   ChatMessageRead,
@@ -142,6 +142,8 @@ export function EmployeeChatScreen() {
     [introMessage, messages]
   );
 
+  const bottomNavigationOffset = Math.max(insets.bottom, 20) + 65;
+
   const focusComposer = () => {
     setTimeout(() => {
       listRef.current?.scrollToEnd({ animated: true });
@@ -243,10 +245,10 @@ export function EmployeeChatScreen() {
       style={styles.container}
     >
       <View style={styles.screen}>
-        <View style={styles.chatCard}>
-          <View
-            style={[styles.chatHeaderWrapper, { paddingTop: insets.top + 14 }]}
-          >
+        <View
+          style={[styles.chatCard, { paddingBottom: bottomNavigationOffset }]}
+        >
+          <View style={styles.chatHeaderWrapper}>
             <ChatHeader
               title={currentHeaderLabel}
               subtitle={
@@ -260,6 +262,7 @@ export function EmployeeChatScreen() {
 
           <FlatList
             ref={listRef}
+            style={styles.messagesList}
             automaticallyAdjustKeyboardInsets
             contentContainerStyle={styles.messagesContent}
             data={visibleMessages}

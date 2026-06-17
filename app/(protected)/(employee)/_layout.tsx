@@ -3,20 +3,36 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { BottomNav, TopBar } from '@/components';
 
-export default function EnterpriseLayout() {
+export default function EmployeeLayout() {
   const { t } = useTranslation();
   const navItems = [
     {
       key: 'home',
-      label: t('enterpriseDashboard.navHome'),
+      label: t('employeeDashboard.navHome'),
       icon: 'home-outline',
       activeIcon: 'home',
       route: '/dashboard',
       matches: ['/dashboard'],
     },
     {
+      key: 'journey',
+      label: t('employeeDashboard.navJourney'),
+      icon: 'map',
+      activeIcon: 'map',
+      route: '/questionnaires',
+      matches: ['/questionnaires'],
+    },
+    {
+      key: 'support',
+      label: t('employeeDashboard.navSupport'),
+      icon: 'brain',
+      activeIcon: 'brain',
+      route: '/chat',
+      matches: ['/chat'],
+    },
+    {
       key: 'settings',
-      label: t('enterpriseDashboard.navSettings'),
+      label: t('employeeDashboard.navSettings'),
       icon: 'cog-outline',
       activeIcon: 'cog',
       route: '/settings',

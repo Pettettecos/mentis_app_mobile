@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
   header: {
     gap: 8,
     paddingHorizontal: 4,
+    marginTop: 8,
   },
   headerTitle: {
     color: colors.textPrimary,

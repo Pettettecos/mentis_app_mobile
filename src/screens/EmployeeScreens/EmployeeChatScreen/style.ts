@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
   },
   chatHeaderWrapper: {
     backgroundColor: colors.primary,
+    paddingTop: 8,
   },
   chatHeader: {
     alignItems: 'center',
@@ -66,6 +67,9 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 28,
+  },
+  messagesList: {
+    flex: 1,
   },
   messageRow: {
     flexDirection: 'row',
