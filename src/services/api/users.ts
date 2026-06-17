@@ -3,6 +3,7 @@ import type {
   ManagerUserCreate,
   ManagerUserCreateResponse,
   ManagerUserTeamUpdate,
+  PasswordChangeRequest,
   UserCreate,
   UserRead,
   UserUpdate,
@@ -57,4 +58,10 @@ export async function updateManagerUserTeam(
 
 export async function deleteUser(userId: string): Promise<void> {
   await api.delete(`/api/v1/users/${userId}`);
+}
+
+export async function changeMyPassword(
+  payload: PasswordChangeRequest
+): Promise<void> {
+  await api.post('/api/v1/users/me/password', payload);
 }

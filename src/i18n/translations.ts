@@ -42,6 +42,7 @@ export interface Translations {
     goToLogin: string;
     passwordMismatch: string;
     passwordMinLength: string;
+    requestError: string;
   };
   common: {
     back: string;

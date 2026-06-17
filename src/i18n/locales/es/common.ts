@@ -46,7 +46,8 @@ const es: Translations = {
     successMessage: 'Tu contraseña ha sido cambiada exitosamente.',
     goToLogin: 'IR AL INICIO',
     passwordMismatch: 'Las contraseñas no coinciden',
-    passwordMinLength: 'La contraseña debe tener al menos 6 caracteres',
+    passwordMinLength: 'La contraseña debe tener al menos 8 caracteres',
+    requestError: 'No fue posible cambiar la contraseña. Inténtalo de nuevo.',
   },
   common: {
     back: 'Volver',
@@ -291,7 +292,8 @@ const es: Translations = {
     infoBodyEnd:
       ', guardarla y compartirla de forma segura con la nueva empresa.',
     successTitle: '¡Empresa creada con éxito!',
-    successBody: 'Copia las credenciales a continuación y envíalas al administrador de la empresa.',
+    successBody:
+      'Copia las credenciales a continuación y envíalas al administrador de la empresa.',
     credentialsTitle: 'Credenciales de Acceso',
     email: 'Correo electrónico',
     password: 'Contraseña temporal',
@@ -301,7 +303,8 @@ const es: Translations = {
     goToCompanies: 'Ver empresas',
     createAnother: 'Crear otra',
     errorTitle: 'Error al crear empresa',
-    errorBody: 'No fue posible crear la empresa. Verifica los datos e inténtalo de nuevo.',
+    errorBody:
+      'No fue posible crear la empresa. Verifica los datos e inténtalo de nuevo.',
     validationRequired: 'Completa todos los campos.',
   },
   adminDashboard: {

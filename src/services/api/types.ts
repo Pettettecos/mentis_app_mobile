@@ -15,6 +15,10 @@ export interface RefreshTokenRequest {
   refresh_token: string;
 }
 
+export interface PasswordChangeRequest {
+  new_password: string;
+}
+
 export interface UserCreate {
   username: string;
   email: string;
