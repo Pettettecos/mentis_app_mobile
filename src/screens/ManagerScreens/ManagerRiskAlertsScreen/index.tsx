@@ -24,7 +24,17 @@ function formatRiskAlertDate(value: string): string {
   });
 }
 
-export function ManagerRiskAlertsScreen() {
+interface ManagerRiskAlertsScreenProps {
+  errorText?: string;
+  subtitle?: string;
+  title?: string;
+}
+
+export function ManagerRiskAlertsScreen({
+  errorText,
+  subtitle,
+  title,
+}: ManagerRiskAlertsScreenProps) {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const [alerts, setAlerts] = useState<ManagerRiskAlertItem[]>([]);
@@ -71,10 +81,10 @@ export function ManagerRiskAlertsScreen() {
         />
         <View style={styles.headerText}>
           <Text style={styles.title}>
-            {t('managerDashboard.riskAlertsDetailsTitle')}
+            {title ?? t('managerDashboard.riskAlertsDetailsTitle')}
           </Text>
           <Text style={styles.subtitle}>
-            {t('managerDashboard.riskAlertsDetailsBody')}
+            {subtitle ?? t('managerDashboard.riskAlertsDetailsBody')}
           </Text>
         </View>
       </View>
@@ -91,7 +101,9 @@ export function ManagerRiskAlertsScreen() {
 
         {!loading && error && (
           <View style={styles.stateContent}>
-            <Text style={styles.stateText}>{t('managerDashboard.error')}</Text>
+            <Text style={styles.stateText}>
+              {errorText ?? t('managerDashboard.error')}
+            </Text>
             <Button mode="contained" onPress={loadAlerts}>
               {t('managerDashboard.retry')}
             </Button>

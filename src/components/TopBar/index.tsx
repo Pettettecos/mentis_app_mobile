@@ -1,4 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/AuthContext';
 import { GradientText } from '../GradientText';
@@ -8,7 +9,10 @@ export function TopBar() {
   const insets = useSafeAreaInsets();
   const { logout } = useAuth();
 
-  const handleLogout = async () => logout();
+  const handleLogout = async () => {
+    await logout();
+    router.replace('/(public)/login');
+  };
 
   return (
     <View style={[styles.wrapper, { paddingTop: insets.top + 16 }]}>

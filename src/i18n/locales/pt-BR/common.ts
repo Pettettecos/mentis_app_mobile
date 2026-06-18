@@ -376,6 +376,12 @@ const ptBR: Translations = {
     navSupport: 'Suporte',
     navSettings: 'Ajustes',
   },
+  psychologistDashboard: {
+    navDashboard: 'Painel',
+    navQuestionnaires: 'Modelos',
+    navAppointments: 'Agenda',
+    navSettings: 'Ajustes',
+  },
   meditation: {
     title: 'Meditação Guiada',
     subtitle: 'Escolha a duração e o som ambiente para sua sessão',

@@ -9,7 +9,7 @@ export default function ManagerLayout() {
   const { user } = useAuth();
 
   if (user?.role !== 'MANAGER') {
-    return <Redirect href="/(protected)/home" />;
+    return <Redirect href="/(protected)" />;
   }
 
   const navItems = [

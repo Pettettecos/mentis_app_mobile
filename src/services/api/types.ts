@@ -169,6 +169,101 @@ export interface QuestionnaireRead {
   questions: QuestionRead[] | null;
 }
 
+export type QuestionOptionCreate = Omit<QuestionOptionRead, 'id'>;
+
+interface BaseQuestionCreate {
+  question: string;
+  position: number;
+}
+
+export interface OpenQuestionCreate extends BaseQuestionCreate {
+  question_type: 'OPEN_ENDED';
+}
+
+export interface ClosedQuestionCreate extends BaseQuestionCreate {
+  question_type: 'CLOSED_ENDED';
+  options: QuestionOptionCreate[];
+}
+
+export type QuestionCreate = OpenQuestionCreate | ClosedQuestionCreate;
+
+export interface QuestionnaireCreate {
+  name: string;
+  is_template?: boolean;
+  questions?: QuestionCreate[];
+}
+
+export interface QuestionnaireUpdate {
+  name?: string;
+  is_template?: boolean;
+}
+
+export interface QuestionnaireAssignmentCreate {
+  user_ids: string[];
+}
+
+export interface QuestionnaireAssignmentRead {
+  id: string;
+  questionnaire_id: string;
+  questionnaire_name: string;
+  user_id: string;
+  user_name: string;
+  assigned_by: string;
+  assigned_at: string;
+  completed_at: string | null;
+  submission_id: string | null;
+  status: 'PENDING' | 'COMPLETED';
+  questions: QuestionRead[] | null;
+  answers:
+    | {
+        question_id: string;
+        question: string;
+        option_id: string | null;
+        option_label: string | null;
+        text_answer: string | null;
+      }[]
+    | null;
+}
+
+export interface AppointmentCreate {
+  user_id: string;
+  time: string;
+  title: string;
+  description?: string | null;
+  type?: string | null;
+}
+
+export interface AppointmentRead extends AppointmentCreate {
+  id: string;
+  psychologist_id: string;
+  psychologist_name: string;
+  user_name: string;
+  created_at: string;
+  updated_at: string | null;
+  deleted_at: string | null;
+}
+
+export type AppointmentRequestStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
+
+export interface AppointmentRequestCreate {
+  preferred_time: string;
+  message?: string | null;
+}
+
+export interface AppointmentRequestRead {
+  id: string;
+  psychologist_id: string;
+  psychologist_name: string;
+  user_id: string;
+  user_name: string;
+  preferred_time: string;
+  message: string | null;
+  status: AppointmentRequestStatus;
+  appointment_id: string | null;
+  created_at: string;
+  updated_at: string | null;
+}
+
 export type ChatRole = 'system' | 'human' | 'ai';
 
 export interface ChatMessageRead {

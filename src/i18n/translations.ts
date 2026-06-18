@@ -349,6 +349,12 @@ export interface Translations {
     navSupport: string;
     navSettings: string;
   };
+  psychologistDashboard: {
+    navDashboard: string;
+    navQuestionnaires: string;
+    navAppointments: string;
+    navSettings: string;
+  };
   meditation: {
     title: string;
     subtitle: string;

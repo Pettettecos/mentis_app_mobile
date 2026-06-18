@@ -16,5 +16,9 @@ export default function ProtectedIndex() {
     return <Redirect href="/(protected)/(manager)/dashboard" />;
   }
 
+  if (user?.role === 'PSYCHOLOGIST') {
+    return <Redirect href="/(protected)/(psychologist)/dashboard" />;
+  }
+
   return <Redirect href="/(protected)/home" />;
 }
