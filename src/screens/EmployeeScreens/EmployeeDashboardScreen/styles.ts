@@ -156,6 +156,103 @@ export const styles = StyleSheet.create({
   journeyStatValuePurple: {
     color: colors.purple,
   },
+  appointmentsCard: {
+    backgroundColor: colors.surface,
+    borderRadius: 20,
+    marginHorizontal: 4,
+    shadowColor: colors.shadowColor,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    elevation: 2,
+  },
+  appointmentsContent: {
+    gap: 16,
+    padding: 20,
+  },
+  appointmentsHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 14,
+  },
+  appointmentIconBg: {
+    alignItems: 'center',
+    backgroundColor: '#D9F0F5',
+    borderRadius: 14,
+    height: 52,
+    justifyContent: 'center',
+    width: 52,
+  },
+  appointmentsTitleGroup: {
+    flex: 1,
+    gap: 2,
+  },
+  appointmentsLabel: {
+    color: colors.textSecondary,
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+  },
+  appointmentsTitle: {
+    color: colors.textPrimary,
+    fontSize: 20,
+    fontWeight: '800',
+  },
+  appointmentEmptyBox: {
+    backgroundColor: colors.surfaceSecondary,
+    borderRadius: 14,
+    padding: 14,
+  },
+  appointmentEmptyText: {
+    color: colors.textSecondary,
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  appointmentRow: {
+    alignItems: 'center',
+    backgroundColor: colors.surfaceSecondary,
+    borderRadius: 14,
+    flexDirection: 'row',
+    gap: 12,
+    padding: 12,
+  },
+  appointmentDatePill: {
+    backgroundColor: '#E9F7FB',
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    width: 86,
+  },
+  appointmentDateText: {
+    color: colors.primary,
+    fontSize: 11,
+    fontWeight: '800',
+    lineHeight: 16,
+    textAlign: 'center',
+  },
+  appointmentInfo: {
+    flex: 1,
+    gap: 2,
+  },
+  appointmentTitle: {
+    color: colors.textPrimary,
+    fontSize: 14,
+    fontWeight: '800',
+  },
+  appointmentMeta: {
+    color: colors.textSecondary,
+    fontSize: 12,
+    lineHeight: 18,
+  },
+  pendingRequestText: {
+    color: colors.textSecondary,
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  requestButton: {
+    borderRadius: 14,
+  },
   exercisesSection: {
     gap: 16,
   },
@@ -204,5 +301,36 @@ export const styles = StyleSheet.create({
   exerciseSubtitle: {
     color: colors.textSecondary,
     fontSize: 13,
+  },
+  sheetContainer: {
+    backgroundColor: colors.surface,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+  },
+  sheetIndicator: {
+    backgroundColor: colors.outline,
+    width: 48,
+  },
+  sheetContent: {
+    backgroundColor: colors.surface,
+    gap: 14,
+    padding: 24,
+  },
+  modalTitle: {
+    color: colors.textPrimary,
+    fontSize: 22,
+    fontWeight: '800',
+  },
+  modalInput: {
+    backgroundColor: colors.surface,
+  },
+  modalActions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  modalActionButton: {
+    borderRadius: 12,
+    flexGrow: 1,
   },
 });

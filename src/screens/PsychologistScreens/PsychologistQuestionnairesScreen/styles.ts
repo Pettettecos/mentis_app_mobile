@@ -1,0 +1,278 @@
+import { StyleSheet } from 'react-native';
+import { colors } from '@/theme/colors';
+
+export const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#F6FAFD',
+    flex: 1,
+  },
+  content: {
+    gap: 28,
+    paddingHorizontal: 24,
+  },
+  header: {
+    gap: 8,
+  },
+  title: {
+    color: '#181C1F',
+    fontSize: 36,
+    fontWeight: '900',
+    lineHeight: 40,
+  },
+  eyebrowRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 8,
+  },
+  eyebrow: {
+    color: '#3E484E',
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  brand: {
+    color: colors.accent,
+    fontSize: 18,
+    fontWeight: '800',
+    lineHeight: 28,
+  },
+  createButton: {
+    backgroundColor: '#8421D3',
+    borderRadius: 999,
+    marginTop: 8,
+  },
+  createButtonContent: {
+    height: 48,
+    justifyContent: 'flex-start',
+    paddingHorizontal: 8,
+  },
+  createButtonLabel: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '800',
+  },
+  list: {
+    gap: 24,
+  },
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    elevation: 2,
+    padding: 24,
+    shadowColor: '#181C1F',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.04,
+    shadowRadius: 12,
+  },
+  cardTop: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  iconBubble: {
+    alignItems: 'center',
+    backgroundColor: '#DDF7FB',
+    borderRadius: 999,
+    height: 48,
+    justifyContent: 'center',
+    width: 48,
+  },
+  actions: {
+    flexDirection: 'row',
+    gap: 4,
+  },
+  iconButton: {
+    borderRadius: 8,
+  },
+  cardTitle: {
+    color: '#181C1F',
+    fontSize: 20,
+    fontWeight: '800',
+    lineHeight: 28,
+    marginTop: 16,
+  },
+  cardDescription: {
+    color: '#3E484E',
+    fontSize: 14,
+    lineHeight: 20,
+    marginTop: 4,
+  },
+  cardFooter: {
+    alignItems: 'center',
+    borderTopColor: 'rgba(223, 227, 230, 0.7)',
+    borderTopWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    paddingTop: 16,
+  },
+  lastUse: {
+    color: '#6E787F',
+    fontSize: 12,
+    fontWeight: '800',
+    lineHeight: 16,
+  },
+  countPill: {
+    backgroundColor: '#E5E9EC',
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+  },
+  countText: {
+    color: '#181C1F',
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 0.5,
+    lineHeight: 15,
+  },
+  customCard: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(240, 244, 247, 0.5)',
+    borderColor: '#BEC8CF',
+    borderRadius: 12,
+    borderStyle: 'dashed',
+    borderWidth: 2,
+    gap: 8,
+    justifyContent: 'center',
+    minHeight: 160,
+    padding: 26,
+  },
+  customTitle: {
+    color: '#6E787F',
+    fontSize: 16,
+    fontWeight: '800',
+    lineHeight: 24,
+    textAlign: 'center',
+  },
+  customBody: {
+    color: '#8A949B',
+    fontSize: 12,
+    lineHeight: 16,
+    textAlign: 'center',
+  },
+  stateCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 20,
+  },
+  stateContent: {
+    alignItems: 'center',
+    gap: 12,
+  },
+  stateText: {
+    color: colors.textSecondary,
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  modalBackdrop: {
+    backgroundColor: 'rgba(15, 23, 42, 0.36)',
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  modalCard: {
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    gap: 14,
+    maxHeight: '92%',
+    padding: 24,
+  },
+  sheetContainer: {
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+  },
+  sheetIndicator: {
+    backgroundColor: '#BEC8CF',
+    width: 48,
+  },
+  sheetContent: {
+    gap: 14,
+    padding: 24,
+  },
+  modalTitle: {
+    color: '#181C1F',
+    fontSize: 22,
+    fontWeight: '900',
+    lineHeight: 28,
+  },
+  input: {
+    backgroundColor: '#F6FAFD',
+  },
+  questionBox: {
+    backgroundColor: '#F6FAFD',
+    borderColor: '#DFE3E6',
+    borderRadius: 12,
+    borderWidth: 1,
+    gap: 10,
+    padding: 12,
+  },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  rowButton: {
+    borderRadius: 12,
+    flexGrow: 1,
+  },
+  selectorList: {
+    gap: 8,
+    maxHeight: 260,
+  },
+  employeeRow: {
+    alignItems: 'center',
+    backgroundColor: '#F6FAFD',
+    borderRadius: 12,
+    flexDirection: 'row',
+    gap: 10,
+    padding: 12,
+  },
+  employeeRowSelected: {
+    backgroundColor: '#E9F7FB',
+  },
+  employeeText: {
+    color: '#181C1F',
+    flex: 1,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  responsesList: {
+    maxHeight: 420,
+  },
+  responseCard: {
+    backgroundColor: '#F6FAFD',
+    borderColor: '#DFE3E6',
+    borderRadius: 14,
+    borderWidth: 1,
+    gap: 10,
+    marginBottom: 12,
+    padding: 14,
+  },
+  responsePatient: {
+    color: '#181C1F',
+    fontSize: 16,
+    fontWeight: '900',
+  },
+  responseDate: {
+    color: '#6E787F',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  answerBox: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    gap: 4,
+    padding: 12,
+  },
+  answerQuestion: {
+    color: '#3E484E',
+    fontSize: 13,
+    fontWeight: '800',
+    lineHeight: 18,
+  },
+  answerText: {
+    color: '#181C1F',
+    fontSize: 14,
+    lineHeight: 20,
+  },
+});

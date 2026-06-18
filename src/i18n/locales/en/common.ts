@@ -371,6 +371,12 @@ const en: Translations = {
     navSupport: 'Support',
     navSettings: 'Settings',
   },
+  psychologistDashboard: {
+    navDashboard: 'Dashboard',
+    navQuestionnaires: 'Templates',
+    navAppointments: 'Schedule',
+    navSettings: 'Settings',
+  },
   meditation: {
     title: 'Guided Meditation',
     subtitle: 'Choose the duration and ambient sound for your session',

@@ -33,7 +33,21 @@ const sentimentChartData = [
 
 const maxSentimentValue = 170;
 
-export function ManagerDashboardScreen() {
+interface ManagerDashboardScreenProps {
+  errorText?: string;
+  headerBody?: string;
+  headerTitle?: string;
+  riskAlertsRoute?: string;
+  reportRoute?: string | null;
+}
+
+export function ManagerDashboardScreen({
+  errorText,
+  headerBody,
+  headerTitle,
+  riskAlertsRoute = '/(protected)/(manager)/risk-alerts',
+  reportRoute = '/(protected)/(manager)/report',
+}: ManagerDashboardScreenProps) {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const [metrics, setMetrics] = useState<ManagerDashboardMetrics | null>(null);
@@ -126,10 +140,10 @@ export function ManagerDashboardScreen() {
     >
       <View style={styles.header}>
         <Text style={styles.headerTitle}>
-          {t('managerDashboard.headerTitle')}
+          {headerTitle ?? t('managerDashboard.headerTitle')}
         </Text>
         <Text style={styles.headerBody}>
-          {t('managerDashboard.headerBody')}
+          {headerBody ?? t('managerDashboard.headerBody')}
         </Text>
       </View>
 
@@ -147,7 +161,9 @@ export function ManagerDashboardScreen() {
       {error && (
         <Card style={styles.stateCard}>
           <Card.Content style={styles.stateContent}>
-            <Text style={styles.stateText}>{t('managerDashboard.error')}</Text>
+            <Text style={styles.stateText}>
+              {errorText ?? t('managerDashboard.error')}
+            </Text>
             <Button mode="contained" onPress={loadDashboard}>
               {t('managerDashboard.retry')}
             </Button>
@@ -257,7 +273,7 @@ export function ManagerDashboardScreen() {
             contentStyle={styles.alertButtonContent}
             labelStyle={styles.alertButtonLabel}
             style={styles.alertButton}
-            onPress={() => router.push('/(protected)/(manager)/risk-alerts')}
+            onPress={() => router.push(riskAlertsRoute)}
           >
             {t('managerDashboard.riskAlertsButton')}
           </Button>
@@ -315,15 +331,17 @@ export function ManagerDashboardScreen() {
           <Text style={styles.insightsBody}>{`"${aiInsight}"`}</Text>
         )}
 
-        <Button
-          mode="contained-tonal"
-          contentStyle={styles.insightsButtonContent}
-          labelStyle={styles.insightsButtonLabel}
-          style={styles.insightsButton}
-          onPress={() => router.push('/(protected)/(manager)/report')}
-        >
-          {t('managerDashboard.insightsButton')}
-        </Button>
+        {reportRoute && (
+          <Button
+            mode="contained-tonal"
+            contentStyle={styles.insightsButtonContent}
+            labelStyle={styles.insightsButtonLabel}
+            style={styles.insightsButton}
+            onPress={() => router.push(reportRoute)}
+          >
+            {t('managerDashboard.insightsButton')}
+          </Button>
+        )}
       </LinearGradient>
 
       {(metrics?.department_usage ?? []).length > 0 && (

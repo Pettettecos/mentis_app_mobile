@@ -1,11 +1,18 @@
-import { Image, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { Card, Icon, Text } from 'react-native-paper';
+import { Button, Card, Icon, Text, TextInput } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'expo-router';
 import Toast from 'react-native-toast-message';
+import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import { styles } from './styles';
 import { useAuth } from '@/context/AuthContext';
 import {
@@ -15,8 +22,14 @@ import {
   moodIconColor,
   moodOptions,
 } from '../constants';
-import { streakService, moodService } from '@/services/api';
-import type { UserStreakDto, MoodType } from '@/services/api';
+import { appointmentService, streakService, moodService } from '@/services/api';
+import type {
+  AppointmentRead,
+  AppointmentRequestRead,
+  UserStreakDto,
+  MoodType,
+} from '@/services/api';
+import { colors } from '@/theme/colors';
 
 const moodMap: Record<string, MoodType> = {
   'employeeDashboard.moodHappy': 'HAPPY',
@@ -25,17 +38,47 @@ const moodMap: Record<string, MoodType> = {
   'employeeDashboard.moodStressed': 'STRESSED',
 };
 
+function localDateKey(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function formatAppointmentDate(value: string): string {
+  return new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(value));
+}
+
 export function EmployeeDashboardScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const requestActionSheetRef = useRef<ActionSheetRef>(null);
   const { user } = useAuth();
   const [streak, setStreak] = useState<UserStreakDto | null>(null);
+  const [appointments, setAppointments] = useState<AppointmentRead[]>([]);
+  const [appointmentRequests, setAppointmentRequests] = useState<
+    AppointmentRequestRead[]
+  >([]);
   const [checkingIn, setCheckingIn] = useState(false);
   const [todayMood, setTodayMood] = useState<MoodType | null>(null);
+  const [requestDate, setRequestDate] = useState(() => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return localDateKey(tomorrow);
+  });
+  const [requestTime, setRequestTime] = useState('09:00');
+  const [requestMessage, setRequestMessage] = useState('');
+  const [requestingAppointment, setRequestingAppointment] = useState(false);
 
   useEffect(() => {
     loadStreak();
+    loadAppointments();
   }, []);
 
   const loadStreak = async () => {
@@ -44,6 +87,85 @@ export function EmployeeDashboardScreen() {
       setStreak(data);
     } catch {
       // Streak unavailable, show defaults
+    }
+  };
+
+  const loadAppointments = async () => {
+    try {
+      const [appointmentsResponse, requestsResponse] = await Promise.all([
+        appointmentService.listMyPatientAppointments(),
+        appointmentService.listMyAppointmentRequests(),
+      ]);
+      setAppointments(appointmentsResponse);
+      setAppointmentRequests(requestsResponse);
+    } catch {
+      // Agenda unavailable, keep dashboard usable.
+    }
+  };
+
+  const upcomingAppointments = appointments
+    .filter((appointment) => new Date(appointment.time).getTime() >= Date.now())
+    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
+    .slice(0, 3);
+
+  const pendingRequests = appointmentRequests.filter(
+    (request) => request.status === 'PENDING'
+  );
+
+  const requestAppointment = async () => {
+    const [hour, minute] = requestTime.split(':').map(Number);
+    if (
+      Number.isNaN(hour) ||
+      Number.isNaN(minute) ||
+      hour < 0 ||
+      hour > 23 ||
+      minute < 0 ||
+      minute > 59
+    ) {
+      Toast.show({
+        type: 'error',
+        text1: 'Horário inválido',
+        text2: 'Use o formato HH:mm.',
+        position: 'top',
+      });
+      return;
+    }
+
+    const preferredTime = new Date(`${requestDate}T00:00:00`);
+    if (Number.isNaN(preferredTime.getTime())) {
+      Toast.show({
+        type: 'error',
+        text1: 'Data inválida',
+        text2: 'Use o formato AAAA-MM-DD.',
+        position: 'top',
+      });
+      return;
+    }
+    preferredTime.setHours(hour, minute, 0, 0);
+
+    setRequestingAppointment(true);
+    try {
+      const created = await appointmentService.createAppointmentRequest({
+        preferred_time: preferredTime.toISOString(),
+        message: requestMessage.trim() || null,
+      });
+      setAppointmentRequests((current) => [created, ...current]);
+      requestActionSheetRef.current?.hide();
+      Toast.show({
+        type: 'success',
+        text1: 'Solicitação enviada',
+        text2: 'A psicóloga poderá aprovar o horário.',
+        position: 'top',
+      });
+    } catch {
+      Toast.show({
+        type: 'error',
+        text1: 'Não foi possível solicitar',
+        text2: 'Tente novamente em instantes.',
+        position: 'top',
+      });
+    } finally {
+      setRequestingAppointment(false);
     }
   };
 
@@ -159,7 +281,9 @@ export function EmployeeDashboardScreen() {
               <Text
                 style={[styles.journeyStatValue, styles.journeyStatValuePurple]}
               >
-                {streak ? `${streak.current_streak} ${t('employeeDashboard.days')}` : t('employeeDashboard.currentStreakValue')}
+                {streak
+                  ? `${streak.current_streak} ${t('employeeDashboard.days')}`
+                  : t('employeeDashboard.currentStreakValue')}
               </Text>
             </View>
 
@@ -168,10 +292,69 @@ export function EmployeeDashboardScreen() {
                 {t('employeeDashboard.longestStreak')}
               </Text>
               <Text style={styles.journeyStatValue}>
-                {streak ? `${streak.longest_streak} ${t('employeeDashboard.days')}` : t('employeeDashboard.longestStreakValue')}
+                {streak
+                  ? `${streak.longest_streak} ${t('employeeDashboard.days')}`
+                  : t('employeeDashboard.longestStreakValue')}
               </Text>
             </View>
           </View>
+        </Card.Content>
+      </Card>
+
+      <Card style={styles.appointmentsCard}>
+        <Card.Content style={styles.appointmentsContent}>
+          <View style={styles.appointmentsHeader}>
+            <View style={styles.appointmentIconBg}>
+              <Icon source="calendar-clock" size={26} color={colors.primary} />
+            </View>
+            <View style={styles.appointmentsTitleGroup}>
+              <Text style={styles.appointmentsLabel}>Agenda clínica</Text>
+              <Text style={styles.appointmentsTitle}>Seus agendamentos</Text>
+            </View>
+          </View>
+
+          {upcomingAppointments.length === 0 ? (
+            <View style={styles.appointmentEmptyBox}>
+              <Text style={styles.appointmentEmptyText}>
+                Nenhum acolhimento agendado no momento.
+              </Text>
+            </View>
+          ) : (
+            upcomingAppointments.map((appointment) => (
+              <View key={appointment.id} style={styles.appointmentRow}>
+                <View style={styles.appointmentDatePill}>
+                  <Text style={styles.appointmentDateText}>
+                    {formatAppointmentDate(appointment.time)}
+                  </Text>
+                </View>
+                <View style={styles.appointmentInfo}>
+                  <Text style={styles.appointmentTitle}>
+                    {appointment.title}
+                  </Text>
+                  <Text style={styles.appointmentMeta}>
+                    {appointment.psychologist_name}
+                  </Text>
+                </View>
+              </View>
+            ))
+          )}
+
+          {pendingRequests.length > 0 && (
+            <Text style={styles.pendingRequestText}>
+              {pendingRequests.length} solicitação
+              {pendingRequests.length === 1 ? '' : 'ões'} pendente
+              {pendingRequests.length === 1 ? '' : 's'}
+            </Text>
+          )}
+
+          <Button
+            icon="calendar-plus"
+            mode="contained"
+            onPress={() => requestActionSheetRef.current?.show()}
+            style={styles.requestButton}
+          >
+            Solicitar agendamento
+          </Button>
         </Card.Content>
       </Card>
 
@@ -211,6 +394,74 @@ export function EmployeeDashboardScreen() {
           </TouchableOpacity>
         ))}
       </View>
+
+      <ActionSheet
+        ref={requestActionSheetRef}
+        gestureEnabled
+        closeOnPressBack
+        keyboardHandlerEnabled
+        drawUnderStatusBar={false}
+        containerStyle={styles.sheetContainer}
+        indicatorStyle={styles.sheetIndicator}
+      >
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 24 : 0}
+        >
+          <ScrollView
+            contentContainerStyle={[
+              styles.sheetContent,
+              { paddingBottom: insets.bottom + 24 },
+            ]}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            <Text style={styles.modalTitle}>Solicitar agendamento</Text>
+            <TextInput
+              label="Data preferida (AAAA-MM-DD)"
+              mode="outlined"
+              onChangeText={setRequestDate}
+              style={styles.modalInput}
+              value={requestDate}
+            />
+            <TextInput
+              label="Horário preferido (HH:mm)"
+              mode="outlined"
+              onChangeText={setRequestTime}
+              style={styles.modalInput}
+              value={requestTime}
+            />
+            <TextInput
+              label="Mensagem opcional"
+              mode="outlined"
+              multiline
+              numberOfLines={4}
+              onChangeText={setRequestMessage}
+              style={styles.modalInput}
+              value={requestMessage}
+            />
+            <View style={styles.modalActions}>
+              <Button
+                mode="outlined"
+                onPress={() => requestActionSheetRef.current?.hide()}
+                disabled={requestingAppointment}
+                style={styles.modalActionButton}
+              >
+                Cancelar
+              </Button>
+              <Button
+                mode="contained"
+                onPress={requestAppointment}
+                loading={requestingAppointment}
+                disabled={requestingAppointment}
+                style={styles.modalActionButton}
+              >
+                Enviar
+              </Button>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </ActionSheet>
     </ScrollView>
   );
 }
