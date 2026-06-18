@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-
 import { authService } from '@/services/api';
-import { subscribeToSessionExpired } from '@/services/api/client';
 import type { LoginRequest, UserRead } from '@/services/api';
 
 interface AuthContextData {
@@ -19,43 +17,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let isMounted = true;
-
-    const unsubscribe = subscribeToSessionExpired(() => {
-      if (isMounted) {
-        setUser(null);
-      }
-    });
-
-    void (async () => {
-      const auth = await authService.isAuthenticated();
-
-      if (!isMounted) {
-        return;
-      }
-
+    authService.isAuthenticated().then(async (auth) => {
       if (auth) {
         try {
           const me = await authService.getMe();
-          if (isMounted) {
-            setUser(me);
-          }
+          setUser(me);
         } catch {
-          if (isMounted) {
-            setUser(null);
-          }
+          setUser(null);
         }
       }
-
-      if (isMounted) {
-        setLoading(false);
-      }
-    })();
-
-    return () => {
-      isMounted = false;
-      unsubscribe();
-    };
+      setLoading(false);
+    });
   }, []);
 
   const refreshUser = async () => {
