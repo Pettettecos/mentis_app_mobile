@@ -1,6 +1,7 @@
 import type { UserRole } from '@/services/api';
 
 const DASHBOARD_ROUTES: Partial<Record<UserRole, string>> = {
+  ADMIN: '/(protected)/(admin)/dashboard',
   ENTERPRISE: '/(protected)/(enterprise)/dashboard',
   MANAGER: '/(protected)/(manager)/dashboard',
   PSYCHOLOGIST: '/(protected)/(psychologist)/dashboard',

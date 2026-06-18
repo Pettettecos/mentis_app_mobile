@@ -1,5 +1,5 @@
-import { View } from 'react-native';
+import { ManagerUsersScreen } from '../../../src/screens/ManagerScreens/ManagerUsersScreen';
 
 export default function UsersPage() {
-  return <View style={{ flex: 1, backgroundColor: '#F6FAFD' }} />;
+  return <ManagerUsersScreen />;
 }

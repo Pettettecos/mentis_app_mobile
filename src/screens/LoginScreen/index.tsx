@@ -18,7 +18,6 @@ import MentisLogo from '../../../assets/logo.png';
 import { styles } from './styles';
 import { colors } from '../../theme/colors';
 import { useAuth } from '../../context/AuthContext';
-import Toast from 'react-native-toast-message';
 
 interface LoginForm {
   email: string;
@@ -34,6 +33,7 @@ export function LoginScreen() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   const {
     control,
@@ -44,19 +44,14 @@ export function LoginScreen() {
   });
 
   const onSubmit = async (data: LoginForm) => {
+    setLoginError(null);
     setLoading(true);
     try {
       await authLogin(data);
       router.replace('/(protected)');
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err: unknown) {
-      Toast.show({
-        type: 'error',
-        text1: t('login.error.invalidCredentials'),
-        position: 'top',
-        topOffset: 60,
-        visibilityTime: 3000,
-      });
+      setLoginError(t('login.error.invalidCredentials'));
     } finally {
       setLoading(false);
     }
@@ -215,6 +210,10 @@ export function LoginScreen() {
                   t('login.enter')
                 )}
               </Button>
+
+              {loginError && (
+                <Text style={styles.loginErrorText}>{loginError}</Text>
+              )}
             </View>
           </Surface>
 

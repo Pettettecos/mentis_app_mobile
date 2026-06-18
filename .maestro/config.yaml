@@ -1,0 +1,7 @@
+flows:
+  - flows/*.yaml
+env:
+  APP_ID: host.exp.Exponent
+  BASE_URL: http://localhost:8081
+  TEST_MANAGER_EMAIL: petteco@inatel.com
+  TEST_MANAGER_PASSWORD: 123

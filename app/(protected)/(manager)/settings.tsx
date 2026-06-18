@@ -1,5 +1,5 @@
-import { View } from 'react-native';
+import { ManagerSettingsScreen } from '../../../src/screens/ManagerScreens/ManagerSettingsScreen';
 
 export default function SettingsPage() {
-  return <View style={{ flex: 1, backgroundColor: '#F6FAFD' }} />;
+  return <ManagerSettingsScreen />;
 }

@@ -3,7 +3,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { Card, Icon, Text } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
+import Toast from 'react-native-toast-message';
 import { styles } from './styles';
 import { useAuth } from '@/context/AuthContext';
 import {
@@ -13,12 +15,62 @@ import {
   moodIconColor,
   moodOptions,
 } from '../constants';
+import { streakService, moodService } from '@/services/api';
+import type { UserStreakDto, MoodType } from '@/services/api';
+
+const moodMap: Record<string, MoodType> = {
+  'employeeDashboard.moodHappy': 'HAPPY',
+  'employeeDashboard.moodCalm': 'CALM',
+  'employeeDashboard.moodTired': 'TIRED',
+  'employeeDashboard.moodStressed': 'STRESSED',
+};
 
 export function EmployeeDashboardScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { user } = useAuth();
+  const [streak, setStreak] = useState<UserStreakDto | null>(null);
+  const [checkingIn, setCheckingIn] = useState(false);
+  const [todayMood, setTodayMood] = useState<MoodType | null>(null);
+
+  useEffect(() => {
+    loadStreak();
+  }, []);
+
+  const loadStreak = async () => {
+    try {
+      const data = await streakService.getUserStreak();
+      setStreak(data);
+    } catch {
+      // Streak unavailable, show defaults
+    }
+  };
+
+  const handleCheckin = async (mood: MoodType) => {
+    if (checkingIn) return;
+    setCheckingIn(true);
+    try {
+      await moodService.registerMood({ mood });
+      setTodayMood(mood);
+      await loadStreak();
+      Toast.show({
+        type: 'success',
+        text1: t('employeeDashboard.checkinSuccessTitle'),
+        text2: t('employeeDashboard.checkinSuccessBody'),
+        position: 'top',
+      });
+    } catch {
+      Toast.show({
+        type: 'error',
+        text1: t('employeeDashboard.checkinErrorTitle'),
+        text2: t('employeeDashboard.checkinErrorBody'),
+        position: 'top',
+      });
+    } finally {
+      setCheckingIn(false);
+    }
+  };
 
   return (
     <ScrollView
@@ -51,16 +103,34 @@ export function EmployeeDashboardScreen() {
             {t('employeeDashboard.checkinTitle')}
           </Text>
           <View style={styles.moodOptions}>
-            {moodOptions.map((mood) => (
-              <TouchableOpacity
-                key={mood.label}
-                style={styles.moodButton}
-                onPress={() => {}}
-              >
-                <Icon source={mood.icon} size={32} color={moodIconColor} />
-                <Text style={styles.moodLabel}>{t(mood.label)}</Text>
-              </TouchableOpacity>
-            ))}
+            {moodOptions.map((mood) => {
+              const isSelected = todayMood === moodMap[mood.label];
+              return (
+                <TouchableOpacity
+                  key={mood.label}
+                  style={[
+                    styles.moodButton,
+                    isSelected && styles.moodButtonSelected,
+                  ]}
+                  onPress={() => handleCheckin(moodMap[mood.label])}
+                  disabled={checkingIn}
+                >
+                  <Icon
+                    source={mood.icon}
+                    size={32}
+                    color={isSelected ? '#FFFFFF' : moodIconColor}
+                  />
+                  <Text
+                    style={[
+                      styles.moodLabel,
+                      isSelected && styles.moodLabelSelected,
+                    ]}
+                  >
+                    {t(mood.label)}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
           </View>
         </Card.Content>
       </Card>
@@ -89,7 +159,7 @@ export function EmployeeDashboardScreen() {
               <Text
                 style={[styles.journeyStatValue, styles.journeyStatValuePurple]}
               >
-                {t('employeeDashboard.currentStreakValue')}
+                {streak ? `${streak.current_streak} ${t('employeeDashboard.days')}` : t('employeeDashboard.currentStreakValue')}
               </Text>
             </View>
 
@@ -98,7 +168,7 @@ export function EmployeeDashboardScreen() {
                 {t('employeeDashboard.longestStreak')}
               </Text>
               <Text style={styles.journeyStatValue}>
-                {t('employeeDashboard.longestStreakValue')}
+                {streak ? `${streak.longest_streak} ${t('employeeDashboard.days')}` : t('employeeDashboard.longestStreakValue')}
               </Text>
             </View>
           </View>

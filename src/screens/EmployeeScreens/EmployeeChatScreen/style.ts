@@ -68,6 +68,9 @@ export const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 28,
   },
+  messagesList: {
+    flex: 1,
+  },
   messageRow: {
     flexDirection: 'row',
     gap: 12,

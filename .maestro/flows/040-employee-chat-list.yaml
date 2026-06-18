@@ -1,0 +1,17 @@
+appId: host.exp.Exponent
+---
+- launchApp
+- waitForAnimationToEnd
+- tapOn: 'mentis-app'
+- waitForAnimationToEnd
+- waitForAnimationToEnd
+- waitForAnimationToEnd
+- tapOn: 'Acesse sua conta'
+- tapOn: 'E-mail'
+- inputText: ${TEST_EMPLOYEE_EMAIL}
+- tapOn: 'Senha'
+- inputText: ${TEST_EMPLOYEE_PASSWORD}
+- tapOn: 'ENTRAR'
+- tapOn: 'Go to chat'
+- assertVisible: 'Sessões da IA'
+- scroll

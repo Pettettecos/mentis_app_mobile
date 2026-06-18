@@ -20,6 +20,10 @@ export interface RefreshTokenRequest {
   refresh_token: string;
 }
 
+export interface PasswordChangeRequest {
+  new_password: string;
+}
+
 export interface UserCreate {
   username: string;
   email: string;
@@ -31,9 +35,19 @@ export interface UserCreate {
   tasks?: string[];
 }
 
+export interface ManagerUserCreate {
+  username: string;
+  email: string;
+  phone_number: string;
+  document?: string | null;
+  role: UserRole;
+  sponsor_team_id?: string | null;
+}
+
 export interface UserRead {
   id: string;
   sponsor_id: string | null;
+  sponsor_team_id: string | null;
   username: string;
   email: string;
   phone_number: string;
@@ -45,6 +59,11 @@ export interface UserRead {
   deleted_at: string | null;
 }
 
+export interface ManagerUserCreateResponse {
+  user: UserRead;
+  temporary_password: string;
+}
+
 export interface UserUpdate {
   username?: string | null;
   email?: string | null;
@@ -52,6 +71,68 @@ export interface UserUpdate {
   document?: string | null;
   role?: UserRole | null;
   tasks?: string[] | null;
+}
+
+export interface ManagerUserTeamUpdate {
+  sponsor_team_id?: string | null;
+}
+
+export interface SponsorTeamCreate {
+  name: string;
+  sponsor_id: string;
+}
+
+export interface SponsorTeamRead {
+  id: string;
+  name: string;
+  sponsor_id: string;
+  created_at: string;
+  updated_at: string | null;
+  deleted_at: string | null;
+}
+
+export interface SponsorUserCreate {
+  sponsor_id?: string | null;
+  username: string;
+  email: string;
+  phone_number: string;
+  document?: string | null;
+  password: string;
+  role?: UserRole;
+  tasks?: string[];
+}
+
+export interface SponsorCreate {
+  name: string;
+  cnpj: string;
+  logo: string;
+  user: SponsorUserCreate;
+}
+
+export interface SponsorRead {
+  id: string;
+  name: string;
+  cnpj: string | null;
+  logo: string | null;
+  created_at: string;
+  updated_at: string | null;
+  deleted_at: string | null;
+}
+
+export interface UserTeamCreate {
+  user_id: string;
+  sponsor_team_id: string;
+  is_leader?: boolean;
+}
+
+export interface UserTeamRead {
+  id: string;
+  user_id: string;
+  sponsor_team_id: string;
+  is_leader: boolean;
+  created_at: string;
+  updated_at: string | null;
+  deleted_at: string | null;
 }
 
 export type QuestionType = 'OPEN_ENDED' | 'CLOSED_ENDED';
@@ -143,6 +224,95 @@ export interface SubmissionRead {
   answers: SubmissionAnswerRead[] | null;
   user_id: string;
   created_at: string;
+}
+
+export interface ActiveUsersDay {
+  label: string;
+  value: number;
+}
+
+export interface DepartmentUsage {
+  label: string;
+  value: number;
+}
+
+export type MoodType = 'HAPPY' | 'CALM' | 'TIRED' | 'STRESSED';
+
+export interface MoodCreate {
+  mood: MoodType;
+}
+
+export interface MoodRead {
+  mood: MoodType;
+  user_id: string;
+  user_name: string;
+}
+
+export interface UserStreakDto {
+  current_streak: number;
+  longest_streak: number;
+  last_activity_date: string;
+  streak_started_at: string;
+}
+
+export interface ManagerDashboardMetrics {
+  health_index: number;
+  active_users_total: number;
+  active_users_percentage: number;
+  active_users_by_day: ActiveUsersDay[];
+  risk_alerts_count: number;
+  department_usage: DepartmentUsage[];
+}
+
+export interface ManagerAIInsightResponse {
+  insight: string;
+}
+
+export interface ManagerRiskAlertItem {
+  id: string;
+  user_name: string;
+  insight: string;
+  department: string;
+  created_at: string;
+}
+
+export interface ReportParagraphBlock {
+  type: 'paragraph';
+  text: string;
+}
+
+export interface ReportCardBlock {
+  type: 'card';
+  variant: 'attention' | 'positive' | 'action' | 'trend';
+  title: string;
+  body: string;
+}
+
+export type ReportBlock = ReportParagraphBlock | ReportCardBlock;
+
+export interface ManagerAIReportResponse {
+  title: string;
+  summary: string;
+  blocks: ReportBlock[];
+}
+
+export interface AdminDashboardMetrics {
+  total_sponsors: number;
+  total_users: number;
+  total_active_users: number;
+  recent_sponsors: {
+    id: string;
+    name: string;
+    logo: string;
+    created_at: string;
+  }[];
+  alerts: {
+    id: string;
+    type: string;
+    title: string;
+    body: string;
+    created_at: string;
+  }[];
 }
 
 export interface HTTPValidationError {
