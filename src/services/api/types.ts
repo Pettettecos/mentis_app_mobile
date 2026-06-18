@@ -231,6 +231,18 @@ export interface DepartmentUsage {
   value: number;
 }
 
+export type MoodType = 'HAPPY' | 'CALM' | 'TIRED' | 'STRESSED';
+
+export interface MoodCreate {
+  mood: MoodType;
+}
+
+export interface MoodRead {
+  mood: MoodType;
+  user_id: string;
+  user_name: string;
+}
+
 export interface UserStreakDto {
   current_streak: number;
   longest_streak: number;

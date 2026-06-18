@@ -77,11 +77,17 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 8,
     gap: 8,
   },
+  moodButtonSelected: {
+    backgroundColor: colors.primary,
+  },
   moodLabel: {
     color: colors.textPrimary,
     fontSize: 12,
     fontWeight: '600',
     textAlign: 'center',
+  },
+  moodLabelSelected: {
+    color: '#FFFFFF',
   },
   journeyCard: {
     backgroundColor: colors.surface,

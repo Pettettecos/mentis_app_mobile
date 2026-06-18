@@ -108,4 +108,11 @@ export const styles = StyleSheet.create({
     marginBottom: 8,
     marginLeft: 4,
   },
+  loginErrorText: {
+    color: colors.error,
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginTop: 12,
+  },
 });
