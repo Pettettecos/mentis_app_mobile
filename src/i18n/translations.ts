@@ -310,6 +310,10 @@ export interface Translations {
     moodCalm: string;
     moodTired: string;
     moodStressed: string;
+    checkinSuccessTitle: string;
+    checkinSuccessBody: string;
+    checkinErrorTitle: string;
+    checkinErrorBody: string;
     yourJourney: string;
     journeyTitle: string;
     currentStreak: string;
