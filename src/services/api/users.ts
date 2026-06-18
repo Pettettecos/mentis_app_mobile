@@ -14,6 +14,11 @@ export async function listUsers(): Promise<UserRead[]> {
   return data;
 }
 
+export async function listEmployees(): Promise<UserRead[]> {
+  const { data } = await api.get<UserRead[]>('/api/v1/users');
+  return data;
+}
+
 export async function createUser(userData: UserCreate): Promise<UserRead> {
   const { data } = await api.post<UserRead>('/api/v1/users', userData);
   return data;

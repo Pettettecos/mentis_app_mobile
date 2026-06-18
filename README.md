@@ -22,11 +22,10 @@ Antes de começar, certifique-se de ter instalado:
 
 ## Instalação
 
-1. **Clone o repositório**:
+1. **Entre na pasta do frontend**:
 
 ```bash
-git clone git@github.com:Pettettecos/frontend.git
-cd mentis-app
+cd frontend
 ```
 
 2. **Instale as dependências**:
@@ -44,6 +43,12 @@ yarn start
 ```
 
 Você verá um menu com as opções disponíveis.
+
+Se quiser rodar direto no navegador:
+
+```bash
+yarn web
+```
 
 ### 2. Escolher uma plataforma:
 
