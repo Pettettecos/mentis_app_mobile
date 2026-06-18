@@ -1,0 +1,230 @@
+import { StyleSheet } from 'react-native';
+import { colors } from '@/theme/colors';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  content: {
+    gap: 16,
+    paddingHorizontal: 20,
+  },
+  header: {
+    gap: 8,
+    paddingHorizontal: 4,
+  },
+  backButton: {
+    alignSelf: 'flex-start',
+    marginLeft: -8,
+  },
+  backButtonLabel: {
+    color: colors.primary,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  headerTitle: {
+    color: colors.textPrimary,
+    fontSize: 28,
+    fontWeight: '800',
+    lineHeight: 36,
+  },
+  headerBody: {
+    color: colors.textSecondary,
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  progressCard: {
+    backgroundColor: colors.primary,
+    borderRadius: 20,
+    elevation: 2,
+    gap: 14,
+    padding: 20,
+    shadowColor: colors.shadowColor,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+  },
+  stickyProgressWrapper: {
+    paddingBottom: 4,
+  },
+  progressHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  progressTitle: {
+    color: colors.surface,
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  progressValue: {
+    color: colors.surface,
+    fontSize: 14,
+    fontWeight: '800',
+  },
+  progressTrack: {
+    backgroundColor: colors.surface,
+    borderRadius: 999,
+    height: 10,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    backgroundColor: colors.textPrimary,
+    borderRadius: 999,
+    height: '100%',
+  },
+  questionCard: {
+    backgroundColor: colors.surface,
+    borderRadius: 20,
+    elevation: 2,
+    gap: 16,
+    padding: 20,
+    shadowColor: colors.shadowColor,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+  },
+  stateCard: {
+    backgroundColor: colors.surface,
+    borderRadius: 20,
+    elevation: 2,
+    gap: 10,
+    padding: 20,
+    shadowColor: colors.shadowColor,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+  },
+  stateTitle: {
+    color: colors.textPrimary,
+    fontSize: 16,
+    fontWeight: '800',
+  },
+  stateBody: {
+    color: colors.textSecondary,
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  stateButton: {
+    alignSelf: 'flex-start',
+    backgroundColor: colors.primary,
+    borderRadius: 999,
+    marginTop: 4,
+  },
+  questionHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  questionNumber: {
+    color: colors.primary,
+    fontSize: 13,
+    fontWeight: '800',
+  },
+  questionTypeBadge: {
+    backgroundColor: colors.iconCircleBg,
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  questionTypeText: {
+    color: colors.textSecondary,
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  questionText: {
+    color: colors.textPrimary,
+    fontSize: 17,
+    fontWeight: '700',
+    lineHeight: 24,
+  },
+  optionsList: {
+    gap: 10,
+  },
+  optionItem: {
+    backgroundColor: colors.iconCircleBg,
+    borderColor: 'transparent',
+    borderRadius: 14,
+    borderWidth: 1,
+    minHeight: 52,
+    paddingHorizontal: 8,
+  },
+  optionItemSelected: {
+    backgroundColor: '#E0F2FE',
+    borderColor: colors.primary,
+  },
+  optionLabel: {
+    color: colors.textSoft,
+    fontSize: 14,
+    fontWeight: '500',
+    lineHeight: 20,
+  },
+  optionLabelSelected: {
+    color: colors.textPrimary,
+    fontWeight: '700',
+  },
+  textInput: {
+    backgroundColor: colors.iconCircleBg,
+    borderRadius: 14,
+    minHeight: 112,
+  },
+  textInputContent: {
+    color: colors.textPrimary,
+    fontSize: 14,
+    lineHeight: 20,
+    paddingTop: 12,
+  },
+  successCard: {
+    backgroundColor: colors.successBg,
+    borderRadius: 20,
+    flexDirection: 'row',
+    gap: 14,
+    padding: 18,
+  },
+  successIconBg: {
+    alignItems: 'center',
+    backgroundColor: colors.success,
+    borderRadius: 999,
+    flexShrink: 0,
+    height: 40,
+    justifyContent: 'center',
+    width: 40,
+  },
+  successContent: {
+    flex: 1,
+    gap: 4,
+  },
+  successTitle: {
+    color: colors.success,
+    fontSize: 15,
+    fontWeight: '800',
+  },
+  successBody: {
+    color: colors.textSoft,
+    fontSize: 13,
+    lineHeight: 19,
+  },
+  submitButton: {
+    backgroundColor: colors.primary,
+    borderRadius: 14,
+    elevation: 4,
+    marginTop: 4,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.24,
+    shadowRadius: 8,
+  },
+  submitButtonDisabled: {
+    backgroundColor: colors.textMuted,
+    shadowOpacity: 0,
+  },
+  submitButtonContent: {
+    height: 52,
+  },
+  submitButtonLabel: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+});

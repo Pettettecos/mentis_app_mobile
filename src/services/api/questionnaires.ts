@@ -1,4 +1,13 @@
 import { api } from './client';
+import type {
+  QuestionRead,
+  QuestionnaireRead,
+  SubmissionAnswerCreate,
+  SubmissionCreate,
+  SubmissionRead,
+} from './types';
+
+export type { SubmissionAnswerCreate } from './types';
 
 export type QuestionType = 'OPEN_ENDED' | 'CLOSED_ENDED';
 
@@ -23,30 +32,10 @@ export interface ClosedQuestionCreate {
 
 export type QuestionCreate = OpenQuestionCreate | ClosedQuestionCreate;
 
-export interface QuestionRead {
-  id: string;
-  question_type: QuestionType;
-  question: string;
-  position: number;
-  options?: Array<QuestionOptionCreate & { id: string }>;
-}
-
 export interface QuestionnaireCreate {
   name: string;
   is_template: boolean;
   questions: QuestionCreate[];
-}
-
-export interface Questionnaire {
-  id: string;
-  name: string;
-  is_template: boolean;
-  sponsor_id: string;
-  created_by: string | null;
-  created_at: string;
-  updated_at: string | null;
-  deleted_at: string | null;
-  questions?: QuestionRead[] | null;
 }
 
 export interface QuestionnaireAssignmentAnswer {
@@ -72,21 +61,15 @@ export interface QuestionnaireAssignment {
   answers?: QuestionnaireAssignmentAnswer[] | null;
 }
 
-export interface SubmissionAnswerCreate {
-  question_id: string;
-  option_id?: string;
-  text_answer?: string;
-}
-
-export async function listQuestionnaires(): Promise<Questionnaire[]> {
-  const { data } = await api.get<Questionnaire[]>('/api/v1/questionnaires');
+export async function listQuestionnaires(): Promise<QuestionnaireRead[]> {
+  const { data } = await api.get<QuestionnaireRead[]>('/api/v1/questionnaires');
   return data;
 }
 
 export async function createQuestionnaire(
   payload: QuestionnaireCreate
-): Promise<Questionnaire> {
-  const { data } = await api.post<Questionnaire>(
+): Promise<QuestionnaireRead> {
+  const { data } = await api.post<QuestionnaireRead>(
     '/api/v1/questionnaires',
     payload
   );
@@ -95,6 +78,20 @@ export async function createQuestionnaire(
 
 export async function deleteQuestionnaire(id: string): Promise<void> {
   await api.delete(`/api/v1/questionnaires/${id}`);
+}
+
+export async function getQuestionnaire(
+  questionnaireId: string
+): Promise<QuestionnaireRead> {
+  const { data } = await api.get<QuestionnaireRead>(
+    `/api/v1/questionnaires/${questionnaireId}`,
+    {
+      params: {
+        withQuestions: true,
+      },
+    }
+  );
+  return data;
 }
 
 export async function assignQuestionnaire(
@@ -136,11 +133,48 @@ export async function getQuestionnaireAssignmentResult(
   return data;
 }
 
-export async function submitQuestionnaire(
+export async function listQuestionnaireSubmissions(
+  questionnaireId: string
+): Promise<SubmissionRead[]> {
+  const { data } = await api.get<SubmissionRead[]>(
+    `/api/v1/questionnaires/${questionnaireId}/submissions`
+  );
+  return data;
+}
+
+export async function getQuestionnaireSubmission(
+  questionnaireId: string,
+  submissionId: string,
+  withAnswers = true
+): Promise<SubmissionRead> {
+  const { data } = await api.get<SubmissionRead>(
+    `/api/v1/questionnaires/${questionnaireId}/submissions/${submissionId}`,
+    {
+      params: {
+        withAnswers,
+      },
+    }
+  );
+  return data;
+}
+
+export function submitQuestionnaire(
   questionnaireId: string,
   answers: SubmissionAnswerCreate[]
-): Promise<void> {
-  await api.post(`/api/v1/questionnaires/${questionnaireId}/submissions`, {
-    answers,
-  });
+): Promise<void>;
+export function submitQuestionnaire(
+  questionnaireId: string,
+  payload: SubmissionCreate
+): Promise<SubmissionRead>;
+export async function submitQuestionnaire(
+  questionnaireId: string,
+  payload: SubmissionCreate | SubmissionAnswerCreate[]
+): Promise<SubmissionRead | void> {
+  const body = Array.isArray(payload) ? { answers: payload } : payload;
+  const { data } = await api.post<SubmissionRead>(
+    `/api/v1/questionnaires/${questionnaireId}/submissions`,
+    body
+  );
+
+  return Array.isArray(payload) ? undefined : data;
 }

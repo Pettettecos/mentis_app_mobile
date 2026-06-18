@@ -1,7 +1,7 @@
 import { Redirect } from 'expo-router';
 
-import { getDashboardRoute } from '@/navigation/roleRoutes';
 import { useAuth } from '@/context/AuthContext';
+import { getDashboardRoute } from '@/navigation/roleRoutes';
 
 export default function ProtectedIndex() {
   const { user } = useAuth();

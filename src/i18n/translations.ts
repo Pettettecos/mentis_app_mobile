@@ -98,6 +98,83 @@ export interface Translations {
       appointmentThreeDescription: string;
     };
   };
+  chat: {
+    sessionsList: {
+      headerTitle: string;
+      headerBody: string;
+      newSessionTitle: string;
+      newSessionBody: string;
+      loadingTitle: string;
+      loadingBody: string;
+      errorTitle: string;
+      errorBody: string;
+      retry: string;
+      emptyTitle: string;
+      emptyBody: string;
+    };
+    session: {
+      labelPrefix: string;
+      createdAt: string;
+      updatedAt: string;
+      invalidDate: string;
+      invalidTime: string;
+    };
+    conversation: {
+      newConversationTitle: string;
+      introMessage: string;
+      dateUnavailable: string;
+      sessionOpenedOn: string;
+      subtitle: string;
+      subtitleError: string;
+      loadErrorTitle: string;
+      loadErrorBody: string;
+      sendErrorTitle: string;
+      sendErrorBody: string;
+      placeholder: string;
+      typing: string;
+      backToList: string;
+    };
+  };
+  questionnaires: {
+    list: {
+      headerTitle: string;
+      headerBody: string;
+      aiSessionsTitle: string;
+      aiSessionsBody: string;
+      loadingTitle: string;
+      loadingBody: string;
+      errorTitle: string;
+      errorBody: string;
+      retry: string;
+      emptyTitle: string;
+      emptyBody: string;
+      createdAt: string;
+      answeredBadge: string;
+      answeredAt: string;
+    };
+    detail: {
+      backToList: string;
+      fallbackTitle: string;
+      editableDescription: string;
+      readOnlyDescription: string;
+      progressTitle: string;
+      loadingTitle: string;
+      loadingBody: string;
+      errorTitle: string;
+      errorBody: string;
+      retry: string;
+      emptyTitle: string;
+      emptyBody: string;
+      questionNumber: string;
+      questionTypeClosed: string;
+      questionTypeOpen: string;
+      answerPlaceholder: string;
+      successTitle: string;
+      successSubmittedBody: string;
+      successReadOnlyBody: string;
+      submitButton: string;
+    };
+  };
   managerDashboard: {
     headerTitle: string;
     headerBody: string;
@@ -132,6 +209,48 @@ export interface Translations {
     dayFri: string;
     navDashboard: string;
     navUsers: string;
+    navSettings: string;
+  };
+  employeeDashboard: {
+    greetingTitle: string;
+    greetingSubtitle: string;
+    checkinTitle: string;
+    today: string;
+    moodHappy: string;
+    moodCalm: string;
+    moodTired: string;
+    moodStressed: string;
+    yourJourney: string;
+    journeyTitle: string;
+    currentStreak: string;
+    currentStreakValue: string;
+    longestStreak: string;
+    longestStreakValue: string;
+    guidedExercises: string;
+    seeAll: string;
+    meditation: string;
+    meditationTitle: string;
+    meditationSubtitle: string;
+    breathing: string;
+    breathingTitle: string;
+    breathingSubtitle: string;
+    diary: string;
+    diaryTitle: string;
+    diarySubtitle: string;
+    consecutiveWeeks: string;
+    avgMood: string;
+    activeDays: string;
+    moodHistory: string;
+    last30Days: string;
+    chartPlaceholder: string;
+    aiInsights: string;
+    insight1Title: string;
+    insight1Body: string;
+    insight2Title: string;
+    insight2Body: string;
+    navHome: string;
+    navJourney: string;
+    navSupport: string;
     navSettings: string;
   };
   newCompany: {
@@ -174,6 +293,74 @@ export interface Translations {
     newRoleRequestBody: string;
     navHome: string;
     navSettings: string;
+  };
+  meditation: {
+    title: string;
+    subtitle: string;
+    duration: string;
+    sound: string;
+    tapToPreview: string;
+    start: string;
+    audioWaterfall: string;
+    audioPeaceful: string;
+    audioMystical: string;
+    breatheIn: string;
+    hold: string;
+    breatheOut: string;
+  };
+  diary: {
+    title: string;
+    subtitle: string;
+    promptLabel: string;
+    promptGratitude: string;
+    promptAchievement: string;
+    promptFeeling: string;
+    promptGoal: string;
+    promptReflection: string;
+    writeLabel: string;
+    placeholder: string;
+    save: string;
+    history: string;
+    entry: string;
+    entries: string;
+    empty: string;
+    errorTitle: string;
+    errorMessage: string;
+  };
+  breathing: {
+    title: string;
+    subtitle: string;
+    technique: string;
+    breatheIn: string;
+    hold: string;
+    breatheOut: string;
+    rounds: string;
+    start: string;
+  };
+  journey: {
+    title: string;
+    subtitle: string;
+  };
+  support: {
+    title: string;
+    subtitle: string;
+  };
+  settings: {
+    headerTitle: string;
+    headerBody: string;
+    profileSection: string;
+    profileTitle: string;
+    preferencesSection: string;
+    notificationsTitle: string;
+    notificationsDescription: string;
+    languageTitle: string;
+    languageDescription: string;
+    supportSection: string;
+    helpTitle: string;
+    helpDescription: string;
+    aboutTitle: string;
+    aboutDescription: string;
+    logout: string;
   };
   splash: {
     title: string;

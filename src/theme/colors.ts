@@ -30,5 +30,10 @@ export const colors = {
   iconCircleBg: '#F1F5F9',
   handleIndicator: '#CBD5E1',
 
+  cyan: '#06B6D4',
+  purple: '#7C3AED',
+  purpleLight: '#EDE9FE',
+  surfaceSecondary: '#F0F4F7',
+
   shadowColor: '#000000',
 };
