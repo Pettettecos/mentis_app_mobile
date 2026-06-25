@@ -21,6 +21,15 @@ export default [
       },
       globals: {
         __DEV__: 'readonly',
+        process: 'readonly',
+        console: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        Date: 'readonly',
+        Promise: 'readonly',
+        JSON: 'readonly',
       },
     },
     plugins: {
@@ -32,7 +41,11 @@ export default [
       ...tsPlugin.configs.recommended.rules,
       ...prettier.rules,
       'prettier/prettier': 'error',
-      'no-console': 'warn',
+      'no-console': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
     },
   },
 ];

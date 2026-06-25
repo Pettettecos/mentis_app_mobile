@@ -2,7 +2,7 @@
 
 # dependencies
 node_modules/
-
+backend/
 # Expo
 .expo/
 dist/
@@ -31,7 +31,9 @@ yarn-error.*
 *.pem
 
 # local env files
+.env
 .env*.local
+.maestro/.env
 
 # typescript
 *.tsbuildinfo

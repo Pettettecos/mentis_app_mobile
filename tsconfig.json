@@ -5,7 +5,12 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@assets/*": ["./assets/*"]
+    }
   },
   "exclude": [
     "node_modules",
